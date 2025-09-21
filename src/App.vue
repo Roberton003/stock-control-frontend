@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <h1>Stock Control Laboratory System</h1>
-    <p>Welcome to the stock control system frontend</p>
+    <AppLayout />
   </div>
 </template>
 
 <script>
+import AppLayout from '@components/layout/AppLayout.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    AppLayout
+  }
 }
 </script>
 
