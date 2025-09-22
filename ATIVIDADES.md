@@ -29,6 +29,7 @@
 
 - [x] Configurar Django para servir arquivos estáticos do frontend
 - [x] Configurar URLs do Django para servir o frontend
+- [x] Corrigir problemas de configuração do Django
 - [ ] Testar integração backend/frontend acessando localhost:8000
 - [ ] Verificar chamadas da API do frontend para o backend
 
