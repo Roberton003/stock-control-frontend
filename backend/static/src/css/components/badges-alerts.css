@@ -1,0 +1,69 @@
+/*
+ * Componentes de Badges e Alertas para Laboratório
+ * Elementos de feedback e identificação visual
+ */
+
+/* Badge básico */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+/* Variantes de badges */
+.badge-primary {
+  @apply bg-primary-blue/20 text-primary-blue;
+}
+
+.badge-secondary {
+  @apply bg-gray-500/20 text-text-muted;
+}
+
+.badge-success {
+  @apply bg-accent-green/20 text-accent-green;
+}
+
+.badge-warning {
+  @apply bg-yellow-500/20 text-yellow-500;
+}
+
+.badge-danger {
+  @apply bg-accent-red/20 text-accent-red;
+}
+
+.badge-info {
+  @apply bg-blue-500/20 text-blue-500;
+}
+
+/* Badges de Status */
+.badge-status-pending {
+  @apply badge-warning;
+}
+
+.badge-status-approved {
+  @apply badge-success;
+}
+
+.badge-status-rejected {
+  @apply badge-danger;
+}
+
+
+/* Alertas */
+.alert {
+  @apply rounded-lg p-4 mb-4 border;
+}
+
+.alert-success {
+  @apply bg-accent-green/10 text-accent-green border-accent-green/30;
+}
+
+.alert-warning {
+  @apply bg-yellow-500/10 text-yellow-500 border-yellow-500/30;
+}
+
+.alert-danger {
+  @apply bg-accent-red/10 text-accent-red border-accent-red/30;
+}
+
+.alert-info {
+  @apply bg-blue-500/10 text-blue-500 border-blue-500/30;
+}

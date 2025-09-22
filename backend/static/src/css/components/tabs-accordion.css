@@ -1,0 +1,366 @@
+/*
+ * Componentes de Abas e Seções Expansíveis
+ * Elementos interativos para organização de conteúdo
+ */
+
+/* Container de Abas */
+.tabs-container {
+  @apply border-b border-gray-200 dark:border-gray-700;
+}
+
+.tabs-container--boxed {
+  @apply border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden;
+}
+
+.tabs-container--vertical {
+  @apply flex border-0;
+}
+
+/* Lista de Abas */
+.tabs-list {
+  @apply flex -mb-px space-x-8;
+}
+
+.tabs-list--boxed {
+  @apply bg-gray-50 dark:bg-gray-800 p-2;
+}
+
+.tabs-list--vertical {
+  @apply flex-col space-y-0 space-x-0 border-r border-gray-200 dark:border-gray-700 pr-4;
+}
+
+/* Item de Aba */
+.tab-item {
+  @apply inline-flex items-center py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-500;
+}
+
+.tab-item--active {
+  @apply border-primary-500 text-primary-600 dark:text-primary-400 dark:border-primary-500;
+}
+
+.tab-item--boxed {
+  @apply px-4 py-2 border-0 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700;
+}
+
+.tab-item--boxed.tab-item--active {
+  @apply bg-white dark:bg-gray-700 shadow-sm;
+}
+
+.tab-item--vertical {
+  @apply px-4 py-3 border-0 border-r-2 border-transparent justify-start;
+}
+
+.tab-item--vertical.tab-item--active {
+  @apply border-primary-500;
+}
+
+/* Ícone de Aba */
+.tab-icon {
+  @apply w-5 h-5 mr-2;
+}
+
+/* Conteúdo das Abas */
+.tabs-content {
+  @apply mt-6;
+}
+
+.tabs-content--boxed {
+  @apply bg-white dark:bg-gray-800 rounded-b-lg rounded-tr-lg p-6 border border-gray-200 dark:border-gray-700 border-t-0;
+}
+
+.tabs-content--vertical {
+  @apply flex-1 pl-4;
+}
+
+/* Painel de Aba */
+.tab-panel {
+  @apply focus:outline-none;
+}
+
+.tab-panel--hidden {
+  @apply hidden;
+}
+
+/* Seções Expansíveis (Accordion) */
+.accordion {
+  @apply border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-200 dark:divide-gray-700;
+}
+
+.accordion--flush {
+  @apply border-0 rounded-none divide-y-0;
+}
+
+/* Item do Accordion */
+.accordion-item {
+  @apply bg-white dark:bg-gray-800;
+}
+
+.accordion-item--flush {
+  @apply border-0 rounded-none;
+}
+
+/* Cabeçalho do Accordion */
+.accordion-header {
+  @apply w-full flex justify-between items-center p-5 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200;
+}
+
+.accordion-header--flush {
+  @apply px-0 py-5;
+}
+
+.accordion-header--compact {
+  @apply p-3;
+}
+
+/* Botão do Accordion */
+.accordion-button {
+  @apply flex items-center justify-between w-full p-0 text-base font-medium text-left text-gray-900 dark:text-white bg-transparent border-0 hover:bg-transparent focus:outline-none focus:ring-0;
+}
+
+.accordion-button--collapsed {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Conteúdo do Accordion */
+.accordion-content {
+  @apply p-5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300;
+}
+
+.accordion-content--flush {
+  @apply px-0 py-5;
+}
+
+.accordion-content--compact {
+  @apply p-3;
+}
+
+.accordion-content--hidden {
+  @apply hidden;
+}
+
+/* Ícone do Accordion */
+.accordion-icon {
+  @apply w-5 h-5 transition-transform duration-300 ease-in-out;
+}
+
+.accordion-icon--rotated {
+  @apply rotate-180;
+}
+
+/* Grupos de Abas */
+.tab-group {
+  @apply flex flex-col;
+}
+
+.tab-group--vertical {
+  @apply flex-row;
+}
+
+/* Conteúdo da Aba */
+.tab-content {
+  @apply focus:outline-none;
+}
+
+.tab-content--hidden {
+  @apply hidden;
+}
+
+/* Abas com Navegação */
+.tabs-navigation {
+  @apply flex justify-between items-center mb-4;
+}
+
+.tabs-prev,
+.tabs-next {
+  @apply p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700;
+}
+
+.tabs-prev--disabled,
+.tabs-next--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Indicador de Abas */
+.tabs-indicator {
+  @apply flex space-x-1 mx-2;
+}
+
+.tabs-indicator-dot {
+  @apply w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600;
+}
+
+.tabs-indicator-dot--active {
+  @apply bg-primary-500;
+}
+
+/* Abas com Scroll */
+.tabs-scrollable {
+  @apply overflow-x-auto;
+}
+
+.tabs-scrollable .tabs-list {
+  @apply flex-nowrap;
+}
+
+/* Abas com Dropdown */
+.tabs-dropdown {
+  @apply relative;
+}
+
+.tabs-dropdown-menu {
+  @apply absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10;
+}
+
+.tabs-dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700;
+}
+
+/* Seções Expansíveis Aninhadas */
+.nested-accordion {
+  @apply ml-4 border-l-2 border-gray-200 dark:border-gray-700;
+}
+
+.nested-accordion-item {
+  @apply border-0;
+}
+
+/* Estados de Abas */
+.tab-item--loading {
+  @apply opacity-75 pointer-events-none;
+}
+
+.tab-item--error {
+  @apply text-danger-600 dark:text-danger-400;
+}
+
+/* Estados de Accordion */
+.accordion-item--loading {
+  @apply opacity-75;
+}
+
+.accordion-item--error {
+  @apply border-danger-200 dark:border-danger-800;
+}
+
+/* Animações de Transição */
+.tabs-transition-enter {
+  @apply opacity-0;
+}
+
+.tabs-transition-enter-active {
+  @apply opacity-100 transition-opacity duration-300 ease-in-out;
+}
+
+.tabs-transition-exit {
+  @apply opacity-100;
+}
+
+.tabs-transition-exit-active {
+  @apply opacity-0 transition-opacity duration-300 ease-in-out;
+}
+
+.accordion-transition-enter {
+  @apply max-h-0 overflow-hidden;
+}
+
+.accordion-transition-enter-active {
+  @apply max-h-screen transition-all duration-300 ease-in-out;
+}
+
+.accordion-transition-exit {
+  @apply max-h-screen overflow-hidden;
+}
+
+.accordion-transition-exit-active {
+  @apply max-h-0 transition-all duration-300 ease-in-out;
+}
+
+/* Componentes Laboratoriais Específicos */
+.lab-tabs {
+  @apply tabs-container;
+}
+
+.lab-tab-item {
+  @apply tab-item;
+}
+
+.lab-tab-item--active {
+  @apply tab-item--active;
+}
+
+.lab-accordion {
+  @apply accordion;
+}
+
+.lab-accordion-item {
+  @apply accordion-item;
+}
+
+.lab-accordion-header {
+  @apply accordion-header;
+}
+
+.lab-accordion-content {
+  @apply accordion-content;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tabs-list {
+    @apply space-x-0 overflow-x-auto;
+  }
+  
+  .tab-item {
+    @apply whitespace-nowrap px-3 py-4;
+  }
+  
+  .tabs-content {
+    @apply mt-4;
+  }
+  
+  .accordion-content {
+    @apply p-4 text-sm;
+  }
+  
+  .accordion-header {
+    @apply p-4;
+  }
+  
+  .tabs-container--vertical {
+    @apply flex-col;
+  }
+  
+  .tabs-list--vertical {
+    @apply flex-row border-r-0 border-b pr-0 pb-4;
+  }
+  
+  .tab-item--vertical {
+    @apply border-r-2 border-transparent border-b-0 px-3 py-2;
+  }
+  
+  .tab-item--vertical.tab-item--active {
+    @apply border-primary-500 border-b-0;
+  }
+  
+  .tabs-content--vertical {
+    @apply pl-0 pt-4;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-item {
+    @apply px-2 text-xs;
+  }
+  
+  .tab-icon {
+    @apply w-4 h-4 mr-1;
+  }
+  
+  .accordion-header {
+    @apply p-3;
+  }
+  
+  .accordion-content {
+    @apply p-3;
+  }
+}

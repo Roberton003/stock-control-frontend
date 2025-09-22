@@ -1,0 +1,688 @@
+/*
+ * Componentes de Navegação entre Entidades Relacionadas
+ * Elementos para facilitar a navegação e contexto em sistemas complexos
+ */
+
+/* Breadcrumb de Navegação */
+.breadcrumb {
+  @apply flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-6;
+}
+
+.breadcrumb--large {
+  @apply text-base mb-8;
+}
+
+.breadcrumb--compact {
+  @apply text-xs mb-4;
+}
+
+/* Item do Breadcrumb */
+.breadcrumb-item {
+  @apply flex items-center;
+}
+
+.breadcrumb-item--current {
+  @apply text-gray-900 dark:text-white font-semibold;
+}
+
+.breadcrumb-item--link {
+  @apply text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 hover:underline cursor-pointer;
+}
+
+/* Separador do Breadcrumb */
+.breadcrumb-separator {
+  @apply mx-2 text-gray-400 dark:text-gray-500;
+}
+
+.breadcrumb-separator--slash {
+  @apply mx-2;
+}
+
+.breadcrumb-separator--arrow {
+  @apply mx-1 text-gray-400 dark:text-gray-500;
+}
+
+/* Ícone do Breadcrumb */
+.breadcrumb-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+/* Navegação Contextual */
+.contextual-nav {
+  @apply flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 mb-6;
+}
+
+.contextual-nav--compact {
+  @apply p-3 mb-4;
+}
+
+.contextual-nav--large {
+  @apply p-6 mb-8;
+}
+
+/* Título da Navegação Contextual */
+.contextual-nav-title {
+  @apply text-lg font-semibold text-gray-900 dark:text-white;
+}
+
+.contextual-nav-title--small {
+  @apply text-base;
+}
+
+.contextual-nav-title--large {
+  @apply text-xl;
+}
+
+/* Subtítulo da Navegação Contextual */
+.contextual-nav-subtitle {
+  @apply text-sm text-gray-600 dark:text-gray-400 mt-1;
+}
+
+.contextual-nav-subtitle--compact {
+  @apply text-xs mt-0;
+}
+
+/* Ações da Navegação Contextual */
+.contextual-nav-actions {
+  @apply flex items-center space-x-3;
+}
+
+.contextual-nav-actions--compact {
+  @apply space-x-2;
+}
+
+/* Links de Navegação Rápida */
+.quick-nav {
+  @apply flex flex-wrap gap-2 mb-6;
+}
+
+.quick-nav--vertical {
+  @apply flex-col gap-1;
+}
+
+.quick-nav--horizontal {
+  @apply flex-row;
+}
+
+/* Item de Navegação Rápida */
+.quick-nav-item {
+  @apply inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200;
+}
+
+.quick-nav-item--active {
+  @apply bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-900 dark:text-primary-200 dark:hover:bg-primary-800;
+}
+
+.quick-nav-item--compact {
+  @apply px-2 py-1 text-xs;
+}
+
+.quick-nav-item--large {
+  @apply px-4 py-2 text-base;
+}
+
+/* Ícone do Item de Navegação Rápida */
+.quick-nav-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+/* Barra de Navegação Lateral */
+.sidebar-nav {
+  @apply w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-full flex-shrink-0 overflow-y-auto;
+}
+
+.sidebar-nav--collapsed {
+  @apply w-16;
+}
+
+.sidebar-nav--expanded {
+  @apply w-64;
+}
+
+/* Cabeçalho da Barra Lateral */
+.sidebar-header {
+  @apply p-4 border-b border-gray-200 dark:border-gray-700;
+}
+
+.sidebar-header--compact {
+  @apply p-3;
+}
+
+/* Título da Barra Lateral */
+.sidebar-title {
+  @apply text-lg font-bold text-gray-900 dark:text-white;
+}
+
+.sidebar-title--small {
+  @apply text-base;
+}
+
+/* Menu da Barra Lateral */
+.sidebar-menu {
+  @apply py-4;
+}
+
+/* Item do Menu da Barra Lateral */
+.sidebar-item {
+  @apply flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200;
+}
+
+.sidebar-item--active {
+  @apply bg-primary-50 text-primary-700 border-l-4 border-primary-500 dark:bg-primary-900/30 dark:text-primary-200;
+}
+
+.sidebar-item--compact {
+  @apply px-3 py-2 text-sm;
+}
+
+/* Ícone do Item da Barra Lateral */
+.sidebar-icon {
+  @apply w-5 h-5 mr-3;
+}
+
+/* Texto do Item da Barra Lateral */
+.sidebar-text {
+  @apply flex-1 font-medium;
+}
+
+/* Submenu da Barra Lateral */
+.sidebar-submenu {
+  @apply ml-8 mt-2 space-y-1;
+}
+
+.sidebar-submenu--hidden {
+  @apply hidden;
+}
+
+/* Item do Submenu da Barra Lateral */
+.sidebar-subitem {
+  @apply flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 rounded-md cursor-pointer transition-colors duration-200;
+}
+
+.sidebar-subitem--active {
+  @apply text-primary-600 bg-primary-50 dark:text-primary-400 dark:bg-primary-900/30;
+}
+
+/* Toggle da Barra Lateral */
+.sidebar-toggle {
+  @apply p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer;
+}
+
+/* Navegação de Abas Contextual */
+.contextual-tabs {
+  @apply flex border-b border-gray-200 dark:border-gray-700 mb-6;
+}
+
+.contextual-tabs--compact {
+  @apply mb-4;
+}
+
+.contextual-tabs--large {
+  @apply mb-8;
+}
+
+/* Item da Aba Contextual */
+.contextual-tab {
+  @apply inline-flex items-center px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-500 border-b-2 border-transparent;
+}
+
+.contextual-tab--active {
+  @apply text-primary-600 border-primary-500 dark:text-primary-400 dark:border-primary-500;
+}
+
+.contextual-tab--compact {
+  @apply px-3 py-2 text-xs;
+}
+
+.contextual-tab--large {
+  @apply px-5 py-4 text-base;
+}
+
+/* Ícone da Aba Contextual */
+.contextual-tab-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+/* Navegação de Entidade */
+.entity-nav {
+  @apply flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 mb-6;
+}
+
+.entity-nav--compact {
+  @apply p-3 mb-4;
+}
+
+.entity-nav--large {
+  @apply p-6 mb-8;
+}
+
+/* Informações da Entidade */
+.entity-info {
+  @apply flex items-center;
+}
+
+/* Avatar da Entidade */
+.entity-avatar {
+  @apply flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center mr-4;
+}
+
+.entity-avatar--small {
+  @apply w-10 h-10 mr-3;
+}
+
+.entity-avatar--large {
+  @apply w-16 h-16 mr-5;
+}
+
+.entity-avatar--primary {
+  @apply bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-300;
+}
+
+.entity-avatar--success {
+  @apply bg-success-100 text-success-600 dark:bg-success-900/30 dark:text-success-300;
+}
+
+.entity-avatar--warning {
+  @apply bg-warning-100 text-warning-600 dark:bg-warning-900/30 dark:text-warning-300;
+}
+
+.entity-avatar--danger {
+  @apply bg-danger-100 text-danger-600 dark:bg-danger-900/30 dark:text-danger-300;
+}
+
+.entity-avatar--info {
+  @apply bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300;
+}
+
+/* Conteúdo da Entidade */
+.entity-content {
+  @apply flex-1 min-w-0;
+}
+
+/* Título da Entidade */
+.entity-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white truncate;
+}
+
+.entity-title--small {
+  @apply text-lg;
+}
+
+.entity-title--large {
+  @apply text-2xl;
+}
+
+/* Metadados da Entidade */
+.entity-meta {
+  @apply flex flex-wrap items-center mt-1 text-sm text-gray-500 dark:text-gray-400;
+}
+
+.entity-meta-item {
+  @apply flex items-center mr-4;
+}
+
+.entity-meta-item:last-child {
+  @apply mr-0;
+}
+
+.entity-meta-icon {
+  @apply w-4 h-4 mr-1;
+}
+
+/* Ações da Entidade */
+.entity-actions {
+  @apply flex items-center space-x-3;
+}
+
+.entity-actions--compact {
+  @apply space-x-2;
+}
+
+.entity-actions--large {
+  @apply space-x-4;
+}
+
+/* Links de Entidade Relacionada */
+.related-entity-link {
+  @apply inline-flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 hover:underline;
+}
+
+.related-entity-link--compact {
+  @apply text-sm;
+}
+
+.related-entity-link--large {
+  @apply text-lg;
+}
+
+/* Ícone do Link de Entidade Relacionada */
+.related-entity-icon {
+  @apply w-4 h-4 mr-1;
+}
+
+/* Grid de Entidades Relacionadas */
+.related-entities-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6;
+}
+
+.related-entities-grid--compact {
+  @apply gap-3 mb-4;
+}
+
+.related-entities-grid--large {
+  @apply gap-6 mb-8;
+}
+
+/* Card de Entidade Relacionada */
+.related-entity-card {
+  @apply card p-4 hover:shadow-md transition-shadow duration-200;
+}
+
+.related-entity-card--compact {
+  @apply p-3;
+}
+
+.related-entity-card--large {
+  @apply p-6;
+}
+
+.related-entity-card--active {
+  @apply ring-2 ring-primary-500 border-primary-500;
+}
+
+/* Cabeçalho do Card de Entidade Relacionada */
+.related-entity-card-header {
+  @apply flex items-center justify-between;
+}
+
+/* Título do Card de Entidade Relacionada */
+.related-entity-card-title {
+  @apply font-medium text-gray-900 dark:text-white truncate;
+}
+
+.related-entity-card-title--small {
+  @apply text-sm;
+}
+
+.related-entity-card-title--large {
+  @apply text-lg;
+}
+
+/* Conteúdo do Card de Entidade Relacionada */
+.related-entity-card-content {
+  @apply mt-3;
+}
+
+/* Metadados do Card de Entidade Relacionada */
+.related-entity-card-meta {
+  @apply flex flex-wrap items-center text-xs text-gray-500 dark:text-gray-400 mt-2;
+}
+
+.related-entity-card-meta-item {
+  @apply flex items-center mr-3;
+}
+
+.related-entity-card-meta-item:last-child {
+  @apply mr-0;
+}
+
+.related-entity-card-meta-icon {
+  @apply w-3 h-3 mr-1;
+}
+
+/* Ações do Card de Entidade Relacionada */
+.related-entity-card-actions {
+  @apply flex items-center mt-3;
+}
+
+.related-entity-card-action {
+  @apply text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 hover:underline text-sm;
+}
+
+/* Navegação de Página */
+.page-nav {
+  @apply flex items-center justify-between py-4 border-t border-gray-200 dark:border-gray-700;
+}
+
+.page-nav--compact {
+  @apply py-3;
+}
+
+.page-nav--large {
+  @apply py-6;
+}
+
+/* Botões de Navegação */
+.page-nav-buttons {
+  @apply flex space-x-3;
+}
+
+.page-nav-button {
+  @apply inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700;
+}
+
+.page-nav-button--previous {
+  @apply pl-3;
+}
+
+.page-nav-button--next {
+  @apply pr-3;
+}
+
+.page-nav-button-icon {
+  @apply w-5 h-5;
+}
+
+.page-nav-button--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Informações de Paginação */
+.page-nav-info {
+  @apply text-sm text-gray-700 dark:text-gray-300;
+}
+
+.page-nav-info--compact {
+  @apply text-xs;
+}
+
+/* Links de Contexto */
+.context-links {
+  @apply flex flex-wrap gap-2 mb-6;
+}
+
+.context-links--vertical {
+  @apply flex-col gap-1;
+}
+
+.context-links--horizontal {
+  @apply flex-row;
+}
+
+.context-link {
+  @apply inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200;
+}
+
+.context-link--active {
+  @apply bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-900 dark:text-primary-200 dark:hover:bg-primary-800;
+}
+
+.context-link-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+/* Indicador de Caminho */
+.path-indicator {
+  @apply flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4;
+}
+
+.path-indicator--compact {
+  @apply text-xs mb-2;
+}
+
+.path-indicator--large {
+  @apply text-base mb-6;
+}
+
+.path-indicator-icon {
+  @apply w-4 h-4 mx-2;
+}
+
+.path-indicator-current {
+  @apply font-medium text-gray-900 dark:text-white;
+}
+
+/* Navegação Hierárquica */
+.hierarchical-nav {
+  @apply mb-6;
+}
+
+.hierarchical-nav--compact {
+  @apply mb-4;
+}
+
+.hierarchical-nav--large {
+  @apply mb-8;
+}
+
+.hierarchical-level {
+  @apply flex items-center mb-2;
+}
+
+.hierarchical-level--current {
+  @apply font-semibold text-gray-900 dark:text-white;
+}
+
+.hierarchical-level-icon {
+  @apply w-4 h-4 mr-2 text-gray-500 dark:text-gray-400;
+}
+
+.hierarchical-level-text {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.hierarchical-level-text--current {
+  @apply text-gray-900 dark:text-white;
+}
+
+/* Menu de Contexto */
+.context-menu {
+  @apply absolute z-50 w-48 py-2 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible transition-all duration-200 ease-in-out;
+}
+
+.context-menu--visible {
+  @apply opacity-100 visible;
+}
+
+.context-menu-item {
+  @apply flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer;
+}
+
+.context-menu-item--active {
+  @apply text-primary-600 bg-primary-50 dark:text-primary-400 dark:bg-primary-900/30;
+}
+
+.context-menu-item-icon {
+  @apply w-5 h-5 mr-3;
+}
+
+.context-menu-divider {
+  @apply h-px my-2 bg-gray-200 dark:bg-gray-700;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .sidebar-nav {
+    @apply w-16;
+  }
+  
+  .sidebar-text,
+  .sidebar-title,
+  .sidebar-submenu {
+    @apply hidden;
+  }
+  
+  .sidebar-item {
+    @apply justify-center px-2 py-3;
+  }
+  
+  .sidebar-icon {
+    @apply mr-0;
+  }
+  
+  .entity-nav {
+    @apply flex-col items-start;
+  }
+  
+  .entity-actions {
+    @apply mt-4 w-full justify-end;
+  }
+  
+  .breadcrumb {
+    @apply text-xs mb-4;
+  }
+  
+  .related-entities-grid {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+}
+
+@media (max-width: 768px) {
+  .contextual-nav {
+    @apply flex-col items-start;
+  }
+  
+  .contextual-nav-actions {
+    @apply mt-4 w-full justify-end;
+  }
+  
+  .entity-info {
+    @apply w-full;
+  }
+  
+  .entity-actions {
+    @apply mt-4;
+  }
+  
+  .breadcrumb-item {
+    @apply max-w-[120px] truncate;
+  }
+  
+  .related-entities-grid {
+    @apply grid-cols-1;
+  }
+  
+  .page-nav-buttons {
+    @apply w-full justify-between;
+  }
+  
+  .page-nav-info {
+    @apply hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .entity-nav {
+    @apply p-3;
+  }
+  
+  .entity-avatar {
+    @apply w-10 h-10 mr-3;
+  }
+  
+  .entity-title {
+    @apply text-lg;
+  }
+  
+  .entity-meta {
+    @apply text-xs;
+  }
+  
+  .contextual-tabs {
+    @apply overflow-x-auto;
+  }
+  
+  .contextual-tab {
+    @apply whitespace-nowrap px-3 py-2 text-xs;
+  }
+}

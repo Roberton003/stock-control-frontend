@@ -1,0 +1,523 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltips e Ajuda Contextual - StockLab</title>
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Exemplos de Tooltips e Ajuda Contextual</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Exemplo de Tooltips Básicos -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Tooltips Básicos</h2>
+                </div>
+                <div class="card-body">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Posicionamento</h3>
+                            <div class="flex flex-wrap gap-4">
+                                <button 
+                                    class="btn btn-primary"
+                                    data-tooltip="Tooltip na parte superior"
+                                    data-tooltip-position="top"
+                                >
+                                    Top
+                                </button>
+                                <button 
+                                    class="btn btn-primary"
+                                    data-tooltip="Tooltip na parte inferior"
+                                    data-tooltip-position="bottom"
+                                >
+                                    Bottom
+                                </button>
+                                <button 
+                                    class="btn btn-primary"
+                                    data-tooltip="Tooltip à esquerda"
+                                    data-tooltip-position="left"
+                                >
+                                    Left
+                                </button>
+                                <button 
+                                    class="btn btn-primary"
+                                    data-tooltip="Tooltip à direita"
+                                    data-tooltip-position="right"
+                                >
+                                    Right
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Temas</h3>
+                            <div class="flex flex-wrap gap-4">
+                                <button 
+                                    class="btn btn-secondary"
+                                    data-tooltip="Tooltip padrão"
+                                    data-tooltip-theme="default"
+                                >
+                                    Padrão
+                                </button>
+                                <button 
+                                    class="btn btn-info"
+                                    data-tooltip="Tooltip informativo"
+                                    data-tooltip-theme="info"
+                                >
+                                    Info
+                                </button>
+                                <button 
+                                    class="btn btn-success"
+                                    data-tooltip="Tooltip de sucesso"
+                                    data-tooltip-theme="success"
+                                >
+                                    Sucesso
+                                </button>
+                                <button 
+                                    class="btn btn-warning"
+                                    data-tooltip="Tooltip de aviso"
+                                    data-tooltip-theme="warning"
+                                >
+                                    Aviso
+                                </button>
+                                <button 
+                                    class="btn btn-danger"
+                                    data-tooltip="Tooltip de erro"
+                                    data-tooltip-theme="danger"
+                                >
+                                    Erro
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Triggers</h3>
+                            <div class="flex flex-wrap gap-4">
+                                <button 
+                                    class="btn btn-secondary"
+                                    data-tooltip="Tooltip ao passar o mouse"
+                                    data-tooltip-trigger="hover"
+                                >
+                                    Hover
+                                </button>
+                                <button 
+                                    class="btn btn-secondary"
+                                    data-tooltip="Tooltip ao clicar"
+                                    data-tooltip-trigger="click"
+                                >
+                                    Click
+                                </button>
+                                <button 
+                                    class="btn btn-secondary"
+                                    data-tooltip="Tooltip ao focar"
+                                    data-tooltip-trigger="focus"
+                                >
+                                    Focus
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Campos de Formulário</h3>
+                            <div class="space-y-4">
+                                <div class="form-group">
+                                    <label class="form-label">Nome do Reagente</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-input"
+                                        placeholder="Digite o nome do reagente"
+                                        data-tooltip="Insira o nome completo do reagente químico"
+                                        data-tooltip-position="top"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">SKU</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-input"
+                                        placeholder="Ex: HCL-001"
+                                        data-tooltip="Código único de identificação do reagente"
+                                        data-tooltip-position="top"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quantidade</label>
+                                    <div class="relative">
+                                        <input 
+                                            type="number" 
+                                            class="form-input pr-10"
+                                            placeholder="0.00"
+                                            data-tooltip="Quantidade em unidades do reagente"
+                                            data-tooltip-position="top"
+                                        >
+                                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">mL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Ajuda Contextual -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Ajuda Contextual</h2>
+                </div>
+                <div class="card-body">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Botões de Ajuda</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium">Política de Validade FEFO</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Primeiro que vence, primeiro a sair</p>
+                                    </div>
+                                    <button 
+                                        class="help-button"
+                                        data-help="Esta política garante que os produtos com menor validade sejam consumidos primeiro, minimizando desperdícios."
+                                        data-help-title="Política FEFO"
+                                        data-help-position="left"
+                                    >
+                                        ?
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium">Níveis de Estoque Mínimo</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Alertas automáticos para reposição</p>
+                                    </div>
+                                    <button 
+                                        class="help-button"
+                                        data-help="Defina quantidades mínimas para cada reagente. O sistema enviará notificações quando o estoque estiver abaixo deste nível."
+                                        data-help-title="Estoque Mínimo"
+                                        data-help-position="left"
+                                    >
+                                        ?
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div>
+                                        <h4 class="font-medium">Relatórios de Consumo</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Análise de uso por departamento</p>
+                                    </div>
+                                    <button 
+                                        class="help-button"
+                                        data-help="Visualize relatórios detalhados de consumo por período, departamento e usuário. Útil para planejamento orçamentário."
+                                        data-help-title="Relatórios de Consumo"
+                                        data-help-position="left"
+                                    >
+                                        ?
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Ajuda com Imagens</h3>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium">QR Code de Lote</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Identificação rápida de lotes</p>
+                                    </div>
+                                    <button 
+                                        class="help-button"
+                                        data-help="Escaneie o QR Code para acessar rapidamente as informações do lote. Útil para movimentações rápidas."
+                                        data-help-title="QR Code de Lote"
+                                        data-help-position="left"
+                                        data-help-image="{% static 'images/qr-code-example.png' %}"
+                                        data-help-image-caption="Exemplo de QR Code para lote"
+                                    >
+                                        ?
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Ajuda em Formulários</h3>
+                            <div class="space-y-4">
+                                <div class="form-group">
+                                    <div class="flex items-center justify-between">
+                                        <label class="form-label">Data de Validade</label>
+                                        <button 
+                                            class="help-button"
+                                            data-help="Insira a data de validade conforme informada na embalagem do reagente. O formato deve ser DD/MM/AAAA."
+                                            data-help-title="Data de Validade"
+                                            data-help-position="top"
+                                        >
+                                            ?
+                                        </button>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input"
+                                        placeholder="DD/MM/AAAA"
+                                    >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="flex items-center justify-between">
+                                        <label class="form-label">Condições de Armazenamento</label>
+                                        <button 
+                                            class="help-button"
+                                            data-help="Especifique as condições ideais de armazenamento para este reagente (temperatura, umidade, proteção luminosa, etc.)."
+                                            data-help-title="Armazenamento"
+                                            data-help-position="top"
+                                        >
+                                            ?
+                                        </button>
+                                    </div>
+                                    <textarea 
+                                        class="form-textarea"
+                                        rows="3"
+                                        placeholder="Ex: Armazenar em local fresco e seco, protegido da luz"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Tooltips Avançados -->
+            <div class="card lg:col-span-2">
+                <div class="card-header">
+                    <h2 class="card-title">Tooltips e Ajuda Avançados</h2>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Tooltips com Conteúdo Rico</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-medium">Status do Sistema</h4>
+                                        <button 
+                                            class="help-button"
+                                            data-help="<div class='tooltip-rich-content'><div class='tooltip-rich-header'>Status do Sistema</div><div class='tooltip-rich-body'><p><strong>Operacional</strong></p><p>Todos os serviços estão funcionando normalmente.</p><p class='mt-2'><strong>Última verificação:</strong> 15/09/2025 14:30</p></div><div class='tooltip-rich-footer'><span class='text-success-500'>●</span> Todos os sistemas online</div></div>"
+                                            data-help-title="Status do Sistema"
+                                            data-help-position="top"
+                                        >
+                                            ?
+                                        </button>
+                                    </div>
+                                    <div class="mt-2 flex items-center">
+                                        <span class="text-success-500 mr-2">●</span>
+                                        <span class="text-sm">Todos os serviços operacionais</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="font-medium">Alertas Ativos</h4>
+                                        <button 
+                                            class="help-button"
+                                            data-help="<div class='tooltip-rich-content'><div class='tooltip-rich-header'>Alertas Ativos</div><div class='tooltip-rich-body'><ul class='space-y-2'><li class='flex items-start'><span class='text-warning-500 mr-2'>⚠</span> <span>HCl-001: Validade em 30 dias</span></li><li class='flex items-start'><span class='text-danger-500 mr-2'>⚠</span> <span>NaOH-002: Estoque baixo (50 mL restantes)</span></li></ul></div><div class='tooltip-rich-footer text-center'><a href='#' class='text-primary-600 hover:underline'>Ver todos os alertas</a></div></div>"
+                                            data-help-title="Alertas Ativos"
+                                            data-help-position="top"
+                                        >
+                                            ?
+                                        </button>
+                                    </div>
+                                    <div class="mt-2 flex items-center">
+                                        <span class="text-warning-500 mr-2">⚠</span>
+                                        <span class="text-sm">2 alertas ativos</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Ajuda Laboratorial</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 mt-1">
+                                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <h4 class="font-medium">Guia de Classificação de Reagentes</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                                Aprenda a classificar reagentes químicos por periculosidade
+                                            </p>
+                                            <button 
+                                                class="mt-2 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                                                data-help="Os reagentes devem ser classificados em: Classe 1 (Altamente perigoso), Classe 2 (Perigoso), Classe 3 (Moderadamente perigoso), Classe 4 (Pouco perigoso). Esta classificação afeta as condições de armazenamento e manipulação."
+                                                data-help-title="Classificação de Reagentes"
+                                                data-help-position="top"
+                                            >
+                                                Saiba mais
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 mt-1">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <h4 class="font-medium">Certificado de Qualidade</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                                Verifique se o reagente possui CoA (Certificate of Analysis)
+                                            </p>
+                                            <button 
+                                                class="mt-2 text-sm text-green-600 hover:underline dark:text-green-400"
+                                                data-help="O Certificate of Analysis (CoA) é um documento fornecido pelo fabricante que atesta a pureza e qualidade do reagente. Sempre verifique a presença do CoA antes de utilizar o reagente em análises críticas."
+                                                data-help-title="Certificate of Analysis"
+                                                data-help-position="top"
+                                            >
+                                                Mais informações
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold mb-4">Exemplo Prático: Formulário de Reagente</h3>
+                        <div class="card p-6">
+                            <form class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">Nome do Reagente *</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Nome comercial ou químico completo do reagente. Evite abreviações."
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-input" placeholder="Ex: Ácido Clorídrico Concentrado">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">SKU *</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Código único de identificação do reagente no sistema. Formato: XXX-XXX"
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-input" placeholder="Ex: HCL-001">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">Categoria</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Classifique o reagente de acordo com sua natureza química (ácidos, bases, sais, solventes, etc.)"
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <select class="form-select">
+                                            <option>Selecione uma categoria</option>
+                                            <option>Ácidos</option>
+                                            <option>Bases</option>
+                                            <option>Sais</option>
+                                            <option>Solventes</option>
+                                            <option>Indicadores</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">Fornecedor</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Empresa fornecedora do reagente. Certifique-se de que está cadastrada no sistema."
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <select class="form-select">
+                                            <option>Selecione um fornecedor</option>
+                                            <option>Química Analítica Ltda</option>
+                                            <option>Laboratório Merck</option>
+                                            <option>Reagentes Sigma-Aldrich</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">Nível Mínimo de Estoque</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Quantidade mínima recomendada em estoque. O sistema gerará alertas quando o estoque estiver abaixo deste valor."
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <div class="relative">
+                                            <input type="number" class="form-input pr-12" placeholder="0">
+                                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">mL</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="flex items-center justify-between">
+                                            <label class="form-label">Condições de Armazenamento</label>
+                                            <button 
+                                                class="help-button"
+                                                data-help="Condições ideais de armazenamento (temperatura, proteção luminosa, atmosfera, etc.)"
+                                                data-help-position="top"
+                                            >
+                                                ?
+                                            </button>
+                                        </div>
+                                        <textarea class="form-textarea" rows="2" placeholder="Ex: Temperatura ambiente, protegido da luz"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end space-x-3">
+                                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar Reagente</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    <script>
+        // Inicializar tooltips e ajuda quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Os elementos já são inicializados automaticamente pelo TooltipManager
+            // Mas podemos adicionar inicialização manual se necessário
+        });
+    </script>
+</body>
+</html>

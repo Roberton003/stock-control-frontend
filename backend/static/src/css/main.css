@@ -1,0 +1,33 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Paleta de Cores Personalizada */
+@import './colors.css';
+
+/* Tipografia */
+@import './typography.css';
+
+/* Animações */
+@import './animations.css';
+
+/* Componentes */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/tables.css';
+@import './components/forms.css';
+@import './components/enhanced-forms.css';
+@import './components/badges-alerts.css';
+@import './components/loading-states.css';
+@import './components/dashboard.css';
+@import './components/tabs-accordion.css';
+@import './components/intuitive-forms.css';
+@import './components/autocomplete.css';
+@import './components/styleguide.css';
+@import './components/theme-toggle.css';
+
+/* Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap');
+
+

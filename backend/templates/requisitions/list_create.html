@@ -1,0 +1,191 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Gestão de Requisições{% endblock %}
+
+{% block content %}
+<div 
+    class="container mx-auto p-4 md:p-8"
+    x-data="requisitionManager()"
+    x-init="init()"
+>
+    <h1 class="text-3xl font-bold mb-6 text-text-heading">Gestão de Requisições</h1>
+
+    <!-- Feedback Messages -->
+    <div x-show="feedback.message" 
+         :class="{ 'alert alert-success': feedback.type === 'success', 'alert alert-danger': feedback.type === 'error' }"
+         role="alert">
+        <span x-text="feedback.message"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Requisition List -->
+        <div class="lg:col-span-2 card">
+            <h2 class="dashboard-widget-title">Requisições</h2>
+            <div x-show="isLoading" class="text-center p-4 text-text-muted">Carregando...</div>
+            <div x-show="!isLoading && requisitions.length === 0" class="text-center p-4 text-text-muted">Nenhuma requisição encontrada.</div>
+            
+            <div x-show="!isLoading && requisitions.length > 0" class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Reagente</th>
+                            <th>Qtd.</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="req in requisitions" :key="req.id">
+                            <tr>
+                                <td x-text="req.reagent_name"></td>
+                                <td x-text="req.quantity"></td>
+                                <td>
+                                    <span class="badge"
+                                          :class="{
+                                            'badge-status-pending': req.status === 'Pendente',
+                                            'badge-status-approved': req.status === 'Aprovada',
+                                            'badge-status-rejected': req.status === 'Rejeitada',
+                                          }"
+                                          x-text="req.status">
+                                    </span>
+                                </td>
+                                <td>
+                                    <template x-if="req.status === 'Pendente'">
+                                        <div class="flex items-center space-x-2">
+                                            <button @click="processRequisition(req.id, 'approve')" class="btn btn-sm btn-primary">Aprovar</button>
+                                            <button @click="processRequisition(req.id, 'reject')" class="btn btn-sm btn-secondary">Rejeitar</button>
+                                        </div>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Create Requisition Form -->
+        <div class="lg:col-span-1 card">
+            <h2 class="dashboard-widget-title">Nova Requisição</h2>
+            <form @submit.prevent="saveRequisition" class="space-y-4">
+                <div>
+                    <label for="reagent" class="form-label">Reagente</label>
+                    <select id="reagent" x-model="newRequisition.reagent" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        <template x-for="reagent in reagents" :key="reagent.id">
+                            <option :value="reagent.id" x-text="reagent.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="quantity" class="form-label">Quantidade</label>
+                    <input type="number" step="0.01" id="quantity" x-model="newRequisition.quantity" class="form-input" required>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="btn btn-primary w-full">
+                        <span x-show="!isSaving">Criar Requisição</span>
+                        <span x-show="isSaving">Enviando...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function requisitionManager() {
+    return {
+        requisitions: [],
+        reagents: [],
+        newRequisition: { reagent: '', quantity: 1, requester: {{ request.user.pk }} },
+        isLoading: true,
+        isSaving: false,
+        feedback: { message: '', type: '' },
+
+        async init() {
+            this.isLoading = true;
+            await Promise.all([this.fetchRequisitions(), this.fetchReagents()]);
+            this.isLoading = false;
+        },
+
+        async fetchRequisitions() {
+            try {
+                const response = await fetch("{% url 'requisition-list-create' %}");
+                const data = await response.json();
+                // Fetch reagent names for display
+                for (let req of data) {
+                    const reagent = this.reagents.find(r => r.id === req.reagent);
+                    req.reagent_name = reagent ? reagent.name : 'Desconhecido';
+                }
+                this.requisitions = data;
+            } catch (error) {
+                this.showFeedback('Falha ao carregar requisições.', 'error');
+            }
+        },
+
+        async fetchReagents() {
+            try {
+                const response = await fetch("{% url 'reagent-list-create' %}");
+                this.reagents = await response.json();
+            } catch (error) {
+                this.showFeedback('Falha ao carregar reagentes.', 'error');
+            }
+        },
+
+        async saveRequisition() {
+            this.isSaving = true;
+            try {
+                const response = await fetch("{% url 'requisition-list-create' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(this.newRequisition),
+                });
+                if (!response.ok) throw new Error('Falha na requisição');
+                this.showFeedback('Requisição criada com sucesso!', 'success');
+                this.resetForm();
+                await this.fetchRequisitions();
+            } catch (error) {
+                this.showFeedback('Erro ao criar requisição.', 'error');
+            } finally {
+                this.isSaving = false;
+            }
+        },
+
+        async processRequisition(id, action) {
+            try {
+                const response = await fetch(`/api/v1/requisitions/${id}/action/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ action: action }),
+                });
+                if (!response.ok) throw new Error(`Falha ao ${action} a requisição`);
+                this.showFeedback(`Requisição foi ${action === 'approve' ? 'aprovada' : 'rejeitada'}!`, 'success');
+                await this.fetchRequisitions();
+            } catch (error) {
+                this.showFeedback(error.message, 'error');
+            }
+        },
+
+        resetForm() {
+            this.newRequisition.reagent = '';
+            this.newRequisition.quantity = 1;
+        },
+
+        showFeedback(message, type) {
+            this.feedback = { message, type };
+            setTimeout(() => { this.feedback.message = ''; }, 5000);
+        }
+    }
+}
+</script>
+{% endblock %}

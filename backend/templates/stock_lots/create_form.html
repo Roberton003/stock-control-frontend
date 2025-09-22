@@ -1,0 +1,148 @@
+{% load static %}
+
+<div 
+    class="card"
+    x-data="stockLotManager()"
+    x-init="init()"
+>
+    <div class="p-6">
+        <h2 class="text-xl font-semibold mb-4">Adicionar Novo Lote (Entrada de Estoque)</h2>
+
+        <!-- Feedback Messages -->
+        <div x-show="successMessage" class="alert alert-success" role="alert">
+            <span x-text="successMessage"></span>
+        </div>
+        <div x-show="errorMessage" class="alert alert-danger" role="alert">
+            <span x-text="errorMessage"></span>
+        </div>
+
+        <form @submit.prevent="saveLot">
+            <div class="space-y-4">
+                <div>
+                    <label for="reagent" class="form-label">Reagente</label>
+                    <select id="reagent" x-model="newLot.reagent" class="form-input" required>
+                        <option value="">Selecione um reagente...</option>
+                        <template x-for="reagent in reagents" :key="reagent.id">
+                            <option :value="reagent.id" x-text="reagent.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="lot_number" class="form-label">Número do Lote</label>
+                    <input type="text" id="lot_number" x-model="newLot.lot_number" class="form-input" required>
+                </div>
+                <div>
+                    <label for="location" class="form-label">Localização</label>
+                    <select id="location" x-model="newLot.location" class="form-input" required>
+                        <option value="">Selecione um local...</option>
+                        <template x-for="location in locations" :key="location.id">
+                            <option :value="location.id" x-text="location.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="expiry_date" class="form-label">Data de Validade</label>
+                    <input type="date" id="expiry_date" x-model="newLot.expiry_date" class="form-input" required>
+                </div>
+                <div>
+                    <label for="purchase_price" class="form-label">Preço de Compra</label>
+                    <input type="number" step="0.01" id="purchase_price" x-model="newLot.purchase_price" class="form-input" required>
+                </div>
+                <div>
+                    <label for="initial_quantity" class="form-label">Quantidade</label>
+                    <input type="number" step="0.01" id="initial_quantity" x-model="newLot.initial_quantity" class="form-input" required>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button type="submit" class="btn btn-primary w-full">
+                    <span x-show="!isSaving">Adicionar Lote</span>
+                    <span x-show="isSaving">Salvando...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function stockLotManager() {
+        return {
+            reagents: [],
+            locations: [],
+            newLot: {
+                reagent: '',
+                lot_number: '',
+                location: '',
+                expiry_date: '',
+                purchase_price: 0,
+                initial_quantity: 0,
+                current_quantity: 0, // Será igual a initial_quantity
+            },
+            isSaving: false,
+            successMessage: '',
+            errorMessage: '',
+
+            async init() {
+                await Promise.all([this.fetchReagents(), this.fetchLocations()]);
+            },
+
+            async fetchReagents() {
+                try {
+                    const response = await fetch("{% url 'reagent-list-create' %}");
+                    this.reagents = await response.json();
+                } catch (error) {
+                    this.errorMessage = 'Falha ao carregar reagentes.';
+                    console.error(error);
+                }
+            },
+
+            async fetchLocations() {
+                try {
+                    const response = await fetch("{% url 'location-list-create' %}");
+                    this.locations = await response.json();
+                } catch (error) {
+                    this.errorMessage = 'Falha ao carregar localizações.';
+                    console.error(error);
+                }
+            },
+
+            async saveLot() {
+                this.isSaving = true;
+                this.successMessage = '';
+                this.errorMessage = '';
+                this.newLot.current_quantity = this.newLot.initial_quantity;
+
+                try {
+                    const response = await fetch("{% url 'stocklot-list-create' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: JSON.stringify(this.newLot),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(JSON.stringify(errorData));
+                    }
+
+                    this.successMessage = 'Lote adicionado com sucesso!';
+                    this.resetForm();
+                    // Disparar um evento para que outras partes da UI possam reagir
+                    document.body.dispatchEvent(new CustomEvent('newStockLot', { detail: await response.json() }));
+
+                } catch (error) {
+                    this.errorMessage = 'Erro ao salvar o lote. Verifique os campos.';
+                    console.error('Save error:', error);
+                } finally {
+                    this.isSaving = false;
+                    setTimeout(() => { this.successMessage = ''; this.errorMessage = ''; }, 5000);
+                }
+            },
+
+            resetForm() {
+                this.newLot = { reagent: '', lot_number: '', location: '', expiry_date: '', purchase_price: 0, initial_quantity: 0, current_quantity: 0 };
+            }
+        }
+    }
+</script>

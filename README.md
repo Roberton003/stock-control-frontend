@@ -1,12 +1,6 @@
-# Stock Control Lab - Frontend
+# Stock Control Lab
 
-Sistema de controle de estoque para laboratórios químicos, desenvolvido para gerenciar eficientemente produtos químicos e reagentes com foco em:
-
-- Controle de validade de produtos
-- Gestão de quantidades mínimas em estoque
-- Monitoramento de movimentações
-- Controle de requisições de materiais
-- Relatórios e dashboards
+Sistema de controle de estoque para laboratórios químicos, desenvolvido como monorepo com frontend e backend integrados.
 
 ## Funcionalidades Principais
 
@@ -51,16 +45,16 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido para g
 - Axios para requisições HTTP
 
 ### Backend
-- Django REST Framework
+- Django 5.2+ com Django REST Framework
 - PostgreSQL como banco de dados
 - Docker para containerização
 - Django Celery para tarefas assíncronas
+- Redis para cache e mensagens
 
 ### Infraestrutura
 - GitHub Actions para CI/CD
 - Docker Compose para orquestração
 - Nginx como proxy reverso
-- Redis para cache
 
 ## Arquitetura do Sistema
 
@@ -77,47 +71,32 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido para g
                      └────────────────────┘
 ```
 
-## Estrutura do Projeto
+## Estrutura do Projeto (Monorepo)
 
-### Frontend
 ```
-src/
-├── assets/              # Imagens, fonts, ícones
-├── components/          # Componentes reutilizáveis
-│   ├── layout/         # Header, Sidebar, Footer
-│   ├── ui/             # Botões, cards, inputs, tabelas
-│   └── dashboard/      # Componentes específicos do dashboard
-├── views/              # Telas principais da aplicação
-│   ├── Dashboard/
-│   ├── Reagents/
-│   ├── StockLots/
-│   ├── StockMovements/
-│   ├── Requisitions/
-│   ├── Reports/
-│   └── advanced/       # Funcionalidades avançadas
-├── services/           # Integração com a API
-├── stores/             # Gerenciamento de estado (Pinia)
-├── router/             # Configuração de rotas
-├── utils/              # Funções auxiliares
-└── styles/             # Estilos globais e temas
-```
-
-### Backend
-```
-stock_control_lab/
-├── config/              # Configurações do projeto
-├── reagents/            # App de reagentes
-├── stock_lots/          # App de lotes de estoque
-├── stock_movements/     # App de movimentações
-├── requisitions/        # App de requisições
-├── suppliers/           # App de fornecedores
-├── categories/          # App de categorias
-├── locations/           # App de localizações
-├── reports/             # App de relatórios
-├── dashboard/           # App do dashboard
-├── accounts/            # App de autenticação
-├── static/              # Arquivos estáticos
-└── templates/           # Templates HTML
+stock-control-lab/
+├── backend/             # Código do backend Django
+│   ├── config/          # Configurações do projeto
+│   ├── inventory/       # App principal com modelos e APIs
+│   ├── templates/       # Templates HTML
+│   ├── static/          # Arquivos estáticos
+│   ├── manage.py        # Script de gerenciamento do Django
+│   ├── requirements.txt # Dependências do backend
+│   └── README.md        # Documentação do backend
+├── src/                 # Código do frontend Vue.js
+│   ├── assets/          # Imagens, fonts, ícones
+│   ├── components/      # Componentes reutilizáveis
+│   ├── views/           # Telas principais da aplicação
+│   ├── services/        # Integração com a API
+│   ├── stores/          # Gerenciamento de estado (Pinia)
+│   ├── router/          # Configuração de rotas
+│   ├── utils/           # Funções auxiliares
+│   └── styles/          # Estilos globais e temas
+├── public/              # Arquivos públicos do frontend
+├── tests/               # Testes end-to-end
+├── docker-compose.yml   # Configuração do Docker Compose
+├── README.md            # Este arquivo (documentação geral)
+└── LICENSE              # Licença do projeto
 ```
 
 ## Desenvolvimento
@@ -130,7 +109,6 @@ stock_control_lab/
 
 ### Configuração do Frontend
 ```bash
-cd frontend
 npm install
 npm run dev
 ```

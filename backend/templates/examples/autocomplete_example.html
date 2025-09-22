@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete e Seletores Inteligentes - StockLab</title>
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Exemplos de Autocomplete e Seletores Inteligentes</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Exemplo de Autocomplete Simples -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Autocomplete Simples</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="simple-autocomplete" class="form-label">Buscar Reagente</label>
+                        <div class="autocomplete-container" data-autocomplete id="simple-autocomplete-container">
+                            <input 
+                                type="text" 
+                                id="simple-autocomplete" 
+                                class="autocomplete-input form-field" 
+                                placeholder="Digite o nome do reagente..."
+                                data-min-length="2"
+                                data-max-results="10"
+                                data-debounce-time="300"
+                            >
+                            <div class="autocomplete-icon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Autocomplete com Múltiplas Seleções -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Autocomplete com Múltiplas Seleções</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="multi-autocomplete" class="form-label">Selecionar Fornecedores</label>
+                        <div class="autocomplete-container" data-autocomplete id="multi-autocomplete-container">
+                            <input 
+                                type="text" 
+                                id="multi-autocomplete" 
+                                class="autocomplete-input form-field" 
+                                placeholder="Selecione múltiplos fornecedores..."
+                                data-min-length="1"
+                                data-max-results="15"
+                                data-debounce-time="200"
+                                data-multiple="true"
+                                data-allow-custom="true"
+                            >
+                            <div class="autocomplete-icon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Seletor Inteligente -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Seletor Inteligente</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="smart-selector" class="form-label">Categoria de Reagente</label>
+                        <div class="smart-selector" data-smart-selector id="smart-selector-container">
+                            <input 
+                                type="text" 
+                                id="smart-selector" 
+                                class="smart-selector-input form-field" 
+                                placeholder="Selecione uma categoria..."
+                                data-min-length="1"
+                                data-max-results="8"
+                                data-debounce-time="250"
+                                data-group-by="category"
+                                data-sort-by="label"
+                            >
+                            <div class="smart-selector-icon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Seletor com Agrupamento -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Seletor com Agrupamento</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="grouped-selector" class="form-label">Localização do Lote</label>
+                        <div class="smart-selector" data-smart-selector id="grouped-selector-container">
+                            <input 
+                                type="text" 
+                                id="grouped-selector" 
+                                class="smart-selector-input form-field" 
+                                placeholder="Selecione uma localização..."
+                                data-min-length="1"
+                                data-max-results="12"
+                                data-debounce-time="200"
+                                data-group-by="area"
+                                data-sort-by="label"
+                                data-allow-custom="true"
+                            >
+                            <div class="smart-selector-icon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Autocomplete com Dados Personalizados -->
+            <div class="card lg:col-span-2">
+                <div class="card-header">
+                    <h2 class="card-title">Autocomplete com Dados Personalizados</h2>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="custom-data-autocomplete" class="form-label">Unidade de Medida</label>
+                            <div class="autocomplete-container" data-autocomplete id="custom-data-autocomplete-container">
+                                <input 
+                                    type="text" 
+                                    id="custom-data-autocomplete" 
+                                    class="autocomplete-input form-field" 
+                                    placeholder="Selecione uma unidade..."
+                                    data-min-length="1"
+                                    data-max-results="10"
+                                    data-debounce-time="150"
+                                    data-source="custom"
+                                    data-custom-data="[{'value': 'ml', 'label': 'mL - Mililitro'}, {'value': 'l', 'label': 'L - Litro'}, {'value': 'mg', 'label': 'mg - Miligrama'}, {'value': 'g', 'label': 'g - Grama'}, {'value': 'kg', 'label': 'kg - Quilograma'}]"
+                                >
+                                <div class="autocomplete-icon">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="custom-data-selector" class="form-label">Tipo de Movimentação</label>
+                            <div class="smart-selector" data-smart-selector id="custom-data-selector-container">
+                                <input 
+                                    type="text" 
+                                    id="custom-data-selector" 
+                                    class="smart-selector-input form-field" 
+                                    placeholder="Selecione um tipo..."
+                                    data-min-length="1"
+                                    data-max-results="8"
+                                    data-debounce-time="150"
+                                    data-source="custom"
+                                    data-custom-data="[{'value': 'entrada', 'label': 'Entrada', 'icon': '📥'}, {'value': 'saida', 'label': 'Saída', 'icon': '📤'}, {'value': 'ajuste', 'label': 'Ajuste', 'icon': '⚖️'}, {'value': 'descarte', 'label': 'Descarte', 'icon': '🗑️'}]"
+                                >
+                                <div class="smart-selector-icon">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    <script>
+        // Inicializar autocompletes e seletores quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Os elementos já são inicializados automaticamente pelo AutocompleteManager
+            // Mas podemos adicionar inicialização manual se necessário
+            
+            // Adicionar dados de exemplo para demonstração
+            window.mockReagentData = [
+                { value: 'hcl', label: 'Ácido Clorídrico Concentrado', sku: 'HCL-001', category: 'Ácidos' },
+                { value: 'naoh', label: 'Hidróxido de Sódio', sku: 'NAOH-001', category: 'Bases' },
+                { value: 'h2so4', label: 'Ácido Sulfúrico', sku: 'H2SO4-001', category: 'Ácidos' },
+                { value: 'etoh', label: 'Etanol 95%', sku: 'ETOH-001', category: 'Solventes' },
+                { value: 'nacl', label: 'Cloreto de Sódio', sku: 'NACL-001', category: 'Sais' },
+                { value: 'kcl', label: 'Cloreto de Potássio', sku: 'KCL-001', category: 'Sais' },
+                { value: 'hno3', label: 'Ácido Nítrico', sku: 'HNO3-001', category: 'Ácidos' },
+                { value: 'kmno4', label: 'Permanganato de Potássio', sku: 'KMNO4-001', category: 'Oxidantes' },
+                { value: 'phenolphthalein', label: 'Fenolftaleína', sku: 'PHENOL-001', category: 'Indicadores' },
+                { value: 'methyl-orange', label: 'Laranja de Metila', sku: 'METHYL-001', category: 'Indicadores' }
+            ];
+            
+            window.mockSupplierData = [
+                { value: 'quimica-analitica', label: 'Química Analítica Ltda', contact: 'contato@quimicaanalitica.com.br' },
+                { value: 'laboratorio-merck', label: 'Laboratório Merck', contact: 'suporte@merck.com.br' },
+                { value: 'sigma-aldrich', label: 'Sigma-Aldrich', contact: 'support@sial.com' },
+                { value: 'vetec', label: 'Vetec', contact: 'vendas@vetec.com.br' },
+                { value: 'synth', label: 'Synth', contact: 'orcamento@synth.com.br' },
+                { value: 'neon', label: 'Neon', contact: 'comercial@neon.com.br' }
+            ];
+            
+            window.mockCategoryData = [
+                { value: 'acids', label: 'Ácidos', category: 'Reagentes' },
+                { value: 'bases', label: 'Bases', category: 'Reagentes' },
+                { value: 'salts', label: 'Sais', category: 'Reagentes' },
+                { value: 'solvents', label: 'Solventes', category: 'Reagentes' },
+                { value: 'indicators', label: 'Indicadores', category: 'Reagentes' },
+                { value: 'oxidants', label: 'Oxidantes', category: 'Reagentes' },
+                { value: 'reducers', label: 'Redutores', category: 'Reagentes' },
+                { value: 'buffers', label: 'Buffers', category: 'Soluções' },
+                { value: 'standards', label: 'Padrões', category: 'Soluções' }
+            ];
+            
+            window.mockLocationData = [
+                { value: 'shelf-a1', label: 'Prateleira A-1', area: 'Área de Ácidos' },
+                { value: 'shelf-a2', label: 'Prateleira A-2', area: 'Área de Ácidos' },
+                { value: 'shelf-b1', label: 'Prateleira B-1', area: 'Área de Bases' },
+                { value: 'shelf-b2', label: 'Prateleira B-2', area: 'Área de Bases' },
+                { value: 'shelf-s1', label: 'Prateleira S-1', area: 'Área de Sais' },
+                { value: 'shelf-s2', label: 'Prateleira S-2', area: 'Área de Sais' },
+                { value: 'cabinet-1', label: 'Armário 1', area: 'Área de Solventes' },
+                { value: 'cabinet-2', label: 'Armário 2', area: 'Área de Solventes' },
+                { value: 'refrigerator-1', label: 'Geladeira 1', area: 'Área Refrigerada' },
+                { value: 'refrigerator-2', label: 'Geladeira 2', area: 'Área Refrigerada' },
+                { value: 'freezer-1', label: 'Freezer 1', area: 'Área Congelada' }
+            ];
+            
+            // Simular carregamento de dados para os autocompletes
+            setTimeout(() => {
+                // Adicionar dados aos autocompletes e seletores
+                const simpleAutocomplete = document.getElementById('simple-autocomplete');
+                if (simpleAutocomplete) {
+                    simpleAutocomplete.setAttribute('data-source', 'custom');
+                    simpleAutocomplete.setAttribute('data-custom-data', JSON.stringify(window.mockReagentData));
+                }
+                
+                const multiAutocomplete = document.getElementById('multi-autocomplete');
+                if (multiAutocomplete) {
+                    multiAutocomplete.setAttribute('data-source', 'custom');
+                    multiAutocomplete.setAttribute('data-custom-data', JSON.stringify(window.mockSupplierData));
+                }
+                
+                const smartSelector = document.getElementById('smart-selector');
+                if (smartSelector) {
+                    smartSelector.setAttribute('data-source', 'custom');
+                    smartSelector.setAttribute('data-custom-data', JSON.stringify(window.mockCategoryData));
+                }
+                
+                const groupedSelector = document.getElementById('grouped-selector');
+                if (groupedSelector) {
+                    groupedSelector.setAttribute('data-source', 'custom');
+                    groupedSelector.setAttribute('data-custom-data', JSON.stringify(window.mockLocationData));
+                }
+                
+                // Reinicializar os componentes com os novos dados
+                if (window.autocompleteManager) {
+                    window.autocompleteManager.init();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

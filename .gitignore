@@ -13,3 +13,28 @@ dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/Pipfile.lock
+backend/.coverage
+backend/.pytest_cache/
+backend/.tox/
+backend/.eggs/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+
+# Django
+backend/db.sqlite3
+backend/db.sqlite3-journal
+backend/media/
+backend/staticfiles/
+backend/logs/
+
+# Docker
+.dockerignore

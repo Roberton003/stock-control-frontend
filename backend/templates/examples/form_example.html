@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Exemplo - StockLab</title>
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Formulário de Exemplo com Validação em Tempo Real</h1>
+        
+        <div class="max-w-2xl mx-auto">
+            <form id="example-form" data-validate="true" class="card p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Campo de Nome -->
+                    <div class="form-group-enhanced">
+                        <label for="name" class="form-label-enhanced form-label-enhanced--required">Nome Completo</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            required 
+                            minlength="3" 
+                            maxlength="100"
+                            class="form-input-enhanced"
+                            placeholder="Digite seu nome completo">
+                    </div>
+                    
+                    <!-- Campo de Email -->
+                    <div class="form-group-enhanced">
+                        <label for="email" class="form-label-enhanced form-label-enhanced--required">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            data-validate-email="true"
+                            class="form-input-enhanced"
+                            placeholder="seu@email.com">
+                    </div>
+                    
+                    <!-- Campo de SKU -->
+                    <div class="form-group-enhanced">
+                        <label for="sku" class="form-label-enhanced form-label-enhanced--required">SKU do Reagente</label>
+                        <input 
+                            type="text" 
+                            id="sku" 
+                            name="sku" 
+                            required 
+                            data-validate-sku="true"
+                            class="form-input-enhanced form-lab-id-enhanced"
+                            placeholder="EXEMPLO-001">
+                    </div>
+                    
+                    <!-- Campo de Quantidade -->
+                    <div class="form-group-enhanced">
+                        <label for="quantity" class="form-label-enhanced form-label-enhanced--required">Quantidade</label>
+                        <input 
+                            type="number" 
+                            id="quantity" 
+                            name="quantity" 
+                            required 
+                            min="0.01" 
+                            step="0.01"
+                            data-validate-quantity="true"
+                            class="form-input-enhanced form-lab-quantity-enhanced"
+                            placeholder="0.00">
+                    </div>
+                    
+                    <!-- Campo de Data de Validade -->
+                    <div class="form-group-enhanced">
+                        <label for="expiry_date" class="form-label-enhanced form-label-enhanced--required">Data de Validade</label>
+                        <input 
+                            type="text" 
+                            id="expiry_date" 
+                            name="expiry_date" 
+                            required 
+                            data-validate-date="true"
+                            class="form-input-enhanced form-lab-date-enhanced"
+                            placeholder="DD/MM/AAAA">
+                    </div>
+                    
+                    <!-- Campo de Categoria -->
+                    <div class="form-group-enhanced">
+                        <label for="category" class="form-label-enhanced form-label-enhanced--required">Categoria</label>
+                        <select id="category" name="category" required class="form-select-enhanced">
+                            <option value="">Selecione uma categoria</option>
+                            <option value="ácidos">Ácidos</option>
+                            <option value="bases">Bases</option>
+                            <option value="sais">Sais</option>
+                            <option value="solventes">Solventes</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Campo de Descrição -->
+                    <div class="form-group-enhanced md:col-span-2">
+                        <label for="description" class="form-label-enhanced">Descrição</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="4" 
+                            maxlength="500"
+                            class="form-textarea-enhanced"
+                            placeholder="Descrição detalhada do reagente..."></textarea>
+                        <div class="form-input-counter">
+                            <span class="form-input-counter-text" id="description-counter">0/500</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Campo de Termos -->
+                    <div class="form-group-enhanced md:col-span-2">
+                        <div class="form-checkbox-enhanced-container">
+                            <input 
+                                type="checkbox" 
+                                id="terms" 
+                                name="terms" 
+                                required
+                                class="form-checkbox-enhanced">
+                            <label for="terms" class="form-checkbox-enhanced-label">
+                                Concordo com os termos e condições de uso
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ações do Formulário -->
+                <div class="form-actions mt-8 flex justify-end space-x-4">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Reagente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    <script>
+        // Atualizar contador de caracteres
+        document.getElementById('description').addEventListener('input', function() {
+            const length = this.value.length;
+            const counter = document.getElementById('description-counter');
+            counter.textContent = `${length}/500`;
+            
+            if (length > 450) {
+                counter.classList.add('form-input-counter--warning');
+            } else if (length > 490) {
+                counter.classList.add('form-input-counter--error');
+            } else {
+                counter.classList.remove('form-input-counter--warning', 'form-input-counter--error');
+            }
+        });
+        
+        // Validar formulário antes do envio
+        document.getElementById('example-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simular envio após validação bem-sucedida
+            setTimeout(() => {
+                alert('Formulário enviado com sucesso!');
+                this.reset();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

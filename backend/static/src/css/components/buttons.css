@@ -1,0 +1,33 @@
+@layer components {
+  .btn {
+    @apply inline-block px-4 py-2 font-semibold text-center transition-colors duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  .btn-primary {
+    @apply bg-primary-blue text-white focus:ring-primary-blue;
+  }
+
+  .btn-primary:hover {
+    @apply bg-blue-700; /* Assuming a darker shade of primary-blue */
+  }
+
+  .btn-secondary {
+    @apply bg-card-background text-text-base border border-border-color focus:ring-gray-500;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-gray-700; /* A common hover state for dark-themed secondary buttons */
+  }
+
+  .btn-danger {
+    @apply bg-accent-red text-white focus:ring-accent-red;
+  }
+
+  .btn-danger:hover {
+    @apply bg-red-700;
+  }
+
+  .btn-sm {
+    @apply px-2 py-1 text-xs rounded-md;
+  }
+}

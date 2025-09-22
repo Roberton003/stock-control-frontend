@@ -1,0 +1,329 @@
+/*
+ * Componentes de Formulários Aprimorados para Laboratório
+ * Formulários com validação em tempo real e feedback visual
+ */
+
+/* Grupo de formulário aprimorado */
+.form-group-enhanced {
+  @apply mb-6 relative;
+}
+
+.form-group-enhanced--horizontal {
+  @apply flex items-start space-x-4;
+}
+
+.form-group-enhanced--inline {
+  @apply inline-block mr-6;
+}
+
+/* Label de formulário aprimorada */
+.form-label-enhanced {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+}
+
+.form-label-enhanced--required::after {
+  @apply content-['*'] text-danger-500 ml-1;
+}
+
+.form-label-enhanced--floating {
+  @apply absolute top-3 left-3 text-gray-500 transition-all duration-200 pointer-events-none;
+}
+
+.form-label-enhanced--floating-focus {
+  @apply text-primary-500 -top-2 left-3 text-xs;
+}
+
+/* Input de formulário aprimorado */
+.form-input-enhanced {
+  @apply block w-full rounded-lg border-gray-300 shadow-sm;
+  @apply focus:border-primary-500 focus:ring-primary-500 focus:ring-2 focus:ring-opacity-20;
+  @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-500;
+  @apply disabled:bg-gray-100 disabled:cursor-not-allowed;
+  @apply px-4 py-3 text-base transition-all duration-200;
+  @apply border-2;
+}
+
+.form-input-enhanced--large {
+  @apply px-5 py-4 text-lg;
+}
+
+.form-input-enhanced--small {
+  @apply px-3 py-2 text-sm;
+}
+
+.form-input-enhanced--error {
+  @apply border-danger-500 focus:ring-danger-500 focus:border-danger-500 bg-danger-50/50 dark:bg-danger-900/20;
+}
+
+.form-input-enhanced--success {
+  @apply border-success-500 focus:ring-success-500 focus:border-success-500 bg-success-50/50 dark:bg-success-900/20;
+}
+
+.form-input-enhanced--warning {
+  @apply border-warning-500 focus:ring-warning-500 focus:border-warning-500 bg-warning-50/50 dark:bg-warning-900/20;
+}
+
+/* Textarea aprimorada */
+.form-textarea-enhanced {
+  @apply form-input-enhanced min-h-[120px];
+}
+
+.form-textarea-enhanced--large {
+  @apply min-h-[180px];
+}
+
+/* Select aprimorado */
+.form-select-enhanced {
+  @apply form-input-enhanced pr-12 bg-no-repeat appearance-none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-size: 1.5em 1.5em;
+}
+
+/* Checkbox aprimorado */
+.form-checkbox-enhanced {
+  @apply h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500 cursor-pointer;
+  @apply dark:bg-gray-700 dark:border-gray-600;
+}
+
+.form-checkbox-enhanced--large {
+  @apply h-6 w-6;
+}
+
+.form-checkbox-enhanced-container {
+  @apply flex items-center space-x-3;
+}
+
+.form-checkbox-enhanced-label {
+  @apply text-base text-gray-700 dark:text-gray-300 cursor-pointer;
+}
+
+/* Radio aprimorado */
+.form-radio-enhanced {
+  @apply h-5 w-5 border-gray-300 text-primary-600 focus:ring-primary-500 cursor-pointer;
+  @apply dark:bg-gray-700 dark:border-gray-600;
+}
+
+.form-radio-enhanced-container {
+  @apply flex items-center space-x-3;
+}
+
+.form-radio-enhanced-label {
+  @apply text-base text-gray-700 dark:text-gray-300 cursor-pointer;
+}
+
+/* Switch/Toggle aprimorado */
+.form-switch-enhanced {
+  @apply relative inline-flex h-7 w-12 items-center rounded-full transition-colors cursor-pointer;
+  @apply bg-gray-300 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+.form-switch-enhanced--checked {
+  @apply bg-primary-500;
+}
+
+.form-switch-enhanced::after {
+  @apply absolute left-1 top-1 h-5 w-5 rounded-full bg-white transition-transform shadow-md;
+  content: '';
+}
+
+.form-switch-enhanced--checked::after {
+  @apply translate-x-5;
+}
+
+/* Feedback de formulário */
+.form-feedback {
+  @apply mt-2 text-sm flex items-center space-x-2;
+}
+
+.form-feedback--error {
+  @apply text-danger-600 dark:text-danger-400;
+}
+
+.form-feedback--success {
+  @apply text-success-600 dark:text-success-400;
+}
+
+.form-feedback--warning {
+  @apply text-warning-600 dark:text-warning-400;
+}
+
+.form-feedback--info {
+  @apply text-blue-600 dark:text-blue-400;
+}
+
+.form-feedback-icon {
+  @apply flex-shrink-0 w-5 h-5;
+}
+
+/* Erro de campo */
+.form-field-error {
+  @apply mt-2 text-sm text-danger-600 dark:text-danger-400 flex items-center space-x-2;
+}
+
+.form-field-error-icon {
+  @apply w-4 h-4;
+}
+
+/* Sucesso de campo */
+.form-field-success {
+  @apply mt-2 text-sm text-success-600 dark:text-success-400 flex items-center space-x-2;
+}
+
+.form-field-success-icon {
+  @apply w-4 h-4;
+}
+
+/* Aviso de campo */
+.form-field-warning {
+  @apply mt-2 text-sm text-warning-600 dark:text-warning-400 flex items-center space-x-2;
+}
+
+.form-field-warning-icon {
+  @apply w-4 h-4;
+}
+
+/* Campo com ícone */
+.form-input-with-icon {
+  @apply relative;
+}
+
+.form-input-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+.form-input-with-icon .form-input-enhanced {
+  @apply pl-10;
+}
+
+/* Campo com contador */
+.form-input-counter {
+  @apply relative;
+}
+
+.form-input-counter-text {
+  @apply absolute right-3 bottom-3 text-xs text-gray-500;
+}
+
+.form-input-counter--warning {
+  @apply text-warning-500;
+}
+
+.form-input-counter--error {
+  @apply text-danger-500;
+}
+
+/* Grupo de campos */
+.form-fields-group {
+  @apply border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6;
+}
+
+.form-fields-group-title {
+  @apply text-lg font-medium text-gray-900 dark:text-white mb-4;
+}
+
+.form-fields-group-description {
+  @apply text-gray-600 dark:text-gray-400 text-sm mb-4;
+}
+
+/* Campos condicionais */
+.form-field-conditional {
+  @apply transition-all duration-300 ease-in-out overflow-hidden;
+}
+
+.form-field-conditional--hidden {
+  @apply max-h-0 opacity-0;
+}
+
+.form-field-conditional--visible {
+  @apply max-h-96 opacity-100;
+}
+
+/* Estados especiais */
+.form-group-enhanced--loading {
+  @apply opacity-75 pointer-events-none;
+}
+
+.form-group-enhanced--disabled {
+  @apply opacity-50 pointer-events-none;
+}
+
+.form-input-enhanced--readonly {
+  @apply bg-gray-100 cursor-not-allowed dark:bg-gray-800;
+}
+
+/* Campos laboratoriais específicos */
+.form-lab-id-enhanced {
+  @apply form-input-enhanced font-mono uppercase tracking-wider;
+}
+
+.form-lab-quantity-enhanced {
+  @apply form-input-enhanced text-right;
+}
+
+.form-lab-date-enhanced {
+  @apply form-input-enhanced;
+}
+
+.form-lab-unit-enhanced {
+  @apply form-input-enhanced w-28;
+}
+
+.form-lab-price-enhanced {
+  @apply form-input-enhanced text-right;
+}
+
+/* Agrupamento de inputs aprimorado */
+.input-group-enhanced {
+  @apply flex rounded-lg shadow-sm border border-gray-300 dark:border-gray-600 transition-colors duration-200;
+}
+
+.input-group-enhanced:focus-within {
+  @apply border-primary-500 ring-2 ring-primary-500 ring-opacity-20;
+}
+
+.input-group-enhanced-prepend {
+  @apply inline-flex items-center px-4 rounded-l-lg border-r border-gray-300 bg-gray-50 text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300;
+}
+
+.input-group-enhanced-append {
+  @apply inline-flex items-center px-4 rounded-r-lg border-l border-gray-300 bg-gray-50 text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300;
+}
+
+.input-group-enhanced .form-input-enhanced {
+  @apply rounded-none first:rounded-l-lg last:rounded-r-lg border-0 shadow-none focus:ring-0;
+}
+
+/* Estados de foco */
+.form-input-enhanced:focus {
+  @apply outline-none;
+}
+
+/* Estados de hover */
+.form-input-enhanced:hover:not(:disabled):not(:focus) {
+  @apply border-gray-400 dark:border-gray-500;
+}
+
+/* Estados de erro com animação */
+.form-input-enhanced--error-animate {
+  @apply animate-pulse-strong;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .form-group-enhanced--horizontal {
+    @apply flex-col space-x-0 space-y-4;
+  }
+  
+  .form-input-enhanced {
+    @apply px-3 py-2.5 text-base;
+  }
+  
+  .form-input-enhanced--large {
+    @apply px-4 py-3 text-base;
+  }
+  
+  .form-select-enhanced {
+    background-position: right 0.75rem center;
+  }
+}

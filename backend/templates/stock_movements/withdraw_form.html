@@ -1,0 +1,120 @@
+{% load static %}
+
+<div 
+    class="card mt-8"
+    x-data="withdrawalManager()"
+    x-init="init()"
+>
+    <div class="p-6">
+        <h2 class="text-xl font-semibold mb-4">Retirada Direta de Estoque</h2>
+
+        <!-- Feedback Messages -->
+        <div x-show="feedback.message" 
+             :class="{ 'alert alert-success': feedback.type === 'success', 'alert alert-danger': feedback.type === 'error' }"
+             role="alert">
+            <span x-text="feedback.message"></span>
+        </div>
+
+        <form @submit.prevent="performWithdrawal">
+            <div class="space-y-4">
+                <div>
+                    <label for="withdraw_reagent" class="form-label">Reagente</label>
+                    <select id="withdraw_reagent" x-model="withdrawal.reagent" class="form-input" required>
+                        <option value="">Selecione um reagente...</option>
+                        <template x-for="reagent in reagents" :key="reagent.id">
+                            <option :value="reagent.id" x-text="reagent.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="withdraw_quantity" class="form-label">Quantidade</label>
+                    <input type="number" step="0.01" id="withdraw_quantity" x-model="withdrawal.quantity" class="form-input" required>
+                </div>
+                <div>
+                    <label for="notes" class="form-label">Observações</label>
+                    <textarea id="notes" x-model="withdrawal.notes" rows="3" class="form-input"></textarea>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button type="submit" class="btn btn-primary w-full">
+                    <span x-show="!isSaving">Registrar Retirada</span>
+                    <span x-show="isSaving">Registrando...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function withdrawalManager() {
+    return {
+        reagents: [],
+        withdrawal: {
+            reagent: '',
+            quantity: 1,
+            user: {{ request.user.pk }},
+            notes: '',
+            move_type: 'Retirada' // This is important for the backend
+        },
+        isSaving: false,
+        feedback: { message: '', type: '' },
+
+        async init() {
+            await this.fetchReagents();
+        },
+
+        async fetchReagents() {
+            try {
+                const response = await fetch("{% url 'reagent-list-create' %}");
+                this.reagents = await response.json();
+            } catch (error) {
+                this.showFeedback('Falha ao carregar reagentes.', 'error');
+            }
+        },
+
+        async performWithdrawal() {
+            this.isSaving = true;
+            try {
+                const response = await fetch("{% url 'stockmovement-list-create' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(this.withdrawal),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    let errorMessage = 'Erro ao registrar retirada.';
+                    if (errorData.detail) {
+                        errorMessage += ` ${errorData.detail}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                this.showFeedback('Retirada registrada com sucesso!', 'success');
+                this.resetForm();
+                // Optionally, dispatch an event if other components need to know
+                document.body.dispatchEvent(new CustomEvent('stockChanged'));
+
+            } catch (error) {
+                this.showFeedback(error.message, 'error');
+            } finally {
+                this.isSaving = false;
+            }
+        },
+
+        resetForm() {
+            this.withdrawal.reagent = '';
+            this.withdrawal.quantity = 1;
+            this.withdrawal.notes = '';
+        },
+
+        showFeedback(message, type) {
+            this.feedback = { message, type };
+            setTimeout(() => { this.feedback.message = ''; }, 5000);
+        }
+    }
+}
+</script>

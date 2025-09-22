@@ -1,0 +1,202 @@
+/*
+ * Tipografia Científica para Sistema de Laboratório
+ * Baseada em fontes legíveis e profissionais
+ */
+
+/* Fontes importadas no main.css */
+
+:root {
+  /* Escala tipográfica para laboratório */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;        /* 16px */
+  --font-size-lg: 1.125rem;      /* 18px */
+  --font-size-xl: 1.25rem;       /* 20px */
+  --font-size-2xl: 1.5rem;       /* 24px */
+  --font-size-3xl: 1.875rem;     /* 30px */
+  --font-size-4xl: 2.25rem;      /* 36px */
+  
+  /* Pesos tipográficos */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Altura da linha */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+}
+
+/* Classes utilitárias tipográficas */
+.typography {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--neutral-800);
+}
+
+.typography--heading {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--neutral-900);
+}
+
+.typography--scientific {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--neutral-800);
+}
+
+/* Tamanhos de título específicos para laboratório */
+.h1-lab {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+.h2-lab {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+.h3-lab {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+
+.h4-lab {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+.h5-lab {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+}
+
+.h6-lab {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+/* Estilos para dados científicos */
+.code-scientific {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  background-color: var(--neutral-100);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.code-block-scientific {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  background-color: var(--neutral-50);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-200);
+  overflow-x: auto;
+}
+
+/* Classes para números e dados */
+.number-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-data {
+  font-size: 0.875em;
+  font-weight: var(--font-weight-normal);
+  color: var(--neutral-600);
+}
+
+/* Classes para rótulos e legendas */
+.caption-lab {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--neutral-600);
+}
+
+.legend-lab {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--neutral-700);
+}
+
+/* Estilos para datas e timestamps */
+.timestamp-lab {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--neutral-600);
+}
+
+.date-lab {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--neutral-600);
+}
+
+/* Modo escuro para tipografia */
+@media (prefers-color-scheme: dark) {
+  .typography {
+    color: var(--neutral-200);
+  }
+  
+  .typography--heading {
+    color: var(--neutral-100);
+  }
+  
+  .typography--scientific {
+    color: var(--neutral-200);
+  }
+  
+  .code-scientific {
+    background-color: var(--neutral-800);
+  }
+  
+  .code-block-scientific {
+    background-color: var(--neutral-900);
+    border-color: var(--neutral-700);
+  }
+  
+  .unit-data {
+    color: var(--neutral-400);
+  }
+  
+  .caption-lab {
+    color: var(--neutral-400);
+  }
+  
+  .legend-lab {
+    color: var(--neutral-300);
+  }
+  
+  .timestamp-lab {
+    color: var(--neutral-400);
+  }
+  
+  .date-lab {
+    color: var(--neutral-400);
+  }
+}

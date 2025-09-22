@@ -1,0 +1,194 @@
+/*
+ * Guia de Estilo para Sistema de Laboratório
+ * Componentes reutilizáveis e diretrizes de design
+ */
+
+/* Importar componentes individuais */
+@import './buttons.css';
+@import './cards.css';
+@import './forms.css';
+@import './badges-alerts.css';
+
+/* Componentes adicionais */
+.component-section {
+  @apply mb-12;
+}
+
+.component-section-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-6 pb-2 border-b border-gray-200 dark:border-gray-700;
+}
+
+.component-subsection {
+  @apply mb-8;
+}
+
+.component-subsection-title {
+  @apply text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4;
+}
+
+.component-preview {
+  @apply mb-4 p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+}
+
+.component-code {
+  @apply text-sm bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.component-description {
+  @apply text-gray-600 dark:text-gray-400 mb-4;
+}
+
+/* Grade de componentes */
+.components-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.components-grid--wide {
+  @apply grid-cols-1 md:grid-cols-3;
+}
+
+/* Exemplos de uso */
+.component-example {
+  @apply mb-6;
+}
+
+.component-example-title {
+  @apply text-lg font-medium text-gray-900 dark:text-white mb-2;
+}
+
+.component-example-description {
+  @apply text-gray-600 dark:text-gray-400 text-sm mb-3;
+}
+
+/* Estados de componentes */
+.component-state {
+  @apply mb-4 p-4 rounded-lg border;
+}
+
+.component-state--default {
+  @apply border-gray-200 dark:border-gray-700;
+}
+
+.component-state--hover {
+  @apply border-primary-200 dark:border-primary-700 bg-primary-50/50 dark:bg-primary-900/20;
+}
+
+.component-state--active {
+  @apply border-primary-500 dark:border-primary-500 bg-primary-100/50 dark:bg-primary-900/30;
+}
+
+.component-state--disabled {
+  @apply border-gray-200 dark:border-gray-700 opacity-50;
+}
+
+/* Tamanhos de componentes */
+.component-size-demo {
+  @apply flex items-center space-x-4 mb-4;
+}
+
+.component-size-label {
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300 w-20;
+}
+
+/* Cores de componentes */
+.component-colors {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6;
+}
+
+.component-color-item {
+  @apply flex flex-col items-center;
+}
+
+.component-color-swatch {
+  @apply w-12 h-12 rounded-lg mb-2 border border-gray-200 dark:border-gray-700;
+}
+
+.component-color-name {
+  @apply text-xs font-medium text-gray-700 dark:text-gray-300;
+}
+
+.component-color-value {
+  @apply text-xs text-gray-500 dark:text-gray-400;
+}
+
+/* Tipografia de componentes */
+.component-typography {
+  @apply space-y-4;
+}
+
+.component-font-sample {
+  @apply p-4 rounded-lg border border-gray-200 dark:border-gray-700;
+}
+
+/* Laboratório específico */
+.lab-component {
+  @apply border-l-4 border-primary-500;
+}
+
+.lab-component-header {
+  @apply bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-700 dark:to-gray-800 px-4 py-3 font-medium;
+}
+
+/* Do's and Don'ts */
+.component-dos-donts {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6 mt-6;
+}
+
+.component-do, .component-dont {
+  @apply p-4 rounded-lg;
+}
+
+.component-do {
+  @apply bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800;
+}
+
+.component-dont {
+  @apply bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800;
+}
+
+.component-do-title, .component-dont-title {
+  @apply font-medium mb-2;
+}
+
+.component-do-title {
+  @apply text-green-800 dark:text-green-200;
+}
+
+.component-dont-title {
+  @apply text-red-800 dark:text-red-200;
+}
+
+/* Código de exemplo */
+.example-code {
+  @apply bg-gray-50 dark:bg-gray-900 rounded-lg p-4 mt-4;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.example-code-header {
+  @apply flex justify-between items-center mb-2 text-sm text-gray-500 dark:text-gray-400;
+}
+
+.example-code-content {
+  @apply overflow-x-auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .component-section-title {
+    @apply text-xl;
+  }
+  
+  .component-subsection-title {
+    @apply text-lg;
+  }
+  
+  .components-grid {
+    @apply grid-cols-1;
+  }
+  
+  .component-colors {
+    @apply grid-cols-2;
+  }
+}

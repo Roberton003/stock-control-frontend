@@ -1,0 +1,90 @@
+/*
+ * Toggle de Tema Dark Mode
+ * Componente para alternar entre temas claro e escuro
+ */
+
+/* Container do toggle */
+.theme-toggle {
+  @apply relative inline-flex items-center cursor-pointer;
+}
+
+/* Input checkbox escondido */
+.theme-toggle-input {
+  @apply sr-only;
+}
+
+/* Slider do toggle */
+.theme-toggle-slider {
+  @apply block w-14 h-8 rounded-full transition-colors duration-300 ease-in-out;
+  @apply bg-gray-300 dark:bg-gray-600;
+}
+
+/* Bolinha do toggle */
+.theme-toggle-thumb {
+  @apply absolute left-1 top-1 bg-white border border-gray-300 rounded-full w-6 h-6 transition-transform duration-300 ease-in-out;
+  @apply dark:left-7 dark:border-gray-600;
+}
+
+/* Estado checked */
+.theme-toggle-input:checked + .theme-toggle-slider {
+  @apply bg-primary-500;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider .theme-toggle-thumb {
+  @apply transform translate-x-6;
+}
+
+/* Ícones do toggle */
+.theme-toggle-icon {
+  @apply absolute inset-y-0 flex items-center justify-center w-1/2 text-gray-500;
+}
+
+.theme-toggle-icon--sun {
+  @apply left-1;
+}
+
+.theme-toggle-icon--moon {
+  @apply right-1;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider .theme-toggle-icon--sun {
+  @apply text-gray-400;
+}
+
+.theme-toggle-input:checked + .theme-toggle-slider .theme-toggle-icon--moon {
+  @apply text-white;
+}
+
+/* Versão minimalista */
+.theme-toggle--minimal {
+  @apply w-12 h-6;
+}
+
+.theme-toggle--minimal .theme-toggle-slider {
+  @apply w-12 h-6;
+}
+
+.theme-toggle--minimal .theme-toggle-thumb {
+  @apply w-4 h-4;
+}
+
+.theme-toggle--minimal .theme-toggle-input:checked + .theme-toggle-slider .theme-toggle-thumb {
+  @apply transform translate-x-6;
+}
+
+/* Versão grande */
+.theme-toggle--large {
+  @apply w-16 h-9;
+}
+
+.theme-toggle--large .theme-toggle-slider {
+  @apply w-16 h-9;
+}
+
+.theme-toggle--large .theme-toggle-thumb {
+  @apply w-7 h-7;
+}
+
+.theme-toggle--large .theme-toggle-input:checked + .theme-toggle-slider .theme-toggle-thumb {
+  @apply transform translate-x-7;
+}
