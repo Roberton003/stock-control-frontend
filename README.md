@@ -169,4 +169,4 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 
 Roberto Nascimento - roberto.m0010@gmail.com
 
-Link do Projeto: [https://github.com/Roberton003/stock_control_lab](https://github.com/Roberton003/stock_control_lab)
+Link do Projeto: [https://github.com/Roberton003/stock-control-lab](https://github.com/Roberton003/stock-control-lab)
