@@ -31,7 +31,8 @@
 - [x] Configurar URLs do Django para servir o frontend
 - [x] Corrigir problemas de configuração do Django
 - [x] **CORRIGIDO: Corrigir erro de sintaxe no arquivo urls.py**
-- [ ] Testar integração backend/frontend acessando localhost:8000
+- [✓] **SERVIDOR INICIA CORRETAMENTE (verificado em testes anteriores)**
+- [!] **PENDENTE: Testar integração completa backend/frontend acessando localhost:8000**
 - [ ] Verificar chamadas da API do frontend para o backend
 
 ## Documentação
