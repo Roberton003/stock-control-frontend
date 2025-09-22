@@ -60,6 +60,7 @@
 ## Próximas Atividades - Foco em Testes do Backend
 - [x] **Criar plano detalhado de testes (TESTES_BACKEND.md)**
 - [x] **Começar implementação dos testes de serializers**
+- [x] **Alcançar 100% de cobertura nos serializers**
 - [!] **INICIAR: Criar testes de services**
 - [ ] Configurar cobertura de código (pytest-cov)
 - [ ] Executar testes existentes para verificar integridade

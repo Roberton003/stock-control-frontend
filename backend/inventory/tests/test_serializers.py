@@ -235,6 +235,130 @@ class TestStockMovementSerializer:
         assert movement.quantity == Decimal('25.00')
         assert movement.move_type == 'Retirada'
         assert movement.notes == 'Para análise química'
+        
+    def test_deserialize_stock_movement_entry_type(self):
+        """Testa a desserialização de uma movimentação do tipo Entrada"""
+        category = Category.objects.create(name='Reagentes')
+        supplier = Supplier.objects.create(name='Fornecedor Reagentes')
+        location = Location.objects.create(name='Estoque Principal')
+        user = User.objects.create_user(username='estoquista', password='testpass', role='Analista')
+        reagent = Reagent.objects.create(
+            name='Ácido Fosfórico',
+            sku='H3PO4-001',
+            category=category,
+            supplier=supplier,
+            min_stock_level=Decimal('50.00')
+        )
+        stock_lot = StockLot.objects.create(
+            reagent=reagent,
+            lot_number='H3PO4-2025',
+            location=location,
+            expiry_date='2026-12-31',
+            purchase_price=Decimal('30.00'),
+            initial_quantity=Decimal('100.00'),
+            current_quantity=Decimal('100.00')
+        )
+        
+        # Reduzir a quantidade para simular uso
+        stock_lot.current_quantity = Decimal('50.00')
+        stock_lot.save()
+        
+        data = {
+            'stock_lot': stock_lot.id,
+            'user': user.id,
+            'quantity': '25.00',
+            'move_type': 'Entrada',
+            'notes': 'Reposição de estoque'
+        }
+        
+        serializer = StockMovementSerializer(data=data)
+        assert serializer.is_valid()
+        
+        movement = serializer.save()
+        stock_lot.refresh_from_db()
+        
+        assert movement.move_type == 'Entrada'
+        assert stock_lot.current_quantity == Decimal('75.00')  # 50 + 25
+
+    def test_deserialize_stock_movement_adjustment_type(self):
+        """Testa a desserialização de uma movimentação do tipo Ajuste"""
+        category = Category.objects.create(name='Solventes')
+        supplier = Supplier.objects.create(name='Fornecedor Solventes')
+        location = Location.objects.create(name='Armário de Solventes')
+        user = User.objects.create_user(username='ajustador', password='testpass', role='Analista')
+        reagent = Reagent.objects.create(
+            name='Acetona',
+            sku='CH3COCH3-001',
+            category=category,
+            supplier=supplier,
+            min_stock_level=Decimal('100.00')
+        )
+        stock_lot = StockLot.objects.create(
+            reagent=reagent,
+            lot_number='ACETONA-2025',
+            location=location,
+            expiry_date='2026-06-30',
+            purchase_price=Decimal('15.00'),
+            initial_quantity=Decimal('200.00'),
+            current_quantity=Decimal('200.00')
+        )
+        
+        data = {
+            'stock_lot': stock_lot.id,
+            'user': user.id,
+            'quantity': '-50.00',  # Ajuste negativo
+            'move_type': 'Ajuste',
+            'notes': 'Perda por evaporação'
+        }
+        
+        serializer = StockMovementSerializer(data=data)
+        assert serializer.is_valid()
+        
+        movement = serializer.save()
+        stock_lot.refresh_from_db()
+        
+        assert movement.move_type == 'Ajuste'
+        assert stock_lot.current_quantity == Decimal('150.00')  # 200 - 50
+
+    def test_deserialize_stock_movement_discard_type(self):
+        """Testa a desserialização de uma movimentação do tipo Descarte"""
+        category = Category.objects.create(name='Indicadores')
+        supplier = Supplier.objects.create(name='Fornecedor Indicadores')
+        location = Location.objects.create(name='Laboratório Análises')
+        user = User.objects.create_user(username='descartador', password='testpass', role='Analista')
+        reagent = Reagent.objects.create(
+            name='Azul de Metileno',
+            sku='C16H18ClN3S-001',
+            category=category,
+            supplier=supplier,
+            min_stock_level=Decimal('25.00')
+        )
+        stock_lot = StockLot.objects.create(
+            reagent=reagent,
+            lot_number='AZUL-METILENO-2025',
+            location=location,
+            expiry_date='2025-12-31',
+            purchase_price=Decimal('25.00'),
+            initial_quantity=Decimal('100.00'),
+            current_quantity=Decimal('100.00')
+        )
+        
+        data = {
+            'stock_lot': stock_lot.id,
+            'user': user.id,
+            'quantity': '30.00',
+            'move_type': 'Descarte',
+            'notes': 'Produto fora da validade'
+        }
+        
+        serializer = StockMovementSerializer(data=data)
+        assert serializer.is_valid()
+        
+        movement = serializer.save()
+        stock_lot.refresh_from_db()
+        
+        assert movement.move_type == 'Descarte'
+        assert stock_lot.current_quantity == Decimal('70.00')  # 100 - 30
 
 
 @pytest.mark.django_db
