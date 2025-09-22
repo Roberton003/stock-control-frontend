@@ -4,8 +4,8 @@
 
 ### Backend
 - [x] Verificar e configurar ambiente de desenvolvimento local para backend (Python, Django)
-- [ ] Criar banco de dados de desenvolvimento (SQLite ou PostgreSQL)
-- [ ] Configurar variáveis de ambiente para desenvolvimento
+- [x] Criar banco de dados de desenvolvimento (SQLite ou PostgreSQL)
+- [x] Configurar variáveis de ambiente para desenvolvimento
 
 ### Frontend
 - [x] Verificar e configurar ambiente de desenvolvimento local para frontend (Node.js, npm)
@@ -13,10 +13,16 @@
 
 ## Configuração do Backend
 
-- [ ] Rodar migrações do banco de dados do backend
-- [ ] Criar superusuário para acesso ao admin do Django
-- [ ] Iniciar servidor de desenvolvimento do backend (Django)
-- [ ] Verificar endpoints da API estão acessíveis
+- [x] Rodar migrações do banco de dados do backend
+- [x] Criar superusuário para acesso ao admin do Django
+- [x] Iniciar servidor de desenvolvimento do backend (Django)
+- [x] Verificar endpoints da API estão acessíveis
+
+## Configuração do Frontend
+
+- [ ] Configurar URL base da API no frontend para apontar para o backend local
+- [ ] Iniciar servidor de desenvolvimento do frontend (Vite)
+- [ ] Verificar que o frontend carrega corretamente no navegador
 
 ## Configuração do Frontend
 
