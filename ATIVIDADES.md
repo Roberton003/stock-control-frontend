@@ -39,14 +39,16 @@
 
 - [x] Melhorar documentação do projeto no README.md
 - [x] Atualizar documentação do backend
+- [x] **Criar plano detalhado de testes do backend**
 - [ ] Adicionar documentação de testes
 
 ## Testes
 
 - [x] Criar testes unitários para models do backend
-- [ ] Criar testes unitários para serializers
+- [!] **INICIAR: Criar testes unitários para serializers**
 - [ ] Criar testes unitários para services
 - [ ] Criar testes unitários para views
+- [ ] Configurar relatórios de cobertura de código
 
 ## Problemas Conhecidos
 
@@ -54,6 +56,13 @@
 **STATUS: RESOLVIDO**  
 **Causa:** Erro de sintaxe no arquivo `config/urls.py`  
 **Solução:** Corrigido erro na expressão regular da linha 28
+
+## Próximas Atividades - Foco em Testes do Backend
+- [x] **Criar plano detalhado de testes (TESTES_BACKEND.md)**
+- [!] **Começar implementação dos testes de serializers**
+- [ ] Configurar cobertura de código (pytest-cov)
+- [ ] Executar testes existentes para verificar integridade
+- [ ] Criar primeiro teste de serializer (ReagentSerializer)
 
 ## Próximas Atividades Alternativas (Opção 2)
 - [x] Adicionar testes unitários para o backend
