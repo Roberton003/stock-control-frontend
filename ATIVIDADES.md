@@ -30,7 +30,7 @@
 - [x] Configurar Django para servir arquivos estáticos do frontend
 - [x] Configurar URLs do Django para servir o frontend
 - [x] Corrigir problemas de configuração do Django
-- [!] **PROBLEMA: Servidor Django não responde às requisições**
+- [x] **CORRIGIDO: Corrigir erro de sintaxe no arquivo urls.py**
 - [ ] Testar integração backend/frontend acessando localhost:8000
 - [ ] Verificar chamadas da API do frontend para o backend
 
@@ -49,18 +49,10 @@
 
 ## Problemas Conhecidos
 
-### Problema: Servidor Django não responde
-**Status:** Pendente de resolução
-**Sintoma:** Servidor inicia mas não responde a requisições HTTP
-**Possíveis causas:**
-- Problemas de binding de rede (127.0.0.1 vs 0.0.0.0)
-- Erros de configuração ocultos
-- Permissões de arquivo
-- Conflitos de porta
-**Próximos passos:**
-1. Parar todos os processos e iniciar em modo foreground
-2. Verificar logs de erro detalhados
-3. Testar configuração de rede
+### ~~Problema: Servidor Django não responde~~
+**STATUS: RESOLVIDO**  
+**Causa:** Erro de sintaxe no arquivo `config/urls.py`  
+**Solução:** Corrigido erro na expressão regular da linha 28
 
 ## Próximas Atividades Alternativas (Opção 2)
 - [x] Adicionar testes unitários para o backend
