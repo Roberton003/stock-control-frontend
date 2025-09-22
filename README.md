@@ -1,4 +1,4 @@
-# Stock Control Lab
+# Stock Control Lab - Frontend
 
 Sistema de controle de estoque para laboratórios químicos, desenvolvido para gerenciar eficientemente produtos químicos e reagentes com foco em:
 

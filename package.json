@@ -1,5 +1,5 @@
 {
-  "name": "stock-control-frontend",
+  "name": "stock-control-lab",
   "version": "1.0.0",
   "description": "Frontend for stock control laboratory system",
   "main": "index.js",
@@ -13,7 +13,8 @@
   "keywords": [
     "vue",
     "vite",
-    "stock-control"
+    "stock-control",
+    "laboratory"
   ],
   "author": "Stock Control Team",
   "license": "MIT",
