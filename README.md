@@ -2,6 +2,14 @@
 
 Sistema de controle de estoque para laboratórios químicos, desenvolvido como monorepo com frontend e backend integrados.
 
+## Status Atual do Projeto
+
+✅ **Backend (Django/DRF)**: Completo e funcional  
+✅ **Frontend (Vue.js)**: Build gerado e configurado  
+✅ **Integração**: Configurada (aguardando teste de funcionamento)  
+🚧 **Testes**: Em andamento  
+📅 **Docker**: Planejado para fase posterior  
+
 ## Funcionalidades Principais
 
 ### Controle de Reagentes
@@ -46,15 +54,14 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido como m
 
 ### Backend
 - Django 5.2+ com Django REST Framework
-- PostgreSQL como banco de dados
-- Docker para containerização
+- SQLite (desenvolvimento) / PostgreSQL (produção)
 - Django Celery para tarefas assíncronas
 - Redis para cache e mensagens
 
 ### Infraestrutura
-- GitHub Actions para CI/CD
-- Docker Compose para orquestração
-- Nginx como proxy reverso
+- GitHub Actions para CI/CD (planejado)
+- Docker Compose para orquestração (planejado)
+- Nginx como proxy reverso (planejado)
 
 ## Arquitetura do Sistema
 
@@ -67,7 +74,7 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido como m
                               │
                      ┌────────────────────┐
                      │   Banco de Dados   │
-                     │    (PostgreSQL)    │
+                     │    (SQLite/PostgreSQL)│
                      └────────────────────┘
 ```
 
@@ -94,7 +101,7 @@ stock-control-lab/
 │   └── styles/          # Estilos globais e temas
 ├── public/              # Arquivos públicos do frontend
 ├── tests/               # Testes end-to-end
-├── docker-compose.yml   # Configuração do Docker Compose
+├── docker-compose.yml   # Configuração do Docker Compose (planejado)
 ├── README.md            # Este arquivo (documentação geral)
 └── LICENSE              # Licença do projeto
 ```
@@ -104,16 +111,11 @@ stock-control-lab/
 ### Pré-requisitos
 - Node.js >= 16.x
 - Python >= 3.8
-- Docker e Docker Compose
-- PostgreSQL >= 12.x
+- Docker e Docker Compose (opcional, para produção)
 
-### Configuração do Frontend
-```bash
-npm install
-npm run dev
-```
+### Configuração do Ambiente
 
-### Configuração do Backend
+#### Backend (Django)
 ```bash
 cd backend
 python -m venv venv
@@ -126,10 +128,43 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### Execução com Docker
+Endpoints da API disponíveis em:
+- `http://localhost:8000/api/v1/reagents/`
+- `http://localhost:8000/api/v1/stock-lots/`
+- `http://localhost:8000/api/v1/stock-movements/`
+- `http://localhost:8000/api/v1/requisitions/`
+
+#### Frontend (Vue.js)
 ```bash
-docker-compose up --build
+npm install
+npm run build  # Gera build para produção
 ```
+
+Build disponível em `backend/static/dist/`
+
+### Testes
+```bash
+# Backend
+cd backend
+python -m pytest
+
+# Frontend
+npm test  # (se configurado)
+```
+
+## Problemas Conhecidos
+
+### Servidor Django não respondendo
+**Status:** Em investigação  
+O servidor Django inicia mas não responde às requisições HTTP.  
+Ver `ATIVIDADES.md` para detalhes do problema.
+
+## Próximos Passos
+
+1. ✅ Concluir integração backend/frontend (configurada, aguardando teste)
+2. 📊 Adicionar testes unitários e de integração
+3. 🐳 Configurar ambiente Docker
+4. 🚀 Preparar deploy para staging/produção
 
 ## Contribuição
 

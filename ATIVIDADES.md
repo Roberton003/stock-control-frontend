@@ -34,6 +34,12 @@
 - [ ] Testar integração backend/frontend acessando localhost:8000
 - [ ] Verificar chamadas da API do frontend para o backend
 
+## Documentação
+
+- [x] Melhorar documentação do projeto no README.md
+- [x] Atualizar documentação do backend
+- [ ] Adicionar documentação de testes
+
 ## Problemas Conhecidos
 
 ### Problema: Servidor Django não responde
@@ -48,6 +54,12 @@
 1. Parar todos os processos e iniciar em modo foreground
 2. Verificar logs de erro detalhados
 3. Testar configuração de rede
+
+## Próximas Atividades Alternativas (Opção 2)
+- [ ] Adicionar testes unitários para o backend
+- [ ] Preparar configuração do Docker
+- [ ] Criar ambiente de staging
+- [ ] Melhorar cobertura de testes do frontend
 
 ## Configuração do Frontend
 

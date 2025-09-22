@@ -2,6 +2,15 @@
 
 Sistema de controle de estoque para laboratórios químicos, desenvolvido com Django e Django REST Framework.
 
+## Status Atual
+
+✅ **Funcionalidades**: Completas  
+✅ **API**: Testada e funcionando  
+✅ **Banco de dados**: Configurado  
+✅ **Testes**: Configurados (necessita implementação)  
+🚧 **Frontend Integration**: Configurada, aguardando teste  
+📅 **Docker**: Planejado para fase posterior  
+
 ## Funcionalidades Principais
 
 ### Controle de Reagentes
@@ -41,7 +50,7 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido com Dj
 - Django REST Framework 3.14+
 - Celery 5.3+ para tarefas assíncronas
 - Redis 4.5+ para mensagens e cache
-- PostgreSQL 15+ como banco de dados
+- SQLite (desenvolvimento) / PostgreSQL 15+ (produção)
 - Django Celery Beat para agendamento de tarefas
 
 ### Testes
@@ -50,7 +59,7 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido com Dj
 - Freezegun 1.2+ para testes de data/hora
 
 ### Integração Contínua
-- GitHub Actions
+- GitHub Actions (planejado)
 
 ## Estrutura do Projeto
 
@@ -72,6 +81,7 @@ backend/
 │   └── migrations/      # Migrações do banco de dados
 ├── templates/           # Templates HTML (para views renderizadas)
 ├── static/              # Arquivos estáticos
+│   └── dist/            # Build do frontend (integrado)
 ├── manage.py            # Script de gerenciamento do Django
 ├── requirements.txt     # Dependências do projeto
 ├── pytest.ini           # Configuração dos testes
@@ -82,8 +92,7 @@ backend/
 
 ### Pré-requisitos
 - Python >= 3.8
-- Docker e Docker Compose (recomendado)
-- PostgreSQL >= 12.x (se não usar Docker)
+- Docker e Docker Compose (opcional, para produção)
 
 ### Configuração do Ambiente
 
@@ -115,11 +124,6 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-### Execução com Docker
-```bash
-docker-compose up --build
-```
-
 ### Testes
 ```bash
 pytest
@@ -144,6 +148,20 @@ A API está disponível em `/api/v1/` com os seguintes endpoints principais:
 
 - `GET /api/v1/dashboard/summary/` - Resumo do dashboard
 - `GET /api/v1/reports/financial/` - Relatório financeiro
+
+## Problemas Conhecidos
+
+### Servidor Django não respondendo
+**Status:** Em investigação  
+O servidor Django inicia mas não responde às requisições HTTP.  
+Ver `../ATIVIDADES.md` para detalhes do problema.
+
+## Próximos Passos
+
+1. ✅ Concluir integração backend/frontend (configurada, aguardando teste)
+2. 📊 Adicionar testes unitários e de integração
+3. 🐳 Configurar ambiente Docker
+4. 🚀 Preparar deploy para staging/produção
 
 ## Contribuição
 
