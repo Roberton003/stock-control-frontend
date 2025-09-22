@@ -1,1 +1,6 @@
-export { default as useMainStore } from './main'
+import { createPinia } from 'pinia'
+
+const pinia = createPinia()
+
+export default pinia
+export { useMainStore } from './main'

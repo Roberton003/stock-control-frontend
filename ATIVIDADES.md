@@ -20,7 +20,9 @@
 
 ## Configuração do Frontend
 
-- [ ] Configurar URL base da API no frontend para apontar para o backend local
+- [x] Configurar URL base da API no frontend para apontar para o backend local
+- [x] Criar script de build do frontend
+- [ ] Corrigir erros no frontend (se necessário)
 - [ ] Iniciar servidor de desenvolvimento do frontend (Vite)
 - [ ] Verificar que o frontend carrega corretamente no navegador
 
