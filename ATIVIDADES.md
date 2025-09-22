@@ -3,12 +3,13 @@
 ## Setup e Configuração Inicial
 
 ### Backend
-- [ ] Verificar e configurar ambiente de desenvolvimento local para backend (Python, Django)
+- [x] Verificar e configurar ambiente de desenvolvimento local para backend (Python, Django)
 - [ ] Criar banco de dados de desenvolvimento (SQLite ou PostgreSQL)
 - [ ] Configurar variáveis de ambiente para desenvolvimento
 
 ### Frontend
-- [ ] Verificar e configurar ambiente de desenvolvimento local para frontend (Node.js, npm)
+- [x] Verificar e configurar ambiente de desenvolvimento local para frontend (Node.js, npm)
+- [x] Instalar dependências do frontend (npm install)
 
 ## Configuração do Backend
 
