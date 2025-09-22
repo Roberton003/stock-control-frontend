@@ -22,9 +22,15 @@
 
 - [x] Configurar URL base da API no frontend para apontar para o backend local
 - [x] Criar script de build do frontend
-- [ ] Corrigir erros no frontend (se necessário)
-- [ ] Iniciar servidor de desenvolvimento do frontend (Vite)
-- [ ] Verificar que o frontend carrega corretamente no navegador
+- [x] Corrigir erros no frontend (se necessário)
+- [x] Copiar arquivos do build do frontend para diretório static do Django
+
+## Integração
+
+- [ ] Configurar Django para servir arquivos estáticos do frontend
+- [ ] Configurar URLs do Django para servir o frontend
+- [ ] Testar integração backend/frontend acessando localhost:8000
+- [ ] Verificar chamadas da API do frontend para o backend
 
 ## Configuração do Frontend
 
