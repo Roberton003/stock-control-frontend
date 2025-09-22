@@ -45,8 +45,8 @@
 ## Testes
 
 - [x] Criar testes unitários para models do backend
-- [!] **INICIAR: Criar testes unitários para serializers**
-- [ ] Criar testes unitários para services
+- [x] **Criar testes unitários para serializers**
+- [!] **INICIAR: Criar testes unitários para services**
 - [ ] Criar testes unitários para views
 - [ ] Configurar relatórios de cobertura de código
 
@@ -59,10 +59,11 @@
 
 ## Próximas Atividades - Foco em Testes do Backend
 - [x] **Criar plano detalhado de testes (TESTES_BACKEND.md)**
-- [!] **Começar implementação dos testes de serializers**
+- [x] **Começar implementação dos testes de serializers**
+- [!] **INICIAR: Criar testes de services**
 - [ ] Configurar cobertura de código (pytest-cov)
 - [ ] Executar testes existentes para verificar integridade
-- [ ] Criar primeiro teste de serializer (ReagentSerializer)
+- [ ] Criar primeiro teste de service (StockMovementService)
 
 ## Próximas Atividades Alternativas (Opção 2)
 - [x] Adicionar testes unitários para o backend
