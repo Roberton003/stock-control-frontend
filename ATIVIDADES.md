@@ -46,7 +46,7 @@
 
 - [x] Criar testes unitários para models do backend
 - [x] **Criar testes unitários para serializers**
-- [!] **INICIAR: Criar testes unitários para services**
+- [x] **Criar testes unitários para services**
 - [ ] Criar testes unitários para views
 - [ ] Configurar relatórios de cobertura de código
 
@@ -61,7 +61,7 @@
 - [x] **Criar plano detalhado de testes (TESTES_BACKEND.md)**
 - [x] **Começar implementação dos testes de serializers**
 - [x] **Alcançar 100% de cobertura nos serializers**
-- [!] **INICIAR: Criar testes de services**
+- [x] **Criar testes de services**
 - [ ] Configurar cobertura de código (pytest-cov)
 - [ ] Executar testes existentes para verificar integridade
 - [ ] Criar primeiro teste de service (StockMovementService)
