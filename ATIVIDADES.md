@@ -40,6 +40,13 @@
 - [x] Atualizar documentação do backend
 - [ ] Adicionar documentação de testes
 
+## Testes
+
+- [x] Criar testes unitários para models do backend
+- [ ] Criar testes unitários para serializers
+- [ ] Criar testes unitários para services
+- [ ] Criar testes unitários para views
+
 ## Problemas Conhecidos
 
 ### Problema: Servidor Django não responde
@@ -56,7 +63,7 @@
 3. Testar configuração de rede
 
 ## Próximas Atividades Alternativas (Opção 2)
-- [ ] Adicionar testes unitários para o backend
+- [x] Adicionar testes unitários para o backend
 - [ ] Preparar configuração do Docker
 - [ ] Criar ambiente de staging
 - [ ] Melhorar cobertura de testes do frontend
