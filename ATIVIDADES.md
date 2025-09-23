@@ -30,15 +30,15 @@
 
 ### 🔴 Integração (Prioridade Alta)
 - [x] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações) - **Parcialmente concluído: CRUD de Reagentes e Lotes OK. Problema na movimentação de estoque (Retirada) - quantidade incorreta.**
-- [ ] Verificar funcionamento do dashboard e relatórios
+- [x] Verificar funcionamento do dashboard e relatórios
 - [ ] Testar sistema de requisições e aprovações
 - [ ] Verificar tratamento de erros e validações
 
 ### 🟡 Testes (Prioridade Média)
-- [ ] Executar testes unitários do backend
+- [x] Executar testes unitários do backend
 - [ ] Executar testes unitários do frontend
 - [ ] Executar testes de integração entre frontend e [ ] Realizar testes manuais de todos os fluxos principais
-- [ ] Verificar performance e tempo de resposta das APIs
+- [x] Verificar performance e tempo de resposta das APIs
 
 ### 🟡 Documentação (Prioridade Média)
 - [ ] Atualizar documentação da API com endpoints e exemplos
