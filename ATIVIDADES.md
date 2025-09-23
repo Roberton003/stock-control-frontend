@@ -51,7 +51,7 @@
 
 ### 🔴 Integração (Prioridade Alta)
 - [x] Testar sistema de requisições e aprovações
-- [ ] Verificar tratamento de erros e validações
+- [x] Verificar tratamento de erros e validações
 
 ### 🟡 Testes (Prioridade Média)
 - [ ] Executar testes unitários do frontend
