@@ -84,11 +84,11 @@ def test_create_stock_lot(authenticated_client):
     assert StockLot.objects.filter(lot_number='NACL20250917').exists()
 
 @pytest.mark.django_db
-def test_create_stock_movement():
+def test_create_stock_movement(authenticated_client):
     """
     Tests that a new stock movement can be recorded via the API.
     """
-    client = APIClient()
+    client, user = authenticated_client
 
     # Create prerequisites
     category = Category.objects.create(name='Solventes')
@@ -110,12 +110,10 @@ def test_create_stock_movement():
         initial_quantity=10000.00,
         current_quantity=10000.00
     )
-    user = User.objects.create_user(username='analista1', password='testpass', role='Analista')
-    client.force_authenticate(user=user) # Authenticate the client
 
     data = {
-        'reagent': reagent.id, # Changed from stock_lot
-        'user': user.id,
+        'stock_lot': stock_lot.id,
+        'reagent_id': reagent.id,
         'quantity': 500.00,
         'move_type': 'Retirada',
         'notes': 'Uso em cromatografia'

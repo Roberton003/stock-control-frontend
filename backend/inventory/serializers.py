@@ -46,11 +46,12 @@ class StockWithdrawalSerializer(serializers.Serializer):
     quantity = serializers.DecimalField(max_digits=10, decimal_places=2)
     notes = serializers.CharField(allow_blank=True, required=False)
 
-    def create(self, validated_data, user=None): # Accept user as a keyword argument
+    def create(self, validated_data):
+        # Get user from context
+        user = self.context['request'].user
         reagent_id = validated_data.pop('reagent_id')
         quantity = validated_data.get('quantity')
         notes = validated_data.get('notes', '')
-        # user = validated_data.pop('user') # Removed
 
         stock_lot = validated_data['stock_lot'] # Now it's the object
 

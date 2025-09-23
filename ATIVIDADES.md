@@ -37,7 +37,7 @@
 ### 🟡 Testes (Prioridade Média)
 - [x] Executar testes unitários do backend
 - [ ] Executar testes unitários do frontend
-- [ ] Executar testes de integração entre frontend e [ ] Realizar testes manuais de todos os fluxos principais
+- [ ] Executar testes de integração entre frontend e backend
 - [x] Verificar performance e tempo de resposta das APIs
 
 ### 🟡 Documentação (Prioridade Média)
