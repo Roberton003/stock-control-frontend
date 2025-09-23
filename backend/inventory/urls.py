@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import (
+    ObtainAuthToken, Logout,
     ReagentListCreateView, ReagentRetrieveUpdateDestroyView,
     StockLotListCreateView, StockMovementListCreateView,
     RequisitionListCreateView, RequisitionApproveRejectView,
@@ -15,6 +16,8 @@ from .views import (
 )
 
 urlpatterns = [
+    path('login/', ObtainAuthToken.as_view(), name='api_token_auth'),
+    path('logout/', Logout.as_view(), name='api_logout'),
     path('reagents/', ReagentListCreateView.as_view(), name='reagent-list-create'),
     path('reagents/<int:pk>/', ReagentRetrieveUpdateDestroyView.as_view(), name='reagent-detail'),
 
