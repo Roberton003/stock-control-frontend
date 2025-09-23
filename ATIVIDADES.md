@@ -38,6 +38,12 @@
 - ✅ Atualizar testes de API para usar o cliente autenticado
 - ✅ Corrigir problema com a criação de movimentações de estoque no teste de API
 
+### 📋 Atividades do Dia 23/09/2025
+- ✅ Concluir correções de testes de API
+- ✅ Garantir integração completa frontend/backend
+- ✅ Atualizar documentação e sistema de tarefas
+- ✅ Fazer versionamento das alterações
+
 ---
 
 ## 📝 Próximas Atividades
