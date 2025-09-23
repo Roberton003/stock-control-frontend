@@ -43,6 +43,7 @@
 - ✅ Garantir integração completa frontend/backend
 - ✅ Atualizar documentação e sistema de tarefas
 - ✅ Fazer versionamento das alterações
+- ✅ Testar sistema de requisições e aprovações
 
 ---
 
