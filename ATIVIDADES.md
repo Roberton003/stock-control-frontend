@@ -11,69 +11,19 @@
 - [x] Verificar e configurar ambiente de desenvolvimento local para frontend (Node.js, npm)
 - [x] Instalar dependências do frontend (npm install)
 
-## Configuração do Backend
+## Configuração dos Servidores
 
 - [x] Rodar migrações do banco de dados do backend
 - [x] Criar superusuário para acesso ao admin do Django
 - [x] Iniciar servidor de desenvolvimento do backend (Django)
 - [x] Verificar endpoints da API estão acessíveis
-
-## Configuração do Frontend
-
 - [x] Configurar URL base da API no frontend para apontar para o backend local
-- [x] Instalar dependências do frontend (npm install)
 - [x] Iniciar servidor de desenvolvimento do frontend (Vite)
 - [x] Verificar que o frontend carrega corretamente no navegador
 
-## Integração
+## Próximas Atividades
 
-- [x] Configurar CORS no backend para permitir requisições do frontend
-- [x] Verificar autenticação e autorização entre frontend e backend
-- [x] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações)
-- [x] Verificar funcionamento do dashboard e relatórios
-- [x] Testar sistema de requisições e aprovações
-- [x] Verificar tratamento de erros e validações
-
-## Testes
-
-- [x] Executar testes unitários do backend
-- [x] Executar testes unitários do frontend
-- [x] Executar testes de integração entre frontend e backend
-- [x] Realizar testes manuais de todos os fluxos principais
-- [x] Verificar performance e tempo de resposta das APIs
-- [x] Alcançar 100% de cobertura de testes nos services do backend
-
-## Documentação
-
-- [x] Atualizar documentação da API com endpoints e exemplos
-- [x] Documentar processo de configuração do ambiente de desenvolvimento
-- [x] Criar guia de desenvolvimento para novos contribuidores
-- [x] Documentar arquitetura do sistema e fluxos de dados
-
-## Deployment (sem Docker)
-
-- [x] Criar script de build do frontend
-- [x] Configurar coleta de arquivos estáticos do Django
-- [ ] Preparar ambiente de produção (sem Docker ainda)
-- [ ] Testar deploy em ambiente de staging
-
-## Docker (somente após tudo funcionando)
-
-- [ ] Criar Dockerfile para o backend
-- [ ] Criar Dockerfile para o frontend
-- [ ] Criar docker-compose.yml para orquestração
-- [ ] Testar ambiente Docker em desenvolvimento
-- [ ] Testar ambiente Docker em produção
-
-## Configuração do Frontend
-
-- [ ] Instalar dependências do frontend (npm install)
-- [ ] Configurar URL base da API no frontend para apontar para o backend local
-- [ ] Iniciar servidor de desenvolvimento do frontend (Vite)
-- [ ] Verificar que o frontend carrega corretamente no navegador
-
-## Integração
-
+### Integração (Prioridade Alta)
 - [ ] Configurar CORS no backend para permitir requisições do frontend
 - [ ] Verificar autenticação e autorização entre frontend e backend
 - [ ] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações)
@@ -81,30 +31,26 @@
 - [ ] Testar sistema de requisições e aprovações
 - [ ] Verificar tratamento de erros e validações
 
-## Testes
-
+### Testes (Prioridade Média)
 - [ ] Executar testes unitários do backend
 - [ ] Executar testes unitários do frontend
 - [ ] Executar testes de integração entre frontend e backend
 - [ ] Realizar testes manuais de todos os fluxos principais
 - [ ] Verificar performance e tempo de resposta das APIs
 
-## Documentação
-
+### Documentação (Prioridade Média)
 - [ ] Atualizar documentação da API com endpoints e exemplos
 - [ ] Documentar processo de configuração do ambiente de desenvolvimento
 - [ ] Criar guia de desenvolvimento para novos contribuidores
 - [ ] Documentar arquitetura do sistema e fluxos de dados
 
-## Deployment (sem Docker)
-
+### Deployment (sem Docker) (Prioridade Média/Alta)
 - [ ] Criar script de build do frontend
 - [ ] Configurar coleta de arquivos estáticos do Django
 - [ ] Preparar ambiente de produção (sem Docker ainda)
 - [ ] Testar deploy em ambiente de staging
 
-## Docker (somente após tudo funcionando)
-
+### Docker (somente após tudo funcionando) (Prioridade Baixa)
 - [ ] Criar Dockerfile para o backend
 - [ ] Criar Dockerfile para o frontend
 - [ ] Criar docker-compose.yml para orquestração

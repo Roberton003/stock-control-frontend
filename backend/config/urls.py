@@ -23,17 +23,14 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('inventory.urls')),
-    path('', include('inventory.urls')),
+    # Deixe a rota raiz para o frontend
+    # path('', include('inventory.urls')), 
+
     # Servir o frontend (index.html) para todas as rotas não API
-    re_path(r'^(?!api|admin|static|media).*
+    re_path(r'^(?!api/|admin/|static/|media/).*$', TemplateView.as_view(template_name='index.html'), name='frontend'),
 ]
 
-# Servir arquivos estáticos em desenvolvimento
+# Servir arquivos de mídia e estáticos em desenvolvimento
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-, TemplateView.as_view(template_name='index.html'), name='frontend'),
-]
-
-# Servir arquivos estáticos em desenvolvimento
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
