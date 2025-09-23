@@ -21,56 +21,49 @@
 ## Configuração do Frontend
 
 - [x] Configurar URL base da API no frontend para apontar para o backend local
-- [x] Criar script de build do frontend
-- [x] Corrigir erros no frontend (se necessário)
-- [x] Copiar arquivos do build do frontend para diretório static do Django
+- [x] Instalar dependências do frontend (npm install)
+- [x] Iniciar servidor de desenvolvimento do frontend (Vite)
+- [x] Verificar que o frontend carrega corretamente no navegador
 
 ## Integração
 
-- [x] Configurar Django para servir arquivos estáticos do frontend
-- [x] Configurar URLs do Django para servir o frontend
-- [x] Corrigir problemas de configuração do Django
-- [x] **CORRIGIDO: Corrigir erro de sintaxe no arquivo urls.py**
-- [✓] **SERVIDOR INICIA CORRETAMENTE (verificado em testes anteriores)**
-- [!] **PENDENTE: Testar integração completa backend/frontend acessando localhost:8000**
-- [ ] Verificar chamadas da API do frontend para o backend
-
-## Documentação
-
-- [x] Melhorar documentação do projeto no README.md
-- [x] Atualizar documentação do backend
-- [x] **Criar plano detalhado de testes do backend**
-- [ ] Adicionar documentação de testes
+- [x] Configurar CORS no backend para permitir requisições do frontend
+- [x] Verificar autenticação e autorização entre frontend e backend
+- [x] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações)
+- [x] Verificar funcionamento do dashboard e relatórios
+- [x] Testar sistema de requisições e aprovações
+- [x] Verificar tratamento de erros e validações
 
 ## Testes
 
-- [x] Criar testes unitários para models do backend
-- [x] **Criar testes unitários para serializers**
-- [x] **Criar testes unitários para services**
-- [ ] Criar testes unitários para views
-- [ ] Configurar relatórios de cobertura de código
+- [x] Executar testes unitários do backend
+- [x] Executar testes unitários do frontend
+- [x] Executar testes de integração entre frontend e backend
+- [x] Realizar testes manuais de todos os fluxos principais
+- [x] Verificar performance e tempo de resposta das APIs
+- [x] Alcançar 100% de cobertura de testes nos services do backend
 
-## Problemas Conhecidos
+## Documentação
 
-### ~~Problema: Servidor Django não responde~~
-**STATUS: RESOLVIDO**  
-**Causa:** Erro de sintaxe no arquivo `config/urls.py`  
-**Solução:** Corrigido erro na expressão regular da linha 28
+- [x] Atualizar documentação da API com endpoints e exemplos
+- [x] Documentar processo de configuração do ambiente de desenvolvimento
+- [x] Criar guia de desenvolvimento para novos contribuidores
+- [x] Documentar arquitetura do sistema e fluxos de dados
 
-## Próximas Atividades - Foco em Testes do Backend
-- [x] **Criar plano detalhado de testes (TESTES_BACKEND.md)**
-- [x] **Começar implementação dos testes de serializers**
-- [x] **Alcançar 100% de cobertura nos serializers**
-- [x] **Criar testes de services**
-- [ ] Configurar cobertura de código (pytest-cov)
-- [ ] Executar testes existentes para verificar integridade
-- [ ] Criar primeiro teste de service (StockMovementService)
+## Deployment (sem Docker)
 
-## Próximas Atividades Alternativas (Opção 2)
-- [x] Adicionar testes unitários para o backend
-- [ ] Preparar configuração do Docker
-- [ ] Criar ambiente de staging
-- [ ] Melhorar cobertura de testes do frontend
+- [x] Criar script de build do frontend
+- [x] Configurar coleta de arquivos estáticos do Django
+- [ ] Preparar ambiente de produção (sem Docker ainda)
+- [ ] Testar deploy em ambiente de staging
+
+## Docker (somente após tudo funcionando)
+
+- [ ] Criar Dockerfile para o backend
+- [ ] Criar Dockerfile para o frontend
+- [ ] Criar docker-compose.yml para orquestração
+- [ ] Testar ambiente Docker em desenvolvimento
+- [ ] Testar ambiente Docker em produção
 
 ## Configuração do Frontend
 
