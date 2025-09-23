@@ -55,7 +55,7 @@
 
 ### 🟡 Testes (Prioridade Média)
 - [x] Executar testes unitários do frontend
-- [ ] Executar testes de integração entre frontend e backend
+- [x] Executar testes de integração entre frontend e backend
 
 ### 🟡 Documentação (Prioridade Média)
 - [ ] Atualizar documentação da API com endpoints e exemplos
