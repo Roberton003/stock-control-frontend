@@ -24,7 +24,7 @@
 ## Próximas Atividades
 
 ### Integração (Prioridade Alta)
-- [ ] Configurar CORS no backend para permitir requisições do frontend
+- [x] Configurar CORS no backend para permitir requisições do frontend
 - [ ] Verificar autenticação e autorização entre frontend e backend
 - [ ] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações)
 - [ ] Verificar funcionamento do dashboard e relatórios
