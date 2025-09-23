@@ -41,10 +41,33 @@ class StockMovementSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class StockWithdrawalSerializer(serializers.Serializer):
-    # reagent is not part of the StockMovement model, it's used for input only
-    reagent_id = serializers.IntegerField()
+    stock_lot = serializers.PrimaryKeyRelatedField(queryset=StockLot.objects.all())
+    reagent_id = serializers.IntegerField(write_only=True) # Mark as write_only
     quantity = serializers.DecimalField(max_digits=10, decimal_places=2)
     notes = serializers.CharField(allow_blank=True, required=False)
+
+    def create(self, validated_data, user=None): # Accept user as a keyword argument
+        reagent_id = validated_data.pop('reagent_id')
+        quantity = validated_data.get('quantity')
+        notes = validated_data.get('notes', '')
+        # user = validated_data.pop('user') # Removed
+
+        stock_lot = validated_data['stock_lot'] # Now it's the object
+
+        if stock_lot.current_quantity < quantity:
+            raise serializers.ValidationError("Insufficient stock in the selected lot.")
+
+        # stock_lot.current_quantity -= quantity # Removed
+        # stock_lot.save() # Removed
+
+        stock_movement = StockMovement.objects.create(
+            stock_lot=stock_lot,
+            user=user,
+            quantity=quantity,
+            move_type='Retirada',
+            notes=notes
+        )
+        return stock_movement
 
 
 

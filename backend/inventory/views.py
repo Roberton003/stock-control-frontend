@@ -94,6 +94,10 @@ class StockLotListCreateView(generics.ListCreateAPIView):
     queryset = StockLot.objects.all()
     serializer_class = StockLotSerializer
 
+class StockLotRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StockLot.objects.all()
+    serializer_class = StockLotSerializer
+
 class StockMovementListCreateView(generics.ListCreateAPIView):
     queryset = StockMovement.objects.all()
 
@@ -105,7 +109,7 @@ class StockMovementListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         # The serializer's create method will handle the actual creation and stock updates
         # We just need to pass the user from the request
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, stock_lot=serializer.validated_data['stock_lot'])
 
 class RequisitionListCreateView(generics.ListCreateAPIView):
     queryset = Requisition.objects.all()

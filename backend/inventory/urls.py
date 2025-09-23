@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     ObtainAuthToken, Logout,
     ReagentListCreateView, ReagentRetrieveUpdateDestroyView,
-    StockLotListCreateView, StockMovementListCreateView,
+    StockLotListCreateView, StockLotRetrieveUpdateDestroyView, StockMovementListCreateView,
     RequisitionListCreateView, RequisitionApproveRejectView,
     CategoryListCreateView, CategoryRetrieveUpdateDestroyView,
     SupplierListCreateView, SupplierRetrieveUpdateDestroyView,
@@ -22,6 +22,7 @@ urlpatterns = [
     path('reagents/<int:pk>/', ReagentRetrieveUpdateDestroyView.as_view(), name='reagent-detail'),
 
     path('stock-lots/', StockLotListCreateView.as_view(), name='stocklot-list-create'),
+    path('stock-lots/<int:pk>/', StockLotRetrieveUpdateDestroyView.as_view(), name='stocklot-detail'),
     path('stock-movements/', StockMovementListCreateView.as_view(), name='stockmovement-list-create'),
 
     path('requisitions/', RequisitionListCreateView.as_view(), name='requisition-list-create'),
