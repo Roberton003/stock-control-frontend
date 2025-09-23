@@ -58,7 +58,7 @@
 - [x] Executar testes de integração entre frontend e backend
 
 ### 🟡 Documentação (Prioridade Média)
-- [ ] Atualizar documentação da API com endpoints e exemplos
+- [x] Atualizar documentação da API com endpoints e exemplos
 - [ ] Documentar processo de configuração do ambiente de desenvolvimento
 - [ ] Criar guia de desenvolvimento para novos contribuidores
 - [ ] Documentar arquitetura do sistema e fluxos de dados
