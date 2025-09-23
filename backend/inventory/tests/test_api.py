@@ -4,11 +4,11 @@ from inventory.models import Reagent, Category, Supplier, StockLot, Location, St
 import datetime
 
 @pytest.mark.django_db
-def test_create_reagent():
+def test_create_reagent(authenticated_client):
     """ 
     Tests that a new reagent can be created via the API.
     """
-    client = APIClient()
+    client, user = authenticated_client
 
     # Create prerequisites
     category = Category.objects.create(name='Ácidos')
@@ -28,11 +28,11 @@ def test_create_reagent():
     assert Reagent.objects.filter(sku='HCL-001').exists()
 
 @pytest.mark.django_db
-def test_list_reagents():
+def test_list_reagents(authenticated_client):
     """
     Tests that the API can list reagents.
     """
-    client = APIClient()
+    client, user = authenticated_client
     category = Category.objects.create(name='Bases')
     supplier = Supplier.objects.create(name='Outro Fornecedor')
     Reagent.objects.create(
@@ -50,11 +50,11 @@ def test_list_reagents():
     assert response.data[0]['sku'] == 'NAOH-001'
 
 @pytest.mark.django_db
-def test_create_stock_lot():
+def test_create_stock_lot(authenticated_client):
     """
     Tests that a new stock lot can be added via the API.
     """
-    client = APIClient()
+    client, user = authenticated_client
 
     # Create prerequisites
     category = Category.objects.create(name='Sais')
