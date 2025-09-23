@@ -60,7 +60,7 @@
 ### 🟡 Documentação (Prioridade Média)
 - [x] Atualizar documentação da API com endpoints e exemplos
 - [x] Documentar processo de configuração do ambiente de desenvolvimento
-- [ ] Criar guia de desenvolvimento para novos contribuidores
+- [x] Criar guia de desenvolvimento para novos contribuidores
 - [ ] Documentar arquitetura do sistema e fluxos de dados
 
 ### 🟡 Deployment (sem Docker) (Prioridade Média/Alta)

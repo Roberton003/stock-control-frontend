@@ -168,6 +168,8 @@ Ver `ATIVIDADES.md` para detalhes do problema.
 
 ## Contribuição
 
+Consulte o [Guia de Contribuição](CONTRIBUTING.md) para obter detalhes sobre como contribuir com este projeto.
+
 1. Faça um fork do projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
 3. Commit suas mudanças (`git commit -m 'Adicionar nova feature'`)
