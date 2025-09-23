@@ -1,3 +1,5 @@
+from django.utils import timezone
+from django.utils import timezone
 import datetime
 from rest_framework import generics, status, viewsets
 from rest_framework.authtoken.models import Token
@@ -203,16 +205,16 @@ class DashboardSummaryView(APIView):
         low_stock_items_data = [{'name': item.name, 'sku': item.sku, 'current_stock': item.current_total_stock or 0, 'min_stock': item.min_stock_level} for item in low_stock_items]
 
         # Expiring Soon Items (e.g., next 90 days)
-        ninety_days_from_now = datetime.date.today() + datetime.timedelta(days=90)
+        ninety_days_from_now = timezone.now().date() + datetime.timedelta(days=90)
         expiring_soon_items = StockLot.objects.filter(
             expiry_date__lte=ninety_days_from_now,
-            expiry_date__gte=datetime.date.today(),
+            expiry_date__gte=timezone.now().date(),
             current_quantity__gt=0
         ).select_related('reagent')
         expiring_soon_items_data = [{'reagent': item.reagent.name, 'lot_number': item.lot_number, 'expiry_date': item.expiry_date, 'quantity': item.current_quantity} for item in expiring_soon_items]
 
         # Consumption Data (last 6 months)
-        today = datetime.date.today()
+        today = timezone.now().date()
         six_months_ago = today - datetime.timedelta(days=180)
         consumption_data_raw = StockMovement.objects.filter(
             move_type='Retirada',
@@ -225,9 +227,9 @@ class DashboardSummaryView(APIView):
         consumption_values = [float(data['total_quantity']) for data in consumption_data_raw]
 
         # Expiry Data (pie chart categories)
-        expired_count = StockLot.objects.filter(expiry_date__lt=datetime.date.today(), current_quantity__gt=0).count()
+        expired_count = StockLot.objects.filter(expiry_date__lt=timezone.now().date(), current_quantity__gt=0).count()
         expiring_soon_count = StockLot.objects.filter(
-            expiry_date__gte=datetime.date.today(),
+            expiry_date__gte=timezone.now().date(),
             expiry_date__lte=ninety_days_from_now,
             current_quantity__gt=0
         ).count()
@@ -352,7 +354,8 @@ class RequisitionViewSet(viewsets.ModelViewSet):
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import datetime
+import datetime
+import datetime
 from .services import (
     get_consumption_by_user_report,
     get_waste_loss_report,
@@ -371,8 +374,8 @@ class ConsumptionByUserReportView(APIView):
             return Response({"error": "start_date and end_date are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
-            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.datetime.strptime(end_date_str, '%Y-%m-%d').date()
         except ValueError:
             return Response({"error": "Date format should be YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -393,8 +396,8 @@ class WasteLossReportView(APIView):
             return Response({"error": "start_date and end_date are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
-            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.datetime.strptime(end_date_str, '%Y-%m-%d').date()
         except ValueError:
             return Response({"error": "Date format should be YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
 
