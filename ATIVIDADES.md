@@ -54,7 +54,7 @@
 - [x] Verificar tratamento de erros e validações
 
 ### 🟡 Testes (Prioridade Média)
-- [ ] Executar testes unitários do frontend
+- [x] Executar testes unitários do frontend
 - [ ] Executar testes de integração entre frontend e backend
 
 ### 🟡 Documentação (Prioridade Média)
