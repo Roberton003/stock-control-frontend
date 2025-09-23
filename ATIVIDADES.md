@@ -49,7 +49,7 @@
 ## 📝 Próximas Atividades
 
 ### 🔴 Integração (Prioridade Alta)
-- [ ] Testar sistema de requisições e aprovações
+- [x] Testar sistema de requisições e aprovações
 - [ ] Verificar tratamento de erros e validações
 
 ### 🟡 Testes (Prioridade Média)
