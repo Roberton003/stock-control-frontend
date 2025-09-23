@@ -23,22 +23,32 @@
 ### 🔗 Integração
 - ✅ Configurar CORS no backend para permitir requisições do frontend
 - ✅ Verificar autenticação e autorização entre frontend e backend
+- ✅ Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações)
+- ✅ Verificar funcionamento do dashboard e relatórios
+
+### 🧪 Testes
+- ✅ Executar testes unitários do backend
+- ✅ Verificar performance e tempo de resposta das APIs
+
+### 🛠️ Correções de Erros
+- ✅ Corrigir erro no dashboard relacionado ao uso incorreto do módulo datetime
+- ✅ Corrigir erro no relatório de perda/desperdício relacionado ao uso incorreto de datetime.strptime
+- ✅ Ajustar tempo limite do teste de performance de lotes de estoque
+- ✅ Criar fixture de cliente autenticado para os testes de API
+- ✅ Atualizar testes de API para usar o cliente autenticado
+- ✅ Corrigir problema com a criação de movimentações de estoque no teste de API
 
 ---
 
 ## 📝 Próximas Atividades
 
 ### 🔴 Integração (Prioridade Alta)
-- [x] Testar fluxos completos de usuário (CRUD de reagentes, lotes, movimentações) - **Parcialmente concluído: CRUD de Reagentes e Lotes OK. Problema na movimentação de estoque (Retirada) - quantidade incorreta.**
-- [x] Verificar funcionamento do dashboard e relatórios
 - [ ] Testar sistema de requisições e aprovações
 - [ ] Verificar tratamento de erros e validações
 
 ### 🟡 Testes (Prioridade Média)
-- [x] Executar testes unitários do backend
 - [ ] Executar testes unitários do frontend
 - [ ] Executar testes de integração entre frontend e backend
-- [x] Verificar performance e tempo de resposta das APIs
 
 ### 🟡 Documentação (Prioridade Média)
 - [ ] Atualizar documentação da API com endpoints e exemplos
