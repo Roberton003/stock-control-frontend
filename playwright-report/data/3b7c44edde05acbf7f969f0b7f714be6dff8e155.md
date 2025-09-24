@@ -1,0 +1,122 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - heading "Stock Control Lab" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e12]:
+            - link "Reagents" [ref=e13] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e14]:
+            - link "Stock Lots" [ref=e15] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e16]:
+            - link "Requisitions" [ref=e17] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e18]:
+            - link "Reports" [ref=e19] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=e20]:
+    - complementary [ref=e21]:
+      - heading "Navigation" [level=2] [ref=e23]
+      - navigation [ref=e24]:
+        - list [ref=e25]:
+          - listitem [ref=e26]:
+            - link "Dashboard" [ref=e27] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e28]:
+            - link "Reagents" [ref=e29] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e30]:
+            - link "Stock Lots" [ref=e31] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e32]:
+            - link "Requisitions" [ref=e33] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e34]:
+            - link "Reports" [ref=e35] [cursor=pointer]:
+              - /url: "#"
+    - main [ref=e36]:
+      - generic [ref=e37]:
+        - heading "Dashboard" [level=1] [ref=e38]
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - heading "Valor Total em Estoque" [level=2] [ref=e42]
+            - generic [ref=e43]:
+              - generic [ref=e44]: R$ 125.430,00
+              - generic [ref=e45]: +2,5% em relação ao mês anterior
+          - generic [ref=e46]:
+            - heading "Itens Abaixo do Mínimo" [level=2] [ref=e48]
+            - generic [ref=e49]:
+              - generic [ref=e50]: "12"
+              - generic [ref=e51]: Necessita reposição urgente
+          - generic [ref=e52]:
+            - heading "Lotes Próximos ao Vencimento" [level=2] [ref=e54]
+            - generic [ref=e55]:
+              - generic [ref=e56]: "8"
+              - generic [ref=e57]: Vencem em menos de 30 dias
+          - generic [ref=e58]:
+            - heading "Movimentações Hoje" [level=2] [ref=e60]
+            - generic [ref=e61]:
+              - generic [ref=e62]: "24"
+              - generic [ref=e63]: "Entradas: 15 | Saídas: 9"
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - heading "Consumo por Categoria (Últimos 30 dias)" [level=2] [ref=e67]
+            - paragraph [ref=e70]: Gráfico de barras será implementado aqui
+          - generic [ref=e71]:
+            - heading "Validade dos Lotes" [level=2] [ref=e73]
+            - paragraph [ref=e76]: Gráfico de pizza será implementado aqui
+        - generic [ref=e77]:
+          - heading "Movimentações Recentes" [level=2] [ref=e79]
+          - table [ref=e82]:
+            - rowgroup [ref=e83]:
+              - row "Data Reagente Tipo Quantidade Usuário" [ref=e84]:
+                - columnheader "Data" [ref=e85]
+                - columnheader "Reagente" [ref=e86]
+                - columnheader "Tipo" [ref=e87]
+                - columnheader "Quantidade" [ref=e88]
+                - columnheader "Usuário" [ref=e89]
+            - rowgroup [ref=e90]:
+              - row "15/09/2023 14:30 Ácido Clorídrico Entrada 5 litros João Silva" [ref=e91]:
+                - cell "15/09/2023 14:30" [ref=e92]
+                - cell "Ácido Clorídrico" [ref=e93]
+                - cell "Entrada" [ref=e94]
+                - cell "5 litros" [ref=e95]
+                - cell "João Silva" [ref=e96]
+              - row "15/09/2023 11:45 Etanol 96% Saída 2 litros Maria Oliveira" [ref=e97]:
+                - cell "15/09/2023 11:45" [ref=e98]
+                - cell "Etanol 96%" [ref=e99]
+                - cell "Saída" [ref=e100]
+                - cell "2 litros" [ref=e101]
+                - cell "Maria Oliveira" [ref=e102]
+              - row "14/09/2023 16:20 Sulfato de Cobre Entrada 1 kg Pedro Santos" [ref=e103]:
+                - cell "14/09/2023 16:20" [ref=e104]
+                - cell "Sulfato de Cobre" [ref=e105]
+                - cell "Entrada" [ref=e106]
+                - cell "1 kg" [ref=e107]
+                - cell "Pedro Santos" [ref=e108]
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - heading "Alertas de Validade" [level=2] [ref=e112]
+            - list [ref=e114]:
+              - listitem [ref=e115]:
+                - generic [ref=e117]: "Ácido Nítrico (Lote #A12345) - Vence em 15 dias"
+              - listitem [ref=e118]:
+                - generic [ref=e120]: "Hidróxido de Sódio (Lote #B67890) - Vence em 22 dias"
+          - generic [ref=e121]:
+            - heading "Estoque Baixo" [level=2] [ref=e123]
+            - list [ref=e125]:
+              - listitem [ref=e126]:
+                - generic [ref=e128]: Etanol 70% - Apenas 3 litros disponíveis
+              - listitem [ref=e129]:
+                - generic [ref=e131]: Água Destilada - Apenas 5 litros disponíveis
+  - contentinfo [ref=e132]:
+    - paragraph [ref=e134]: © 2023 Stock Control Laboratory System. All rights reserved.
+```

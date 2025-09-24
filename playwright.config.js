@@ -8,12 +8,12 @@ export default defineConfig({
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
     actionTimeout: 0,
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3100',  // Atualizado para refletir a porta do frontend no Docker
     trace: 'on-first-retry',
   },
   projects: [
@@ -24,7 +24,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run dev',
-    port: 3000,
+    port: 3100,  // Atualizado para refletir a porta do frontend no Docker
     timeout: 120000,
     reuseExistingServer: !process.env.CI,
   },
