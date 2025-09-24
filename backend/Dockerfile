@@ -1,1 +1,38 @@
-# Dockerfile para o backend Django\nFROM python:3.11-slim\n\n# Definir variáveis de ambiente\nENV PYTHONDONTWRITEBYTECODE 1\nENV PYTHONUNBUFFERED 1\n\n# Definir diretório de trabalho\nWORKDIR /app\n\n# Instalar dependências do sistema\nRUN apt-get update \\\n    && apt-get install -y --no-install-recommends \\\n        postgresql-client \\\n        build-essential \\\n        libpq-dev \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Copiar arquivos de dependências\nCOPY ./backend/requirements.txt /app/requirements.txt\n\n# Instalar dependências do Python\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copiar o código do projeto\nCOPY ./backend /app\n\n# Criar diretório para arquivos estáticos\nRUN mkdir -p /app/staticfiles\n\n# Expor a porta\nEXPOSE 8000\n\n# Comando padrão\nCMD [\"python\", \"manage.py\", \"runserver\", \"0.0.0.0:8000\"]
+# Dockerfile para o backend Django
+FROM python:3.11-slim
+
+# Definir variáveis de ambiente
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apt-get update \\
+    && apt-get install -y --no-install-recommends \\
+        postgresql-client \\
+        build-essential \\
+        libpq-dev \\
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar arquivos de dependências
+COPY ./backend/requirements.txt /app/requirements.txt
+
+# Instalar dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar o código do projeto
+COPY ./backend /app
+
+# Criar diretório para arquivos estáticos
+RUN mkdir -p /app/staticfiles
+
+# Coletar arquivos estáticos (necessário para produção)
+RUN python manage.py collectstatic --noinput
+
+# Expor a porta
+EXPOSE 8000
+
+# Comando padrão
+CMD [\"gunicorn\", \"config.wsgi:application\", \"--bind\", \"0.0.0.0:8000\"]

@@ -1,5 +1,5 @@
 # Dockerfile para o frontend Vue.js
-FROM node:16-alpine
+FROM node:18-alpine
 
 # Definir diretório de trabalho
 WORKDIR /app
@@ -16,8 +16,11 @@ COPY . .
 # Build do projeto
 RUN npm run build
 
+# Instalar servidor de produção para arquivos estáticos
+RUN npm install -g serve
+
 # Expor a porta
 EXPOSE 3000
 
 # Comando padrão
-CMD ["npm", "run", "dev"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
