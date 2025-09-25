@@ -23,10 +23,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('inventory.urls')),
-    # Deixe a rota raiz para o frontend
-    # path('', include('inventory.urls')), 
-
+    
     # Servir o frontend (index.html) para todas as rotas não API
+    # Esta rota deve vir por último para não interferir com as rotas da API
     re_path(r'^(?!api/|admin/|static/|media/).*$', TemplateView.as_view(template_name='index.html'), name='frontend'),
 ]
 

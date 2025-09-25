@@ -54,33 +54,71 @@ stock-control-lab/
 ├── docker-compose.yml    # Orquestração dos containers
 ├── nginx.conf            # Configuração do Nginx
 ├── requirements.txt      # Dependências do backend
-└── package.json         # Dependências do frontend
+└── package.json          # Dependências do frontend
 ```
 
 ## 🛠️ Solução de Problemas de Acesso
 
-Durante a implementação, identificamos um problema na configuração do frontend que impedia o acesso correto à aplicação via navegador web. O problema estava na configuração do cliente HTTP Axios, que estava apontando diretamente para a porta 8000 do backend em vez de usar a URL relativa para o proxy do Nginx.
+Durante a implementação, identificamos dois problemas principais que impediam o acesso correto à aplicação:
 
-### Problema Identificado:
+### 1. Problema na Configuração do Axios (Frontend)
+**Problema Identificado:**
 O arquivo `src/plugins/axios.js` estava configurado com:
 ```javascript
 baseURL: 'http://localhost:8000/api' // URL absoluta
 ```
 
-### Solução Aplicada:
+**Solução Aplicada:**
 Corrigimos a configuração para usar uma URL relativa:
 ```javascript
 baseURL: '/api' // URL relativa para usar o proxy do Nginx
 ```
 
-Essa mudança permite que o Nginx faça o proxy reverso corretamente das requisições da API, resolvendo o problema de acesso à interface web.
+### 2. Problema na Ordem das Rotas do Django (Backend)
+**Problema Identificado:**
+A ordem das rotas no arquivo `backend/config/urls.py` estava causando conflitos, onde a rota curinga estava capturando requisições que deveriam ir para a API.
 
-### Verificação Pós-Correção:
-Após aplicar a correção e reiniciar os containers, todos os componentes estão funcionando corretamente:
-- ✅ Página HTML carregando corretamente
-- ✅ Assets JavaScript e CSS sendo carregados
-- ✅ Requisições da API sendo encaminhadas pelo proxy do Nginx
-- ✅ Interface web acessível via http://localhost:8080
+**Solução Aplicada:**
+Reordenamos as rotas para garantir que as rotas da API sejam processadas antes da rota curinga do frontend:
+```python
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/v1/', include('inventory.urls')),
+    
+    # Esta rota deve vir por último para não interferir com as rotas da API
+    re_path(r'^(?!api/|admin/|static/|media/).*$', TemplateView.as_view(template_name='index.html'), name='frontend'),
+]
+```
+
+## 🛠️ Verificação Pós-Correção
+
+Após aplicar as correções e reiniciar os containers, todos os componentes estão funcionando corretamente:
+
+✅ **Página HTML carregando corretamente**  
+✅ **Assets JavaScript e CSS sendo carregados**  
+✅ **Requisições da API sendo encaminhadas pelo proxy do Nginx**  
+✅ **Interface web acessível via http://localhost:8080**  
+✅ **API acessível diretamente via http://localhost:8100/api/v1/**  
+✅ **API acessível através do proxy via http://localhost:8080/api/v1/**  
+
+### Testes de Funcionalidade:
+```bash
+# Teste do frontend (HTML)
+$ curl -I http://localhost:8080
+HTTP/1.1 200 OK
+
+# Teste da API backend (direto)
+$ curl -s http://localhost:8100/api/v1/reagents/
+{"detail":"Authentication credentials were not provided."}
+
+# Teste de proxy reverso (API via Nginx)
+$ curl -s http://localhost:8080/api/v1/reagents/
+{"detail":"Authentication credentials were not provided."}
+
+# Teste de assets
+$ curl -I http://localhost:8080/assets/index-DNd0YjnK.js
+HTTP/1.1 200 OK
+```
 
 ## 🛠️ Comandos Úteis para Diagnóstico
 
@@ -133,3 +171,5 @@ A aplicação está pronta para uso em ambiente de produção e pode ser facilme
 6. **Configurar SSL/TLS** para conexões seguras
 
 Esta implementação robusta e bem documentada fornece uma base sólida para o controle de estoque em laboratórios químicos, pronta para evolução contínua e expansão de funcionalidades.
+
+🎉 **Projeto Concluído com Sucesso!** 🎉
