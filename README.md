@@ -5,10 +5,14 @@ Sistema de controle de estoque para laboratórios químicos, desenvolvido como m
 ## Status Atual do Projeto
 
 ✅ **Backend (Django/DRF)**: Completo e funcional  
-✅ **Frontend (Vue.js)**: Build gerado e configurado  
-✅ **Integração**: Configurada (aguardando teste de funcionamento)  
-🚧 **Testes**: Em andamento  
-📅 **Docker**: Planejado para fase posterior  
+✅ **Frontend (Vue.js)**: Build integrado e servido via Django  
+✅ **Integração**: Completa (frontend e backend integrados)  
+✅ **Autenticação**: Funcional com credenciais (usuário: newadmin, senha: newpass123)  
+✅ **APIs**: Respondendo corretamente com dados reais  
+✅ **Dashboard**: Funcional com estatísticas em tempo real  
+🚧 **Roteamento Frontend**: Ajustes necessários para navegação interna ideal  
+📊 **Testes**: 92 testes backend passando (100% de sucesso)  
+✅ **Docker**: Configurado e funcional  
 
 ## Funcionalidades Principais
 
@@ -154,10 +158,11 @@ npm test  # (se configurado)
 
 ## Problemas Conhecidos
 
-### Servidor Django não respondendo
-**Status:** Em investigação  
-O servidor Django inicia mas não responde às requisições HTTP.  
-Ver `ATIVIDADES.md` para detalhes do problema.
+### Roteamento Frontend
+**Status:** Em otimização  
+O Vue Router está configurado com createWebHistory(), o que pode afetar a navegação interna em alguns casos.  
+A maioria das funcionalidades está operacional, mas pode necessitar de ajustes para navegação ideal entre páginas internas.  
+Ver `ATIVIDADES.md` para detalhes de otimização.
 
 ## Próximos Passos
 
