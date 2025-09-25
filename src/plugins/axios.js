@@ -4,7 +4,7 @@ import { retry } from '@/utils/retryHelper'
 
 // Criar instância do axios com configurações padrão
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api', // URL base do backend
+  baseURL: '/api', // URL base relativa para usar o proxy do Nginx
   timeout: 10000, // Timeout de 10 segundos
   headers: {
     'Content-Type': 'application/json'
