@@ -1,0 +1,1099 @@
+<!-- form_component.html - Componente de formulário moderno -->
+<form class="form-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ form_id }}" method="{% if method %}{{ method }}{% else %}POST{% endif %}" action="{% if action %}{{ action }}{% else %}#{% endif %}">
+    {% csrf_token %}
+    
+    {% if title %}
+    <div class="form-header-modern">
+        <h3 class="form-title-modern">{{ title }}</h3>
+        {% if subtitle %}
+        <p class="form-subtitle-modern">{{ subtitle }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if messages %}
+    <div class="form-messages-modern">
+        {% for message in messages %}
+        <div class="form-message-modern form-message-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="form-fields-modern">
+        {% for field in fields %}
+        <div class="form-field-modern {% if field.type == 'checkbox' or field.type == 'radio' %}form-field-boolean{% endif %} {% if field.required %}form-field-required{% endif %}">
+            {% if field.type != 'checkbox' and field.type != 'radio' %}
+            <label for="{{ field.id }}" class="form-label-modern">
+                {% if field.icon %}
+                <i class="{{ field.icon }} form-icon-modern"></i>
+                {% endif %}
+                {{ field.label }}
+                {% if field.required %}
+                <span class="form-required-indicator">*</span>
+                {% endif %}
+            </label>
+            {% endif %}
+            
+            {% if field.type == 'text' or field.type == 'email' or field.type == 'password' or field.type == 'number' or field.type == 'tel' or field.type == 'url' %}
+            <input 
+                type="{{ field.type }}" 
+                id="{{ field.id }}" 
+                name="{{ field.name }}" 
+                class="form-input-modern {% if field.class %}{{ field.class }}{% endif %}"
+                placeholder="{% if field.placeholder %}{{ field.placeholder }}{% endif %}"
+                {% if field.required %}required{% endif %}
+                {% if field.min %}min="{{ field.min }}"{% endif %}
+                {% if field.max %}max="{{ field.max }}"{% endif %}
+                {% if field.step %}step="{{ field.step }}"{% endif %}
+                {% if field.pattern %}pattern="{{ field.pattern }}"{% endif %}
+                {% if field.autocomplete %}autocomplete="{{ field.autocomplete }}"{% endif %}
+                {% if field.value %}value="{{ field.value }}"{% endif %}
+            >
+            {% elif field.type == 'textarea' %}
+            <textarea 
+                id="{{ field.id }}" 
+                name="{{ field.name }}" 
+                class="form-textarea-modern {% if field.class %}{{ field.class }}{% endif %}"
+                placeholder="{% if field.placeholder %}{{ field.placeholder }}{% endif %}"
+                rows="{% if field.rows %}{{ field.rows }}{% else %}3{% endif %}"
+                {% if field.required %}required{% endif %}
+            >{% if field.value %}{{ field.value }}{% endif %}</textarea>
+            {% elif field.type == 'select' %}
+            <select 
+                id="{{ field.id }}" 
+                name="{{ field.name }}" 
+                class="form-select-modern {% if field.class %}{{ field.class }}{% endif %}"
+                {% if field.required %}required{% endif %}
+            >
+                <option value="">{% if field.placeholder %}{{ field.placeholder }}{% else %}Selecione uma opção{% endif %}</option>
+                {% for option in field.options %}
+                <option value="{{ option.value }}" {% if option.selected %}selected{% endif %}>{{ option.label }}</option>
+                {% endfor %}
+            </select>
+            {% elif field.type == 'checkbox' %}
+            <div class="form-checkbox-wrapper-modern">
+                <input 
+                    type="checkbox" 
+                    id="{{ field.id }}" 
+                    name="{{ field.name }}" 
+                    class="form-checkbox-modern"
+                    {% if field.checked %}checked{% endif %}
+                    {% if field.required %}required{% endif %}
+                >
+                <label for="{{ field.id }}" class="form-checkbox-label-modern">
+                    {% if field.icon %}
+                    <i class="{{ field.icon }} form-checkbox-icon-modern"></i>
+                    {% endif %}
+                    {{ field.label }}
+                    {% if field.required %}
+                    <span class="form-required-indicator">*</span>
+                    {% endif %}
+                </label>
+            </div>
+            {% elif field.type == 'radio' %}
+            <div class="form-radio-wrapper-modern">
+                {% for option in field.options %}
+                <div class="form-radio-option-modern">
+                    <input 
+                        type="radio" 
+                        id="{{ field.id }}-{{ option.value }}" 
+                        name="{{ field.name }}" 
+                        value="{{ option.value }}"
+                        class="form-radio-modern"
+                        {% if option.checked %}checked{% endif %}
+                        {% if field.required %}required{% endif %}
+                    >
+                    <label for="{{ field.id }}-{{ option.value }}" class="form-radio-label-modern">
+                        {{ option.label }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            {% elif field.type == 'date' or field.type == 'datetime-local' or field.type == 'time' %}
+            <input 
+                type="{{ field.type }}" 
+                id="{{ field.id }}" 
+                name="{{ field.name }}" 
+                class="form-input-modern {% if field.class %}{{ field.class }}{% endif %}"
+                {% if field.required %}required{% endif %}
+                {% if field.min %}min="{{ field.min }}"{% endif %}
+                {% if field.max %}max="{{ field.max }}"{% endif %}
+                {% if field.value %}value="{{ field.value }}"{% endif %}
+            >
+            {% endif %}
+            
+            {% if field.help_text %}
+            <p class="form-help-text-modern">{{ field.help_text }}</p>
+            {% endif %}
+            
+            {% if field.errors %}
+            <div class="form-errors-modern">
+                {% for error in field.errors %}
+                <p class="form-error-modern">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if actions %}
+    <div class="form-actions-modern">
+        {{ actions|safe }}
+    </div>
+    {% endif %}
+    
+    {% if footer %}
+    <div class="form-footer-modern">
+        {{ footer|safe }}
+    </div>
+    {% endif %}
+</form>
+
+<style>
+.form-container-modern {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.form-container-modern:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.form-header-modern {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.form-title-modern {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.form-subtitle-modern {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.form-messages-modern {
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-message-modern {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.form-message-modern:last-child {
+    margin-bottom: 0;
+}
+
+.form-message-modern.form-message-error {
+    background-color: #fff5f5;
+    color: #dc3545;
+    border: 1px solid #fed7d7;
+}
+
+.form-message-modern.form-message-success {
+    background-color: #f0fdf4;
+    color: #28a745;
+    border: 1px solid #c6f6d5;
+}
+
+.form-message-modern.form-message-info {
+    background-color: #f0f9ff;
+    color: #17a2b8;
+    border: 1px solid #bee3f8;
+}
+
+.form-message-modern.form-message-warning {
+    background-color: #fffdf5;
+    color: #ffc107;
+    border: 1px solid #feedaf;
+}
+
+.form-fields-modern {
+    padding: 0 1.5rem;
+}
+
+.form-field-modern {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.form-field-modern:last-child {
+    margin-bottom: 0;
+}
+
+.form-field-required .form-label-modern::after {
+    content: " *";
+    color: #dc3545;
+}
+
+.form-label-modern {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.form-icon-modern {
+    margin-right: 0.5rem;
+    color: #034EA2;
+}
+
+.form-required-indicator {
+    color: #dc3545;
+}
+
+.form-input-modern,
+.form-textarea-modern,
+.form-select-modern {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #374151;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    appearance: none;
+}
+
+.form-input-modern:focus,
+.form-textarea-modern:focus,
+.form-select-modern:focus {
+    color: #374151;
+    background-color: #ffffff;
+    border-color: #034EA2;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.form-input-modern::placeholder,
+.form-textarea-modern::placeholder,
+.form-select-modern::placeholder {
+    color: #9ca3af;
+}
+
+.form-textarea-modern {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-select-modern {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.form-checkbox-wrapper-modern {
+    display: flex;
+    align-items: center;
+}
+
+.form-checkbox-modern {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    color: #034EA2;
+    accent-color: #034EA2;
+    margin-right: 0.75rem;
+}
+
+.form-checkbox-label-modern {
+    font-weight: 400;
+    color: #374151;
+    font-size: 0.875rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.form-checkbox-icon-modern {
+    margin-right: 0.5rem;
+    color: #034EA2;
+}
+
+.form-radio-wrapper-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-radio-option-modern {
+    display: flex;
+    align-items: center;
+}
+
+.form-radio-modern {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid #d1d5db;
+    color: #034EA2;
+    accent-color: #034EA2;
+    margin-right: 0.75rem;
+}
+
+.form-radio-label-modern {
+    font-weight: 400;
+    color: #374151;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.form-help-text-modern {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.form-errors-modern {
+    margin-top: 0.5rem;
+}
+
+.form-error-modern {
+    font-size: 0.75rem;
+    color: #dc3545;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.form-error-modern:last-child {
+    margin-bottom: 0;
+}
+
+.form-actions-modern {
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-footer-modern {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .form-container-modern {
+        margin-bottom: 1rem;
+    }
+    
+    .form-header-modern {
+        padding: 1rem 1rem 0 1rem;
+    }
+    
+    .form-title-modern {
+        font-size: 1rem;
+    }
+    
+    .form-subtitle-modern {
+        font-size: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .form-messages-modern {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .form-fields-modern {
+        padding: 0 1rem;
+    }
+    
+    .form-field-modern {
+        margin-bottom: 1rem;
+    }
+    
+    .form-label-modern {
+        font-size: 0.75rem;
+    }
+    
+    .form-input-modern,
+    .form-textarea-modern,
+    .form-select-modern {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .form-actions-modern {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-footer-modern {
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .form-container-modern .form-title-modern {
+        font-size: 1.0625rem;
+    }
+    
+    .form-container-modern .form-subtitle-modern {
+        font-size: 0.8125rem;
+    }
+    
+    .form-container-modern .form-input-modern,
+    .form-container-modern .form-textarea-modern,
+    .form-container-modern .form-select-modern {
+        font-size: 0.8125rem;
+        padding: 0.625rem 0.875rem;
+    }
+}
+
+/* Estados para diferentes variantes */
+.form-container-modern.variant-primary {
+    border-top: 4px solid #034EA2;
+}
+
+.form-container-modern.variant-success {
+    border-top: 4px solid #28a745;
+}
+
+.form-container-modern.variant-warning {
+    border-top: 4px solid #ffc107;
+}
+
+.form-container-modern.variant-danger {
+    border-top: 4px solid #dc3545;
+}
+
+.form-container-modern.variant-info {
+    border-top: 4px solid #17a2b8;
+}
+
+/* Estados para formulários compactos */
+.form-container-modern.compact .form-field-modern {
+    margin-bottom: 1rem;
+}
+
+.form-container-modern.compact .form-input-modern,
+.form-container-modern.compact .form-textarea-modern,
+.form-container-modern.compact .form-select-modern {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+}
+
+.form-container-modern.compact .form-header-modern {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.form-container-modern.compact .form-fields-modern {
+    padding: 0 1rem;
+}
+
+.form-container-modern.compact .form-actions-modern {
+    padding: 1rem;
+}
+
+.form-container-modern.compact .form-footer-modern {
+    padding: 0.75rem 1rem;
+}
+
+/* Estados para formulários com bordas arredondadas */
+.form-container-modern.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.form-container-modern.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.form-container-modern.rounded-2xl {
+    border-radius: 1rem;
+}
+
+/* Estados para formulários sem sombra */
+.form-container-modern.no-shadow {
+    box-shadow: none;
+}
+
+/* Estados para formulários com validação */
+.form-container-modern .form-input-modern:valid,
+.form-container-modern .form-textarea-modern:valid,
+.form-container-modern .form-select-modern:valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+}
+
+.form-container-modern .form-input-modern:invalid:not(:focus):not(:placeholder-shown),
+.form-container-modern .form-textarea-modern:invalid:not(:focus):not(:placeholder-shown),
+.form-container-modern .form-select-modern:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Estados para formulários com tema escuro */
+.form-container-modern.theme-dark {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+.form-container-modern.theme-dark .form-header-modern {
+    background-color: #111827;
+    border-color: #374151;
+}
+
+.form-container-modern.theme-dark .form-title-modern {
+    color: #ffffff;
+}
+
+.form-container-modern.theme-dark .form-subtitle-modern {
+    color: #9ca3af;
+}
+
+.form-container-modern.theme-dark .form-input-modern,
+.form-container-modern.theme-dark .form-textarea-modern,
+.form-container-modern.theme-dark .form-select-modern {
+    background-color: #111827;
+    border-color: #374151;
+    color: #ffffff;
+}
+
+.form-container-modern.theme-dark .form-input-modern:focus,
+.form-container-modern.theme-dark .form-textarea-modern:focus,
+.form-container-modern.theme-dark .form-select-modern:focus {
+    background-color: #111827;
+    border-color: #034EA2;
+}
+
+.form-container-modern.theme-dark .form-input-modern::placeholder,
+.form-container-modern.theme-dark .form-textarea-modern::placeholder,
+.form-container-modern.theme-dark .form-select-modern::placeholder {
+    color: #4b5563;
+}
+
+.form-container-modern.theme-dark .form-label-modern {
+    color: #d1d5db;
+}
+
+.form-container-modern.theme-dark .form-checkbox-label-modern {
+    color: #d1d5db;
+}
+
+.form-container-modern.theme-dark .form-radio-label-modern {
+    color: #d1d5db;
+}
+
+.form-container-modern.theme-dark .form-help-text-modern {
+    color: #9ca3af;
+}
+
+.form-container-modern.theme-dark .form-actions-modern {
+    background-color: #111827;
+    border-top: 1px solid #374151;
+}
+
+.form-container-modern.theme-dark .form-footer-modern {
+    background-color: #111827;
+    border-top: 1px solid #374151;
+    color: #9ca3af;
+}
+
+.form-container-modern.theme-dark .form-message-modern.form-message-error {
+    background-color: #2c1212;
+    color: #dc3545;
+    border: 1px solid #4a1818;
+}
+
+.form-container-modern.theme-dark .form-message-modern.form-message-success {
+    background-color: #122c12;
+    color: #28a745;
+    border: 1px solid #184a18;
+}
+
+.form-container-modern.theme-dark .form-message-modern.form-message-info {
+    background-color: #122c2c;
+    color: #17a2b8;
+    border: 1px solid #184a4a;
+}
+
+.form-container-modern.theme-dark .form-message-modern.form-message-warning {
+    background-color: #2c2c12;
+    color: #ffc107;
+    border: 1px solid #4a4a18;
+}
+
+.form-container-modern.theme-dark .form-error-modern {
+    color: #dc3545;
+}
+</style>
+
+<script>
+class ModernForm {
+    constructor(formId, options = {}) {
+        this.formId = formId;
+        this.formElement = document.getElementById(formId);
+        this.options = Object.assign({
+            onSubmit: null,
+            onError: null,
+            showLoading: true,
+            validateOnSubmit: true
+        }, options);
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar eventos ao formulário
+        if (this.formElement) {
+            this.formElement.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleSubmit();
+            });
+            
+            // Adicionar eventos aos campos para validação em tempo real
+            const inputs = this.formElement.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('blur', () => {
+                    this.validateField(input);
+                });
+                
+                input.addEventListener('input', () => {
+                    this.clearFieldError(input);
+                });
+            });
+        }
+    }
+    
+    validateField(field) {
+        // Limpar mensagens de erro anteriores
+        this.clearFieldError(field);
+        
+        // Validar campo obrigatório
+        if (field.hasAttribute('required') && !field.value.trim()) {
+            this.showFieldError(field, 'Este campo é obrigatório');
+            return false;
+        }
+        
+        // Validar email
+        if (field.type === 'email' && field.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value)) {
+                this.showFieldError(field, 'Por favor, insira um email válido');
+                return false;
+            }
+        }
+        
+        // Validar número
+        if (field.type === 'number' && field.value) {
+            if (isNaN(field.value)) {
+                this.showFieldError(field, 'Por favor, insira um número válido');
+                return false;
+            }
+            
+            const numValue = parseFloat(field.value);
+            if (field.min && numValue < parseFloat(field.min)) {
+                this.showFieldError(field, `O valor deve ser maior ou igual a ${field.min}`);
+                return false;
+            }
+            
+            if (field.max && numValue > parseFloat(field.max)) {
+                this.showFieldError(field, `O valor deve ser menor ou igual a ${field.max}`);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    showFieldError(field, message) {
+        // Remover mensagem de erro existente
+        const existingError = field.parentNode.querySelector('.form-error-modern');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Adicionar nova mensagem de erro
+        const errorElement = document.createElement('p');
+        errorElement.className = 'form-error-modern';
+        errorElement.textContent = message;
+        
+        // Inserir após o campo
+        field.parentNode.appendChild(errorElement);
+        field.classList.add('error');
+    }
+    
+    clearFieldError(field) {
+        const errorElement = field.parentNode.querySelector('.form-error-modern');
+        if (errorElement) {
+            errorElement.remove();
+        }
+        field.classList.remove('error');
+    }
+    
+    validateForm() {
+        let isValid = true;
+        const fields = this.formElement.querySelectorAll('input, textarea, select');
+        
+        fields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+    
+    async handleSubmit() {
+        // Validar formulário se necessário
+        if (this.options.validateOnSubmit) {
+            if (!this.validateForm()) {
+                return;
+            }
+        }
+        
+        // Mostrar estado de carregamento se configurado
+        if (this.options.showLoading) {
+            this.showLoadingState();
+        }
+        
+        // Coletar dados do formulário
+        const formData = new FormData(this.formElement);
+        const data = Object.fromEntries(formData.entries());
+        
+        try {
+            // Chamar função de callback se definida
+            if (this.options.onSubmit) {
+                await this.options.onSubmit(data);
+            } else {
+                // Implementação padrão de envio
+                await this.defaultSubmit(data);
+            }
+        } catch (error) {
+            // Tratar erro
+            this.handleError(error);
+        } finally {
+            // Esconder estado de carregamento
+            if (this.options.showLoading) {
+                this.hideLoadingState();
+            }
+        }
+    }
+    
+    async defaultSubmit(data) {
+        // Implementação padrão de envio
+        // Esta função seria substituída pela implementação real
+        console.log('Envio padrão:', data);
+        
+        // Simular chamada assíncrona
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Simular sucesso ou erro aleatório
+                if (Math.random() > 0.2) {
+                    resolve({ success: true });
+                } else {
+                    reject(new Error('Ocorreu um erro durante o envio'));
+                }
+            }, 1000);
+        });
+    }
+    
+    handleError(error) {
+        // Chamar função de callback se definida
+        if (this.options.onError) {
+            this.options.onError(error);
+        } else {
+            // Implementação padrão de tratamento de erro
+            this.showErrorMessage(error.message || 'Ocorreu um erro durante o envio');
+        }
+    }
+    
+    showLoadingState() {
+        const submitButtons = this.formElement.querySelectorAll('button[type="submit"]');
+        submitButtons.forEach(button => {
+            button.disabled = true;
+            const originalContent = button.innerHTML;
+            button.setAttribute('data-original-content', originalContent);
+            button.innerHTML = `
+                <i class="fas fa-spinner fa-spin mr-2"></i>
+                Enviando...
+            `;
+        });
+    }
+    
+    hideLoadingState() {
+        const submitButtons = this.formElement.querySelectorAll('button[type="submit"]');
+        submitButtons.forEach(button => {
+            button.disabled = false;
+            const originalContent = button.getAttribute('data-original-content');
+            if (originalContent) {
+                button.innerHTML = originalContent;
+            }
+        });
+    }
+    
+    showErrorMessage(message) {
+        // Remover mensagens existentes
+        const existingMessages = this.formElement.querySelector('.form-messages-modern');
+        if (existingMessages) {
+            existingMessages.remove();
+        }
+        
+        // Adicionar nova mensagem de erro
+        const messagesContainer = document.createElement('div');
+        messagesContainer.className = 'form-messages-modern';
+        messagesContainer.innerHTML = `
+            <div class="form-message-modern form-message-error">
+                ${message}
+            </div>
+        `;
+        
+        // Inserir antes dos campos
+        const fieldsContainer = this.formElement.querySelector('.form-fields-modern');
+        if (fieldsContainer) {
+            this.formElement.insertBefore(messagesContainer, fieldsContainer);
+        } else {
+            // Se não encontrar o container de campos, inserir no início
+            this.formElement.insertBefore(messagesContainer, this.formElement.firstChild);
+        }
+        
+        // Rolagem suave para a mensagem de erro
+        messagesContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    clearMessages() {
+        const messagesContainer = this.formElement.querySelector('.form-messages-modern');
+        if (messagesContainer) {
+            messagesContainer.remove();
+        }
+    }
+    
+    setFieldValue(fieldName, value) {
+        const field = this.formElement.querySelector(`[name="${fieldName}"]`);
+        if (field) {
+            field.value = value;
+        }
+    }
+    
+    getFieldValues() {
+        const formData = new FormData(this.formElement);
+        return Object.fromEntries(formData.entries());
+    }
+}
+
+// Funções utilitárias
+function createForm(options) {
+    const {
+        id = `form-${Date.now()}`,
+        title = '',
+        subtitle = '',
+        method = 'POST',
+        action = '#',
+        fields = [],
+        actions = '',
+        footer = '',
+        classes = '',
+        onSubmit = null,
+        onError = null
+    } = options;
+    
+    // Criar elemento do formulário
+    const formElement = document.createElement('form');
+    formElement.className = `form-container-modern ${classes}`;
+    formElement.id = id;
+    formElement.method = method;
+    formElement.action = action;
+    
+    // Criar conteúdo do formulário
+    let fieldsHTML = '';
+    fields.forEach(field => {
+        fieldsHTML += `
+            <div class="form-field-modern ${field.type === 'checkbox' || field.type === 'radio' ? 'form-field-boolean' : ''} ${field.required ? 'form-field-required' : ''}">
+                ${field.type !== 'checkbox' && field.type !== 'radio' ? `
+                    <label for="${field.id}" class="form-label-modern">
+                        ${field.icon ? `<i class="${field.icon} form-icon-modern"></i>` : ''}
+                        ${field.label}
+                        ${field.required ? '<span class="form-required-indicator">*</span>' : ''}
+                    </label>
+                ` : ''}
+                
+                ${field.type === 'text' || field.type === 'email' || field.type === 'password' || field.type === 'number' || field.type === 'tel' || field.type === 'url' ? `
+                    <input 
+                        type="${field.type}" 
+                        id="${field.id}" 
+                        name="${field.name}" 
+                        class="form-input-modern ${field.class || ''}"
+                        placeholder="${field.placeholder || ''}"
+                        ${field.required ? 'required' : ''}
+                        ${field.min ? `min="${field.min}"` : ''}
+                        ${field.max ? `max="${field.max}"` : ''}
+                        ${field.step ? `step="${field.step}"` : ''}
+                        ${field.pattern ? `pattern="${field.pattern}"` : ''}
+                        ${field.autocomplete ? `autocomplete="${field.autocomplete}"` : ''}
+                        ${field.value ? `value="${field.value}"` : ''}
+                    >
+                ` : field.type === 'textarea' ? `
+                    <textarea 
+                        id="${field.id}" 
+                        name="${field.name}" 
+                        class="form-textarea-modern ${field.class || ''}"
+                        placeholder="${field.placeholder || ''}"
+                        rows="${field.rows || 3}"
+                        ${field.required ? 'required' : ''}
+                    >${field.value || ''}</textarea>
+                ` : field.type === 'select' ? `
+                    <select 
+                        id="${field.id}" 
+                        name="${field.name}" 
+                        class="form-select-modern ${field.class || ''}"
+                        ${field.required ? 'required' : ''}
+                    >
+                        <option value="">${field.placeholder || 'Selecione uma opção'}</option>
+                        ${(field.options || []).map(option => `
+                            <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.label}</option>
+                        `).join('')}
+                    </select>
+                ` : field.type === 'checkbox' ? `
+                    <div class="form-checkbox-wrapper-modern">
+                        <input 
+                            type="checkbox" 
+                            id="${field.id}" 
+                            name="${field.name}" 
+                            class="form-checkbox-modern"
+                            ${field.checked ? 'checked' : ''}
+                            ${field.required ? 'required' : ''}
+                        >
+                        <label for="${field.id}" class="form-checkbox-label-modern">
+                            ${field.icon ? `<i class="${field.icon} form-checkbox-icon-modern"></i>` : ''}
+                            ${field.label}
+                            ${field.required ? '<span class="form-required-indicator">*</span>' : ''}
+                        </label>
+                    </div>
+                ` : field.type === 'radio' ? `
+                    <div class="form-radio-wrapper-modern">
+                        ${(field.options || []).map(option => `
+                            <div class="form-radio-option-modern">
+                                <input 
+                                    type="radio" 
+                                    id="${field.id}-${option.value}" 
+                                    name="${field.name}" 
+                                    value="${option.value}"
+                                    class="form-radio-modern"
+                                    ${option.checked ? 'checked' : ''}
+                                    ${field.required ? 'required' : ''}
+                                >
+                                <label for="${field.id}-${option.value}" class="form-radio-label-modern">
+                                    ${option.label}
+                                </label>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : field.type === 'date' || field.type === 'datetime-local' || field.type === 'time' ? `
+                    <input 
+                        type="${field.type}" 
+                        id="${field.id}" 
+                        name="${field.name}" 
+                        class="form-input-modern ${field.class || ''}"
+                        ${field.required ? 'required' : ''}
+                        ${field.min ? `min="${field.min}"` : ''}
+                        ${field.max ? `max="${field.max}"` : ''}
+                        ${field.value ? `value="${field.value}"` : ''}
+                    >
+                ` : ''}
+                
+                ${field.help_text ? `<p class="form-help-text-modern">${field.help_text}</p>` : ''}
+            </div>
+        `;
+    });
+    
+    formElement.innerHTML = `
+        <input type="hidden" name="csrfmiddlewaretoken" value="">
+        
+        ${title ? `
+        <div class="form-header-modern">
+            <h3 class="form-title-modern">${title}</h3>
+            ${subtitle ? `<p class="form-subtitle-modern">${subtitle}</p>` : ''}
+        </div>
+        ` : ''}
+        
+        <div class="form-fields-modern">
+            ${fieldsHTML}
+        </div>
+        
+        ${actions ? `
+        <div class="form-actions-modern">
+            ${actions}
+        </div>
+        ` : ''}
+        
+        ${footer ? `
+        <div class="form-footer-modern">
+            ${footer}
+        </div>
+        ` : ''}
+    `;
+    
+    // Adicionar ao container desejado (ou body se não especificado)
+    const container = options.container ? document.querySelector(options.container) : document.body;
+    if (container) {
+        container.appendChild(formElement);
+    }
+    
+    // Criar instância do formulário
+    const formInstance = new ModernForm(id, {
+        onSubmit: onSubmit,
+        onError: onError
+    });
+    
+    return formInstance;
+}
+
+// Inicializar formulários quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe form-init
+    const formElements = document.querySelectorAll('[data-form-init]');
+    
+    formElements.forEach(element => {
+        const formId = element.id;
+        const action = element.getAttribute('data-action') || '#';
+        const method = element.getAttribute('data-method') || 'POST';
+        
+        // Criar instância do formulário
+        window[`form_${formId}`] = new ModernForm(formId, {
+            action: action,
+            method: method
+        });
+    });
+});
+
+// Exportar funções para uso global
+window.ModernForm = ModernForm;
+window.createForm = createForm;
+</script>

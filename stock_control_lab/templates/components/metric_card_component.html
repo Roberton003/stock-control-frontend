@@ -1,0 +1,579 @@
+<!-- metric_card_component.html - Componente de card de métrica moderno -->
+<div class="metric-card-container {% if classes %}{{ classes }}{% endif %} {% if variant %}metric-card-{{ variant }}{% endif %}" id="{{ card_id }}">
+    {% if clickable %}
+    <a href="{% if url %}{{ url }}{% endif %}" class="metric-card-link">
+    {% endif %}
+        
+        <div class="metric-card-content">
+            {% if icon %}
+            <div class="metric-card-icon-container">
+                <i class="{{ icon }} metric-card-icon"></i>
+            </div>
+            {% endif %}
+            
+            <div class="metric-card-info">
+                {% if title %}
+                <h3 class="metric-card-title">{{ title }}</h3>
+                {% endif %}
+                
+                {% if value %}
+                <div class="metric-card-value-container">
+                    <span class="metric-card-value">{{ value }}</span>
+                    {% if unit %}
+                    <span class="metric-card-unit">{{ unit }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if description %}
+                <p class="metric-card-description">{{ description }}</p>
+                {% endif %}
+                
+                {% if trend %}
+                <div class="metric-card-trend">
+                    {% if trend.direction == 'up' %}
+                    <i class="fas fa-arrow-up metric-card-trend-icon trend-positive"></i>
+                    {% elif trend.direction == 'down' %}
+                    <i class="fas fa-arrow-down metric-card-trend-icon trend-negative"></i>
+                    {% else %}
+                    <i class="fas fa-minus metric-card-trend-icon trend-neutral"></i>
+                    {% endif %}
+                    <span class="metric-card-trend-value {% if trend.direction == 'up' %}trend-positive{% elif trend.direction == 'down' %}trend-negative{% endif %}">
+                        {{ trend.value }}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if actions %}
+        <div class="metric-card-actions">
+            {{ actions|safe }}
+        </div>
+        {% endif %}
+        
+    {% if clickable %}
+    </a>
+    {% endif %}
+</div>
+
+<style>
+.metric-card-container {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.metric-card-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.metric-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.metric-card-content {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.metric-card-icon-container {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+    background-color: #eff6ff;
+}
+
+.metric-card-icon {
+    font-size: 1.5rem;
+    color: #034EA2;
+}
+
+.metric-card-info {
+    flex: 1;
+}
+
+.metric-card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metric-card-value-container {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.2;
+}
+
+.metric-card-unit {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-left: 0.25rem;
+}
+
+.metric-card-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.metric-card-trend {
+    display: flex;
+    align-items: center;
+}
+
+.metric-card-trend-icon {
+    font-size: 0.875rem;
+}
+
+.metric-card-trend-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+
+.trend-positive {
+    color: #28a745;
+}
+
+.trend-negative {
+    color: #dc3545;
+}
+
+.trend-neutral {
+    color: #6b7280;
+}
+
+.metric-card-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+/* Variantes de cards */
+.metric-card-container.variant-primary {
+    border-top: 4px solid #034EA2;
+}
+
+.metric-card-container.variant-primary .metric-card-icon-container {
+    background-color: #eff6ff;
+    color: #034EA2;
+}
+
+.metric-card-container.variant-success {
+    border-top: 4px solid #28a745;
+}
+
+.metric-card-container.variant-success .metric-card-icon-container {
+    background-color: #f0fff4;
+    color: #28a745;
+}
+
+.metric-card-container.variant-warning {
+    border-top: 4px solid #ffc107;
+}
+
+.metric-card-container.variant-warning .metric-card-icon-container {
+    background-color: #fffdf5;
+    color: #ffc107;
+}
+
+.metric-card-container.variant-danger {
+    border-top: 4px solid #dc3545;
+}
+
+.metric-card-container.variant-danger .metric-card-icon-container {
+    background-color: #fff5f5;
+    color: #dc3545;
+}
+
+.metric-card-container.variant-info {
+    border-top: 4px solid #17a2b8;
+}
+
+.metric-card-container.variant-info .metric-card-icon-container {
+    background-color: #f5fcfd;
+    color: #17a2b8;
+}
+
+/* Cards com gradientes */
+.metric-card-container.gradient-blue {
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    color: white;
+    border: none;
+}
+
+.metric-card-container.gradient-blue .metric-card-icon-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.metric-card-container.gradient-blue .metric-card-title {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.metric-card-container.gradient-blue .metric-card-value {
+    color: white;
+}
+
+.metric-card-container.gradient-blue .metric-card-unit {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.metric-card-container.gradient-blue .metric-card-description {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Cards compactos */
+.metric-card-container.compact .metric-card-content {
+    padding: 1rem;
+}
+
+.metric-card-container.compact .metric-card-icon-container {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 1rem;
+}
+
+.metric-card-container.compact .metric-card-icon {
+    font-size: 1.25rem;
+}
+
+.metric-card-container.compact .metric-card-value {
+    font-size: 1.5rem;
+}
+
+.metric-card-container.compact .metric-card-unit {
+    font-size: 0.875rem;
+}
+
+/* Cards horizontais */
+.metric-card-container.horizontal .metric-card-content {
+    flex-direction: row;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .metric-card-container {
+        margin-bottom: 1rem;
+    }
+    
+    .metric-card-content {
+        padding: 1rem;
+    }
+    
+    .metric-card-icon-container {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 1rem;
+    }
+    
+    .metric-card-icon {
+        font-size: 1.25rem;
+    }
+    
+    .metric-card-value {
+        font-size: 1.5rem;
+    }
+    
+    .metric-card-unit {
+        font-size: 0.875rem;
+    }
+}
+
+/* Estados para diferentes tamanhos de tela */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .metric-card-container .metric-card-value {
+        font-size: 1.75rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .metric-card-container .metric-card-value {
+        font-size: 2rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.metric-card-container {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Estados de loading */
+.metric-card-container.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.metric-card-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metric-card-container.loading::after::before {
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid #e5e7eb;
+    border-top-color: #034EA2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estados de erro */
+.metric-card-container.error {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.metric-card-container.error .metric-card-icon-container {
+    background-color: #fff5f5;
+    color: #dc3545;
+}
+</style>
+
+<script>
+class MetricCard {
+    constructor(cardId, options = {}) {
+        this.cardId = cardId;
+        this.valueElement = document.querySelector(`#${cardId} .metric-card-value`);
+        this.unitElement = document.querySelector(`#${cardId} .metric-card-unit`);
+        this.trendElement = document.querySelector(`#${cardId} .metric-card-trend-value`);
+        this.trendIconElement = document.querySelector(`#${cardId} .metric-card-trend-icon`);
+        
+        this.options = Object.assign({
+            animate: true,
+            animationDuration: 1000,
+            formatter: null
+        }, options);
+        
+        this.currentValue = 0;
+    }
+    
+    updateValue(newValue, newUnit = null, animate = true) {
+        if (this.valueElement) {
+            if (animate && this.options.animate) {
+                this.animateValue(newValue);
+            } else {
+                this.valueElement.textContent = this.formatValue(newValue);
+            }
+        }
+        
+        if (this.unitElement && newUnit) {
+            this.unitElement.textContent = newUnit;
+        }
+        
+        this.currentValue = newValue;
+    }
+    
+    animateValue(targetValue) {
+        const startValue = this.currentValue;
+        const startTime = performance.now();
+        const duration = this.options.animationDuration;
+        
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function (easeOutQuad)
+            const easeProgress = 1 - Math.pow(1 - progress, 2);
+            const currentValue = startValue + (targetValue - startValue) * easeProgress;
+            
+            if (this.valueElement) {
+                this.valueElement.textContent = this.formatValue(currentValue);
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                this.currentValue = targetValue;
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+    
+    formatValue(value) {
+        if (this.options.formatter) {
+            return this.options.formatter(value);
+        }
+        
+        // Formatar números grandes
+        if (value >= 1000000) {
+            return (value / 1000000).toFixed(1) + 'M';
+        } else if (value >= 1000) {
+            return (value / 1000).toFixed(1) + 'K';
+        } else {
+            return Number.isInteger(value) ? value.toString() : value.toFixed(2);
+        }
+    }
+    
+    updateTrend(direction, value) {
+        if (this.trendElement) {
+            this.trendElement.textContent = value;
+            
+            // Remover classes
+            this.trendElement.classList.remove('trend-positive', 'trend-negative', 'trend-neutral');
+            this.trendIconElement.classList.remove('trend-positive', 'trend-negative', 'trend-neutral');
+            
+            // Adicionar classe apropriada
+            if (direction === 'up') {
+                this.trendElement.classList.add('trend-positive');
+                this.trendIconElement.classList.add('trend-positive');
+                this.trendIconElement.className = 'fas fa-arrow-up metric-card-trend-icon trend-positive';
+            } else if (direction === 'down') {
+                this.trendElement.classList.add('trend-negative');
+                this.trendIconElement.classList.add('trend-negative');
+                this.trendIconElement.className = 'fas fa-arrow-down metric-card-trend-icon trend-negative';
+            } else {
+                this.trendElement.classList.add('trend-neutral');
+                this.trendIconElement.classList.add('trend-neutral');
+                this.trendIconElement.className = 'fas fa-minus metric-card-trend-icon trend-neutral';
+            }
+        }
+    }
+    
+    setLoading(loading = true) {
+        const cardElement = document.getElementById(this.cardId);
+        if (cardElement) {
+            if (loading) {
+                cardElement.classList.add('loading');
+            } else {
+                cardElement.classList.remove('loading');
+            }
+        }
+    }
+    
+    setError(error = true) {
+        const cardElement = document.getElementById(this.cardId);
+        if (cardElement) {
+            if (error) {
+                cardElement.classList.add('error');
+            } else {
+                cardElement.classList.remove('error');
+            }
+        }
+    }
+    
+    refreshData() {
+        // Simular atualização de dados
+        this.setLoading(true);
+        
+        setTimeout(() => {
+            // Aqui você faria uma chamada AJAX para atualizar os dados
+            // Por enquanto, vamos simular uma atualização
+            const newValue = this.currentValue * 1.1; // Aumentar 10%
+            this.updateValue(newValue);
+            this.setLoading(false);
+        }, 1000);
+    }
+}
+
+// Função para criar múltiplos cards de métrica
+function createMetricCards(cardsData) {
+    const cardContainer = document.getElementById('metric-cards-container');
+    if (!cardContainer) return;
+    
+    cardsData.forEach(cardData => {
+        const card = document.createElement('div');
+        card.className = `metric-card-container ${cardData.classes || ''}`;
+        card.id = cardData.id;
+        card.innerHTML = `
+            <div class="metric-card-content">
+                <div class="metric-card-icon-container">
+                    <i class="${cardData.icon} metric-card-icon"></i>
+                </div>
+                <div class="metric-card-info">
+                    <h3 class="metric-card-title">${cardData.title}</h3>
+                    <div class="metric-card-value-container">
+                        <span class="metric-card-value">${cardData.value}</span>
+                        ${cardData.unit ? `<span class="metric-card-unit">${cardData.unit}</span>` : ''}
+                    </div>
+                    ${cardData.trend ? `
+                        <div class="metric-card-trend">
+                            <i class="fas fa-arrow-${cardData.trend.direction === 'up' ? 'up' : cardData.trend.direction === 'down' ? 'down' : 'minus'} metric-card-trend-icon ${cardData.trend.direction === 'up' ? 'trend-positive' : cardData.trend.direction === 'down' ? 'trend-negative' : 'trend-neutral'}"></i>
+                            <span class="metric-card-trend-value ${cardData.trend.direction === 'up' ? 'trend-positive' : cardData.trend.direction === 'down' ? 'trend-negative' : 'trend-neutral'}">
+                                ${cardData.trend.value}
+                            </span>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+        cardContainer.appendChild(card);
+    });
+}
+
+// Inicializar cards de métrica quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe metric-card-init
+    const cardElements = document.querySelectorAll('[data-metric-card-init]');
+    
+    cardElements.forEach(element => {
+        const cardId = element.id;
+        const animate = element.getAttribute('data-animate') !== 'false';
+        const formatter = element.getAttribute('data-formatter');
+        
+        // Criar instância do card de métrica
+        window[`metric_${cardId}`] = new MetricCard(cardId, {
+            animate: animate,
+            formatter: formatter ? window[formatter] : null
+        });
+    });
+});
+
+// Exportar classe e funções para uso global
+window.MetricCard = MetricCard;
+window.createMetricCards = createMetricCards;
+</script>

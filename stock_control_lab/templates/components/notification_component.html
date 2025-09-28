@@ -1,0 +1,82 @@
+<!-- notification_component.html - Componente de notificação -->
+<div id="notification-container" class="fixed top-4 right-4 z-50 w-full max-w-sm">
+    <!-- As notificações serão inseridas aqui dinamicamente -->
+</div>
+
+<style>
+.notification {
+    animation: slideInRight 0.3s ease-out;
+    max-width: 384px;
+}
+
+.notification-success {
+    border-left: 4px solid #28a745;
+    background-color: #f8fff9;
+}
+
+.notification-error {
+    border-left: 4px solid #dc3545;
+    background-color: #fff8f8;
+}
+
+.notification-warning {
+    border-left: 4px solid #ffc107;
+    background-color: #fffdf5;
+}
+
+.notification-info {
+    border-left: 4px solid #17a2b8;
+    background-color: #f5fcfd;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.slide-out {
+    animation: slideOutRight 0.3s ease-out forwards;
+}
+</style>
+
+<script>
+// Script para gerenciar notificações
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para remover notificação automaticamente
+    function setupAutoRemoval() {
+        const notifications = document.querySelectorAll('.notification');
+        notifications.forEach(notification => {
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.add('slide-out');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        });
+    }
+    
+    // Chamar função após um breve delay para permitir renderização
+    setTimeout(setupAutoRemoval, 100);
+});
+</script>

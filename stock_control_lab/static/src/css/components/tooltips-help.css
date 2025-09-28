@@ -1,0 +1,391 @@
+/*
+ * Componentes de Tooltips e Ajuda Contextual
+ * Elementos de assistência e orientação para usuários
+ */
+
+/* Container de Tooltip */
+.tooltip {
+  @apply relative inline-block;
+}
+
+/* Conteúdo do Tooltip */
+.tooltip-content {
+  @apply absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 invisible transition-all duration-300 ease-in-out;
+  @apply dark:bg-gray-700;
+}
+
+.tooltip-content--visible {
+  @apply opacity-100 visible;
+}
+
+/* Posicionamento do Tooltip */
+.tooltip-content--top {
+  @apply bottom-full left-1/2 transform -translate-x-1/2 mb-2;
+}
+
+.tooltip-content--top-left {
+  @apply bottom-full left-0 mb-2;
+}
+
+.tooltip-content--top-right {
+  @apply bottom-full right-0 mb-2;
+}
+
+.tooltip-content--bottom {
+  @apply top-full left-1/2 transform -translate-x-1/2 mt-2;
+}
+
+.tooltip-content--bottom-left {
+  @apply top-full left-0 mt-2;
+}
+
+.tooltip-content--bottom-right {
+  @apply top-full right-0 mt-2;
+}
+
+.tooltip-content--left {
+  @apply right-full top-1/2 transform -translate-y-1/2 mr-2;
+}
+
+.tooltip-content--right {
+  @apply left-full top-1/2 transform -translate-y-1/2 ml-2;
+}
+
+/* Triângulo do Tooltip (Seta) */
+.tooltip-arrow {
+  @apply absolute w-0 h-0 border-solid;
+}
+
+.tooltip-arrow--top {
+  @apply left-1/2 transform -translate-x-1/2 top-full border-t-0 border-r-4 border-l-4 border-b-4 border-t-transparent border-r-transparent border-l-transparent border-b-gray-900;
+  @apply dark:border-b-gray-700;
+}
+
+.tooltip-arrow--top-left {
+  @apply left-3 top-full border-t-0 border-r-4 border-l-4 border-b-4 border-t-transparent border-r-transparent border-l-transparent border-b-gray-900;
+  @apply dark:border-b-gray-700;
+}
+
+.tooltip-arrow--top-right {
+  @apply right-3 top-full border-t-0 border-r-4 border-l-4 border-b-4 border-t-transparent border-r-transparent border-l-transparent border-b-gray-900;
+  @apply dark:border-b-gray-700;
+}
+
+.tooltip-arrow--bottom {
+  @apply left-1/2 transform -translate-x-1/2 bottom-full border-b-0 border-r-4 border-l-4 border-t-4 border-b-transparent border-r-transparent border-l-transparent border-t-gray-900;
+  @apply dark:border-t-gray-700;
+}
+
+.tooltip-arrow--bottom-left {
+  @apply left-3 bottom-full border-b-0 border-r-4 border-l-4 border-t-4 border-b-transparent border-r-transparent border-l-transparent border-t-gray-900;
+  @apply dark:border-t-gray-700;
+}
+
+.tooltip-arrow--bottom-right {
+  @apply right-3 bottom-full border-b-0 border-r-4 border-l-4 border-t-4 border-b-transparent border-r-transparent border-l-transparent border-t-gray-900;
+  @apply dark:border-t-gray-700;
+}
+
+.tooltip-arrow--left {
+  @apply right-full top-1/2 transform -translate-y-1/2 border-l-0 border-t-4 border-b-4 border-r-4 border-l-transparent border-t-transparent border-b-transparent border-r-gray-900;
+  @apply dark:border-r-gray-700;
+}
+
+.tooltip-arrow--right {
+  @apply left-full top-1/2 transform -translate-y-1/2 border-r-0 border-t-4 border-b-4 border-l-4 border-r-transparent border-t-transparent border-b-transparent border-l-gray-900;
+  @apply dark:border-l-gray-700;
+}
+
+/* Trigger do Tooltip */
+.tooltip-trigger {
+  @apply cursor-help;
+}
+
+/* Tooltip com fundo colorido */
+.tooltip-content--info {
+  @apply bg-blue-500 text-white;
+}
+
+.tooltip-content--info .tooltip-arrow--top {
+  @apply border-b-blue-500;
+}
+
+.tooltip-content--info .tooltip-arrow--bottom {
+  @apply border-t-blue-500;
+}
+
+.tooltip-content--info .tooltip-arrow--left {
+  @apply border-r-blue-500;
+}
+
+.tooltip-content--info .tooltip-arrow--right {
+  @apply border-l-blue-500;
+}
+
+.tooltip-content--success {
+  @apply bg-success-500 text-white;
+}
+
+.tooltip-content--success .tooltip-arrow--top {
+  @apply border-b-success-500;
+}
+
+.tooltip-content--success .tooltip-arrow--bottom {
+  @apply border-t-success-500;
+}
+
+.tooltip-content--success .tooltip-arrow--left {
+  @apply border-r-success-500;
+}
+
+.tooltip-content--success .tooltip-arrow--right {
+  @apply border-l-success-500;
+}
+
+.tooltip-content--warning {
+  @apply bg-warning-500 text-white;
+}
+
+.tooltip-content--warning .tooltip-arrow--top {
+  @apply border-b-warning-500;
+}
+
+.tooltip-content--warning .tooltip-arrow--bottom {
+  @apply border-t-warning-500;
+}
+
+.tooltip-content--warning .tooltip-arrow--left {
+  @apply border-r-warning-500;
+}
+
+.tooltip-content--warning .tooltip-arrow--right {
+  @apply border-l-warning-500;
+}
+
+.tooltip-content--danger {
+  @apply bg-danger-500 text-white;
+}
+
+.tooltip-content--danger .tooltip-arrow--top {
+  @apply border-b-danger-500;
+}
+
+.tooltip-content--danger .tooltip-arrow--bottom {
+  @apply border-t-danger-500;
+}
+
+.tooltip-content--danger .tooltip-arrow--left {
+  @apply border-r-danger-500;
+}
+
+.tooltip-content--danger .tooltip-arrow--right {
+  @apply border-l-danger-500;
+}
+
+/* Tooltip com largura fixa */
+.tooltip-content--small {
+  @apply w-32;
+}
+
+.tooltip-content--medium {
+  @apply w-48;
+}
+
+.tooltip-content--large {
+  @apply w-64;
+}
+
+/* Tooltip com conteúdo rico */
+.tooltip-rich-content {
+  @apply p-0;
+}
+
+.tooltip-rich-header {
+  @apply px-3 py-2 bg-gray-800 dark:bg-gray-600 rounded-t-lg;
+}
+
+.tooltip-rich-body {
+  @apply p-3;
+}
+
+.tooltip-rich-footer {
+  @apply px-3 py-2 bg-gray-100 dark:bg-gray-600 rounded-b-lg;
+}
+
+/* Container de Ajuda Contextual */
+.help-container {
+  @apply relative inline-block;
+}
+
+/* Botão de Ajuda */
+.help-button {
+  @apply inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-gray-400 rounded-full cursor-help hover:bg-gray-500;
+  @apply dark:bg-gray-500 dark:hover:bg-gray-600;
+}
+
+/* Conteúdo da Ajuda */
+.help-content {
+  @apply absolute z-50 w-64 p-4 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition-all duration-300 ease-in-out;
+  @apply dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300;
+}
+
+.help-content--visible {
+  @apply opacity-100 visible;
+}
+
+.help-content--top {
+  @apply bottom-full left-1/2 transform -translate-x-1/2 mb-2;
+}
+
+.help-content--bottom {
+  @apply top-full left-1/2 transform -translate-x-1/2 mt-2;
+}
+
+.help-content--left {
+  @apply right-full top-1/2 transform -translate-y-1/2 mr-2;
+}
+
+.help-content--right {
+  @apply left-full top-1/2 transform -translate-y-1/2 ml-2;
+}
+
+/* Título da Ajuda */
+.help-title {
+  @apply mb-2 font-semibold text-gray-900 dark:text-white;
+}
+
+/* Texto da Ajuda */
+.help-text {
+  @apply mb-3;
+}
+
+/* Links na Ajuda */
+.help-link {
+  @apply text-primary-600 hover:underline dark:text-primary-400;
+}
+
+/* Botões da Ajuda */
+.help-actions {
+  @apply flex justify-end space-x-2;
+}
+
+.help-action-button {
+  @apply px-3 py-1 text-xs font-medium rounded;
+}
+
+/* Tooltip Animado */
+.tooltip--animated {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.tooltip--fade-in {
+  @apply opacity-100 visible animate-fade-in;
+}
+
+.tooltip--fade-out {
+  @apply opacity-0 invisible animate-fade-out;
+}
+
+.tooltip--slide-in-top {
+  @apply opacity-100 visible animate-fade-in-up;
+}
+
+.tooltip--slide-in-bottom {
+  @apply opacity-100 visible animate-fade-in-down;
+}
+
+.tooltip--slide-in-left {
+  @apply opacity-100 visible animate-fade-in-left;
+}
+
+.tooltip--slide-in-right {
+  @apply opacity-100 visible animate-fade-in-right;
+}
+
+/* Ajuda com Imagem */
+.help-with-image {
+  @apply flex flex-col;
+}
+
+.help-image {
+  @apply mb-3 rounded-lg;
+}
+
+.help-image-caption {
+  @apply text-xs text-gray-500 dark:text-gray-400 text-center mt-1;
+}
+
+/* Tooltip Hover Persistente */
+.tooltip--persistent {
+  @apply hover:opacity-100 hover:visible;
+}
+
+/* Tooltip com Delay */
+.tooltip--delayed {
+  @apply transition-delay-300;
+}
+
+/* Estados de Tooltip */
+.tooltip--loading {
+  @apply opacity-75 pointer-events-none;
+}
+
+.tooltip--error {
+  @apply border-danger-200 dark:border-danger-800;
+}
+
+/* Tooltip para Inputs */
+.input-tooltip {
+  @apply absolute right-3 top-1/2 transform -translate-y-1/2;
+}
+
+/* Tooltip Responsivo */
+@media (max-width: 768px) {
+  .tooltip-content,
+  .help-content {
+    @apply w-48;
+  }
+  
+  .tooltip-content--large,
+  .help-content--large {
+    @apply w-56;
+  }
+  
+  .tooltip-content--small {
+    @apply w-32;
+  }
+  
+  .tooltip-content--top,
+  .tooltip-content--bottom {
+    @apply left-auto right-0 transform-none;
+  }
+  
+  .tooltip-arrow--top,
+  .tooltip-arrow--bottom {
+    @apply left-auto right-3 transform-none;
+  }
+  
+  .help-content--top,
+  .help-content--bottom {
+    @apply left-auto right-0 transform-none;
+  }
+}
+
+@media (max-width: 480px) {
+  .tooltip-content,
+  .help-content {
+    @apply w-40 text-xs;
+  }
+  
+  .tooltip-content--large {
+    @apply w-44;
+  }
+  
+  .tooltip-content--small {
+    @apply w-28;
+  }
+  
+  .help-button {
+    @apply w-4 h-4 text-[10px];
+  }
+}

@@ -1,0 +1,346 @@
+/*
+ * Componentes de Loading e Estados de Erro
+ * Elementos visuais para feedback durante carregamento e erros
+ */
+
+/* Container de loading */
+.loading-container {
+  @apply flex items-center justify-center p-8;
+}
+
+.loading-container--fullscreen {
+  @apply fixed inset-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm;
+}
+
+.loading-container--overlay {
+  @apply absolute inset-0 z-10 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm;
+}
+
+/* Spinner de loading básico */
+.loading-spinner {
+  @apply animate-spin rounded-full border-4 border-solid border-current border-r-transparent;
+  @apply w-8 h-8;
+}
+
+.loading-spinner--small {
+  @apply w-4 h-4 border-2;
+}
+
+.loading-spinner--large {
+  @apply w-12 h-12 border-6;
+}
+
+.loading-spinner--xl {
+  @apply w-16 h-16 border-8;
+}
+
+/* Texto de loading */
+.loading-text {
+  @apply ml-3 text-gray-600 dark:text-gray-400 font-medium;
+}
+
+.loading-text--centered {
+  @apply ml-0 mt-4 text-center;
+}
+
+/* Barra de progresso de loading */
+.loading-progress {
+  @apply w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden;
+}
+
+.loading-progress-bar {
+  @apply bg-primary-500 h-2.5 rounded-full transition-all duration-300 ease-out;
+}
+
+.loading-progress--indeterminate::after {
+  @apply content-[''] absolute top-0 left-0 h-full w-full bg-primary-300 dark:bg-primary-700 rounded-full animate-pulse;
+}
+
+/* Skeleton loading */
+.loading-skeleton {
+  @apply bg-gray-200 dark:bg-gray-700 rounded animate-pulse;
+}
+
+.loading-skeleton--text {
+  @apply h-4 rounded;
+}
+
+.loading-skeleton--heading {
+  @apply h-6 rounded-lg;
+}
+
+.loading-skeleton--avatar {
+  @apply rounded-full;
+}
+
+.loading-skeleton--card {
+  @apply rounded-xl;
+}
+
+.loading-skeleton--button {
+  @apply rounded-lg;
+}
+
+/* Estados de erro */
+.error-container {
+  @apply flex flex-col items-center justify-center p-8 text-center;
+}
+
+.error-container--fullscreen {
+  @apply fixed inset-0 z-50 bg-white dark:bg-gray-900;
+}
+
+.error-container--inline {
+  @apply p-4 rounded-lg bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800;
+}
+
+/* Ícone de erro */
+.error-icon {
+  @apply w-16 h-16 text-danger-500 mb-4;
+}
+
+.error-icon--large {
+  @apply w-24 h-24;
+}
+
+.error-icon--small {
+  @apply w-8 h-8;
+}
+
+/* Título de erro */
+.error-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white mb-2;
+}
+
+.error-title--large {
+  @apply text-2xl;
+}
+
+.error-title--small {
+  @apply text-lg;
+}
+
+/* Mensagem de erro */
+.error-message {
+  @apply text-gray-600 dark:text-gray-400 mb-6;
+}
+
+.error-message--large {
+  @apply text-lg;
+}
+
+.error-message--small {
+  @apply text-sm;
+}
+
+/* Ações de erro */
+.error-actions {
+  @apply flex flex-col sm:flex-row gap-3;
+}
+
+/* Estados vazios */
+.empty-state {
+  @apply flex flex-col items-center justify-center p-8 text-center;
+}
+
+.empty-state--inline {
+  @apply p-4;
+}
+
+.empty-state--card {
+  @apply p-12 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700;
+}
+
+/* Ícone de estado vazio */
+.empty-state-icon {
+  @apply w-16 h-16 text-gray-400 dark:text-gray-500 mb-4;
+}
+
+.empty-state-icon--large {
+  @apply w-24 h-24;
+}
+
+/* Título de estado vazio */
+.empty-state-title {
+  @apply text-lg font-medium text-gray-900 dark:text-white mb-2;
+}
+
+/* Mensagem de estado vazio */
+.empty-state-message {
+  @apply text-gray-500 dark:text-gray-400 mb-6;
+}
+
+/* Componentes de loading específicos para laboratório */
+.lab-loading-card {
+  @apply card p-8 flex flex-col items-center;
+}
+
+.lab-loading-content {
+  @apply space-y-4 w-full max-w-md;
+}
+
+.lab-loading-row {
+  @apply flex space-x-4 items-center;
+}
+
+.lab-loading-avatar {
+  @apply loading-skeleton loading-skeleton--avatar w-12 h-12 flex-shrink-0;
+}
+
+.lab-loading-text-group {
+  @apply flex-1 space-y-2;
+}
+
+.lab-loading-text-line {
+  @apply loading-skeleton loading-skeleton--text w-full;
+}
+
+.lab-loading-text-line--short {
+  @apply w-3/4;
+}
+
+/* Loading para tabelas */
+.table-loading {
+  @apply relative;
+}
+
+.table-loading-overlay {
+  @apply absolute inset-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm z-10 flex items-center justify-center;
+}
+
+/* Loading para gráficos */
+.chart-loading {
+  @apply flex flex-col items-center justify-center h-64;
+}
+
+.chart-loading-spinner {
+  @apply loading-spinner loading-spinner--large mb-4;
+}
+
+.chart-loading-text {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Loading para formulários */
+.form-loading {
+  @apply opacity-50 pointer-events-none;
+}
+
+.form-loading-spinner {
+  @apply absolute top-4 right-4 w-5 h-5;
+}
+
+/* Estados de tentativa novamente */
+.retry-container {
+  @apply flex flex-col items-center justify-center p-8 text-center;
+}
+
+.retry-icon {
+  @apply w-16 h-16 text-warning-500 mb-4;
+}
+
+.retry-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white mb-2;
+}
+
+.retry-message {
+  @apply text-gray-600 dark:text-gray-400 mb-6;
+}
+
+.retry-actions {
+  @apply flex flex-col sm:flex-row gap-3;
+}
+
+/* Indicadores de status */
+.status-indicator {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-indicator--loading {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+}
+
+.status-indicator--success {
+  @apply bg-success-100 text-success-800 dark:bg-success-900 dark:text-success-200;
+}
+
+.status-indicator--error {
+  @apply bg-danger-100 text-danger-800 dark:bg-danger-900 dark:text-danger-200;
+}
+
+.status-indicator--warning {
+  @apply bg-warning-100 text-warning-800 dark:bg-warning-900 dark:text-warning-200;
+}
+
+/* Loading com shimmer effect */
+.loading-shimmer {
+  @apply animate-shimmer bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700;
+  background-size: 1000px 100%;
+}
+
+/* Componentes de feedback */
+.feedback-toast {
+  @apply fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out;
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+}
+
+.feedback-toast--enter {
+  @apply translate-x-full opacity-0;
+}
+
+.feedback-toast--enter-active {
+  @apply translate-x-0 opacity-100;
+}
+
+.feedback-toast--exit {
+  @apply translate-x-0 opacity-100;
+}
+
+.feedback-toast--exit-active {
+  @apply translate-x-full opacity-0;
+}
+
+/* Loading para imagens */
+.image-loading {
+  @apply bg-gray-200 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center;
+}
+
+.image-loading-spinner {
+  @apply loading-spinner loading-spinner--small text-gray-400;
+}
+
+/* Estados de carregamento específicos */
+.loading-state--initial {
+  @apply flex flex-col items-center justify-center min-h-screen;
+}
+
+.loading-state--content {
+  @apply p-8 text-center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .loading-container--fullscreen {
+    @apply p-4;
+  }
+  
+  .error-container {
+    @apply p-4;
+  }
+  
+  .empty-state {
+    @apply p-4;
+  }
+  
+  .error-title {
+    @apply text-lg;
+  }
+  
+  .error-message {
+    @apply text-sm mb-4;
+  }
+  
+  .loading-text {
+    @apply text-sm;
+  }
+}

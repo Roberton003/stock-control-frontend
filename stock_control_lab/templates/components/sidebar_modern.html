@@ -1,0 +1,401 @@
+<!-- sidebar_modern.html - Componente de barra lateral moderna -->
+<aside class="sidebar-modern hidden lg:block">
+    <div class="sidebar-content-modern">
+        <!-- Logo -->
+        <div class="sidebar-logo-modern">
+            <div class="flex items-center">
+                <i class="fas fa-flask text-blue-500 text-xl mr-2"></i>
+                <span class="text-lg font-bold text-gray-900">LabStock</span>
+            </div>
+        </div>
+        
+        <!-- Menu de Navegação -->
+        <nav class="sidebar-nav-modern">
+            <ul class="space-y-1">
+                <!-- Dashboard -->
+                <li>
+                    <a href="{% url 'dashboard' %}" class="sidebar-link-modern {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <i class="fas fa-home sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Dashboard</span>
+                    </a>
+                </li>
+                
+                <!-- Produtos -->
+                <li>
+                    <a href="#" class="sidebar-link-modern dropdown-toggle" data-dropdown="products">
+                        <i class="fas fa-vial sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Produtos</span>
+                        <i class="fas fa-chevron-down sidebar-arrow-modern"></i>
+                    </a>
+                    <ul class="sidebar-submenu-modern" id="products-menu">
+                        <li>
+                            <a href="{% url 'produtos:list' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-list sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Lista de Produtos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'produtos:create' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-plus sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Adicionar Produto</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-tags sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Categorias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-truck sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Fornecedores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Lotes -->
+                <li>
+                    <a href="#" class="sidebar-link-modern dropdown-toggle" data-dropdown="lots">
+                        <i class="fas fa-boxes sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Lotes</span>
+                        <i class="fas fa-chevron-down sidebar-arrow-modern"></i>
+                    </a>
+                    <ul class="sidebar-submenu-modern" id="lots-menu">
+                        <li>
+                            <a href="{% url 'stock_lots:list' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-list sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Lista de Lotes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'stock_lots:create' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-plus sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Adicionar Lote</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-map-marker-alt sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Localizações</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Movimentações -->
+                <li>
+                    <a href="#" class="sidebar-link-modern dropdown-toggle" data-dropdown="movements">
+                        <i class="fas fa-exchange-alt sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Movimentações</span>
+                        <i class="fas fa-chevron-down sidebar-arrow-modern"></i>
+                    </a>
+                    <ul class="sidebar-submenu-modern" id="movements-menu">
+                        <li>
+                            <a href="{% url 'movimentacoes:list' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-list sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Lista de Movimentações</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'movimentacoes:withdraw' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-arrow-down sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Retirada de Estoque</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-arrow-up sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Entrada de Estoque</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-ban sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Descartes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Requisições -->
+                <li>
+                    <a href="#" class="sidebar-link-modern dropdown-toggle" data-dropdown="requisitions">
+                        <i class="fas fa-clipboard-list sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Requisições</span>
+                        <i class="fas fa-chevron-down sidebar-arrow-modern"></i>
+                    </a>
+                    <ul class="sidebar-submenu-modern" id="requisitions-menu">
+                        <li>
+                            <a href="{% url 'requisitions:list' %}" class="sidebar-sublink-modern">
+                                <i class="fas fa-list sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Lista de Requisições</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-plus sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Nova Requisição</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-check sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Aprovar Requisições</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Relatórios -->
+                <li>
+                    <a href="#" class="sidebar-link-modern dropdown-toggle" data-dropdown="reports">
+                        <i class="fas fa-chart-bar sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Relatórios</span>
+                        <i class="fas fa-chevron-down sidebar-arrow-modern"></i>
+                    </a>
+                    <ul class="sidebar-submenu-modern" id="reports-menu">
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-chart-line sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Consumo por Usuário</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-calendar-alt sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Validade dos Lotes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-file-invoice-dollar sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Valor em Estoque</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-sublink-modern">
+                                <i class="fas fa-trash-alt sidebar-subicon-modern"></i>
+                                <span class="sidebar-subtext-modern">Perdas e Descartes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Divider -->
+        <div class="sidebar-divider-modern"></div>
+        
+        <!-- Menu Inferior -->
+        <nav class="sidebar-nav-modern">
+            <ul class="space-y-1">
+                <!-- Configurações -->
+                <li>
+                    <a href="#" class="sidebar-link-modern">
+                        <i class="fas fa-cog sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Configurações</span>
+                    </a>
+                </li>
+                
+                <!-- Ajuda -->
+                <li>
+                    <a href="#" class="sidebar-link-modern">
+                        <i class="fas fa-question-circle sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Ajuda</span>
+                    </a>
+                </li>
+                
+                <!-- Sair -->
+                <li>
+                    <a href="{% url 'logout' %}" class="sidebar-link-modern">
+                        <i class="fas fa-sign-out-alt sidebar-icon-modern"></i>
+                        <span class="sidebar-text-modern">Sair</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<style>
+.sidebar-modern {
+    position: fixed;
+    left: 0;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    width: 16rem;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    z-index: 40;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.sidebar-content-modern {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.sidebar-logo-modern {
+    padding: 0 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1rem;
+}
+
+.sidebar-nav-modern {
+    padding: 0 0.5rem;
+}
+
+.sidebar-link-modern {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #4b5563;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.sidebar-link-modern:hover {
+    background-color: #f3f4f6;
+    color: #034EA2;
+}
+
+.sidebar-link-modern.active {
+    background-color: #034EA2;
+    color: #ffffff;
+}
+
+.sidebar-link-modern.active .sidebar-icon-modern,
+.sidebar-link-modern.active .sidebar-text-modern,
+.sidebar-link-modern.active .sidebar-arrow-modern {
+    color: #ffffff;
+}
+
+.sidebar-icon-modern {
+    width: 1.5rem;
+    text-align: center;
+    margin-right: 0.75rem;
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.sidebar-text-modern {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.sidebar-arrow-modern {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-link-modern.dropdown-toggle[aria-expanded="true"] .sidebar-arrow-modern {
+    transform: rotate(180deg);
+}
+
+.sidebar-submenu-modern {
+    display: none;
+    padding-left: 2.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-submenu-modern.show {
+    display: block;
+}
+
+.sidebar-sublink-modern {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: #6b7280;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    margin-bottom: 0.125rem;
+    transition: all 0.2s ease;
+    font-size: 0.8125rem;
+}
+
+.sidebar-sublink-modern:hover {
+    background-color: #f3f4f6;
+    color: #034EA2;
+}
+
+.sidebar-subicon-modern {
+    width: 1.25rem;
+    text-align: center;
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+.sidebar-subtext-modern {
+    flex: 1;
+    font-weight: 400;
+}
+
+.sidebar-divider-modern {
+    border-top: 1px solid #e5e7eb;
+    margin: 1rem 1rem;
+}
+
+/* Versão mobile */
+.sidebar-mobile {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 16rem;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    z-index: 50;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-mobile.show {
+    transform: translateX(0);
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 45;
+    display: none;
+}
+
+.sidebar-overlay.show {
+    display: block;
+}
+
+/* Estados responsivos */
+@media (max-width: 1023px) {
+    .sidebar-modern {
+        display: none;
+    }
+    
+    .sidebar-mobile {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar-mobile {
+        display: none;
+    }
+}

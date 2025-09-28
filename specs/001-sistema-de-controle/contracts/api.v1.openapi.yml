@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: API de Controle de Estoque de Laboratório
+  version: 1.0.0
+  description: API para gerenciar reagentes, lotes, estoque e relatórios.
+
+paths:
+  /api/v1/reagents/:
+    get:
+      summary: Lista todos os reagentes
+      responses:
+        '200':
+          description: Lista de reagentes.
+    post:
+      summary: Cria um novo reagente
+      responses:
+        '201':
+          description: Reagente criado.
+
+  /api/v1/reagents/{id}/:
+    get:
+      summary: Obtém um reagente específico
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detalhes do reagente.
+    put:
+      summary: Atualiza um reagente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reagente atualizado.
+
+  /api/v1/stock-lots/:
+    get:
+      summary: Lista todos os lotes em estoque
+      responses:
+        '200':
+          description: Lista de lotes.
+    post:
+      summary: Adiciona um novo lote ao estoque (entrada)
+      responses:
+        '201':
+          description: Lote adicionado.
+
+  /api/v1/stock-movements/:
+    post:
+      summary: Registra uma nova movimentação de estoque (retirada, descarte)
+      description: A lógica FEFO é aplicada no backend ao selecionar o lote para retirada.
+      responses:
+        '201':
+          description: Movimentação registrada.
+
+  /api/v1/dashboard/summary/:
+    get:
+      summary: Obtém dados consolidados para o dashboard
+      responses:
+        '200':
+          description: Um objeto com estatísticas como valor total do estoque, itens com estoque baixo e itens próximos da validade.
+
+  /api/v1/reports/financial/:
+    get:
+      summary: Gera um relatório financeiro
+      parameters:
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Relatório com o total gasto em um determinado período.

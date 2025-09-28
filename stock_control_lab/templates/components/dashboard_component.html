@@ -1,0 +1,1312 @@
+<!-- dashboard_component.html - Componente de dashboard moderno -->
+<div class="dashboard-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ dashboard_id }}">
+    <div class="dashboard-header">
+        {% if title %}
+        <div class="dashboard-title-section">
+            <h1 class="dashboard-title">
+                {{ title }}
+            </h1>
+            {% if subtitle %}
+            <p class="dashboard-subtitle">
+                {{ subtitle }}
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if actions %}
+        <div class="dashboard-actions">
+            {{ actions|safe }}
+        </div>
+        {% endif %}
+    </div>
+    
+    {% if filters %}
+    <div class="dashboard-filters">
+        {{ filters|safe }}
+    </div>
+    {% endif %}
+    
+    <div class="dashboard-content">
+        {% if metrics %}
+        <div class="dashboard-metrics-grid">
+            {% for metric in metrics %}
+            <div class="dashboard-metric-card {% if metric.size %}metric-size-{{ metric.size }}{% endif %}">
+                <div class="metric-content">
+                    {% if metric.icon %}
+                    <div class="metric-icon-container metric-bg-{{ metric.variant|default:'primary' }}">
+                        <i class="{{ metric.icon }} metric-icon"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="metric-info">
+                        {% if metric.title %}
+                        <h3 class="metric-title">
+                            {{ metric.title }}
+                        </h3>
+                        {% endif %}
+                        
+                        <div class="metric-value-container">
+                            {% if metric.value %}
+                            <span class="metric-value">{{ metric.value }}</span>
+                            {% endif %}
+                            
+                            {% if metric.unit %}
+                            <span class="metric-unit">{{ metric.unit }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        {% if metric.change %}
+                        <div class="metric-change metric-change-{{ metric.change.direction|default:'neutral' }}">
+                            {% if metric.change.direction == 'up' %}
+                            <i class="fas fa-arrow-up"></i>
+                            {% elif metric.change.direction == 'down' %}
+                            <i class="fas fa-arrow-down"></i>
+                            {% else %}
+                            <i class="fas fa-equals"></i>
+                            {% endif %}
+                            <span class="metric-change-value">{{ metric.change.value }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if metric.chart %}
+                <div class="metric-chart">
+                    <canvas id="metric-chart-{{ forloop.counter }}" height="50"></canvas>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if charts %}
+        <div class="dashboard-charts-grid">
+            {% for chart in charts %}
+            <div class="dashboard-chart-card {% if chart.size %}chart-size-{{ chart.size }}{% endif %}">
+                {% if chart.title %}
+                <div class="chart-header">
+                    <h3 class="chart-title">
+                        {{ chart.title }}
+                    </h3>
+                    {% if chart.subtitle %}
+                    <p class="chart-subtitle">
+                        {{ chart.subtitle }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="chart-content">
+                    <canvas id="chart-{{ forloop.counter }}" height="{% if chart.height %}{{ chart.height }}{% else %}300{% endif %}"></canvas>
+                </div>
+                
+                {% if chart.footer %}
+                <div class="chart-footer">
+                    {{ chart.footer|safe }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if tables %}
+        <div class="dashboard-tables-grid">
+            {% for table in tables %}
+            <div class="dashboard-table-card {% if table.size %}table-size-{{ table.size }}{% endif %}">
+                {% if table.title %}
+                <div class="table-header">
+                    <h3 class="table-title">
+                        {{ table.title }}
+                    </h3>
+                    {% if table.actions %}
+                    <div class="table-actions">
+                        {{ table.actions|safe }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="table-content">
+                    {% if table.data %}
+                    <div class="table-responsive">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    {% for header in table.headers %}
+                                    <th class="{% if header.class %}{{ header.class }}{% endif %}">
+                                        {{ header.label }}
+                                    </th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in table.data %}
+                                <tr class="{% if row.class %}{{ row.class }}{% endif %}">
+                                    {% for cell in row.cells %}
+                                    <td class="{% if cell.class %}{{ cell.class }}{% endif %}">
+                                        {{ cell.content|safe }}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if table.footer %}
+                <div class="table-footer">
+                    {{ table.footer|safe }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if widgets %}
+        <div class="dashboard-widgets-grid">
+            {% for widget in widgets %}
+            <div class="dashboard-widget-card {% if widget.size %}widget-size-{{ widget.size }}{% endif %}">
+                {% if widget.header %}
+                <div class="widget-header">
+                    <h3 class="widget-title">
+                        {{ widget.header.title }}
+                    </h3>
+                    {% if widget.header.actions %}
+                    <div class="widget-actions">
+                        {{ widget.header.actions|safe }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="widget-content">
+                    {{ widget.content|safe }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
+    {% if pagination %}
+    <div class="dashboard-pagination">
+        {{ pagination|safe }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.dashboard-container-modern {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dashboard-title-section {
+    flex: 1;
+    min-width: 0;
+}
+
+.dashboard-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.dashboard-subtitle {
+    margin: 0;
+    font-size: 1rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.dashboard-filters {
+    margin-bottom: 2rem;
+}
+
+.dashboard-content {
+    width: 100%;
+}
+
+/* Grid de métricas */
+.dashboard-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-metric-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-metric-card.metric-size-small {
+    grid-column: span 1;
+}
+
+.dashboard-metric-card.metric-size-medium {
+    grid-column: span 2;
+}
+
+.dashboard-metric-card.metric-size-large {
+    grid-column: span 3;
+}
+
+/* Conteúdo das métricas */
+.metric-content {
+    display: flex;
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.metric-icon-container {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.metric-bg-primary {
+    background-color: #eff6ff;
+    color: #034EA2;
+}
+
+.metric-bg-success {
+    background-color: #f0fdf4;
+    color: #22c55e;
+}
+
+.metric-bg-warning {
+    background-color: #fffdf5;
+    color: #f59e0b;
+}
+
+.metric-bg-danger {
+    background-color: #fff5f5;
+    color: #ef4444;
+}
+
+.metric-bg-info {
+    background-color: #f0f9ff;
+    color: #0ea5e9;
+}
+
+.metric-bg-purple {
+    background-color: #f5f3ff;
+    color: #8b5cf6;
+}
+
+.metric-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.metric-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metric-value-container {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.2;
+}
+
+.metric-unit {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.metric-change {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.metric-change-up {
+    color: #22c55e;
+}
+
+.metric-change-down {
+    color: #ef4444;
+}
+
+.metric-change-neutral {
+    color: #6b7280;
+}
+
+/* Gráficos das métricas */
+.metric-chart {
+    height: 50px;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* Grid de gráficos */
+.dashboard-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-chart-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.dashboard-chart-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-chart-card.chart-size-small {
+    grid-column: span 1;
+}
+
+.dashboard-chart-card.chart-size-large {
+    grid-column: span 2;
+}
+
+.chart-header {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.chart-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+}
+
+.chart-subtitle {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.chart-content {
+    padding: 1.5rem;
+}
+
+.chart-footer {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Grid de tabelas */
+.dashboard-tables-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-table-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.dashboard-table-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.table-content {
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #374151;
+}
+
+.dashboard-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.dashboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+}
+
+.dashboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.dashboard-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.table-footer {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.table-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Grid de widgets */
+.dashboard-widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-widget-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.dashboard-widget-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.widget-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.widget-content {
+    padding: 1.5rem;
+}
+
+.widget-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Paginação */
+.dashboard-pagination {
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .dashboard-container-modern {
+        padding: 1rem;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    
+    .dashboard-actions {
+        margin-top: 1rem;
+    }
+    
+    .dashboard-metrics-grid,
+    .dashboard-charts-grid,
+    .dashboard-widgets-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .dashboard-metric-card,
+    .dashboard-chart-card,
+    .dashboard-table-card,
+    .dashboard-widget-card {
+        margin-bottom: 1rem;
+    }
+    
+    .metric-content {
+        padding: 1rem;
+    }
+    
+    .chart-header,
+    .table-header,
+    .widget-header {
+        padding: 1rem 1rem 0 1rem;
+    }
+    
+    .chart-content,
+    .table-content,
+    .widget-content {
+        padding: 1rem;
+    }
+    
+    .chart-footer,
+    .table-footer {
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .metric-value {
+        font-size: 1.75rem;
+    }
+    
+    .dashboard-filters {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .dashboard-metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .dashboard-charts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+/* Estados para diferentes variantes */
+.dashboard-container-modern.variant-dark {
+    background-color: #1f2937;
+    color: #d1d5db;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-title {
+    color: #ffffff;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-subtitle {
+    color: #9ca3af;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-metric-card,
+.dashboard-container-modern.variant-dark .dashboard-chart-card,
+.dashboard-container-modern.variant-dark .dashboard-table-card,
+.dashboard-container-modern.variant-dark .dashboard-widget-card {
+    background-color: #111827;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-table th {
+    background-color: #1f2937;
+    color: #9ca3af;
+    border-color: #374151;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-table td {
+    color: #d1d5db;
+    border-color: #374151;
+}
+
+.dashboard-container-modern.variant-dark .dashboard-table tbody tr:hover {
+    background-color: #1f2937;
+}
+
+.dashboard-container-modern.variant-dark .metric-title {
+    color: #9ca3af;
+}
+
+.dashboard-container-modern.variant-dark .metric-value {
+    color: #ffffff;
+}
+
+.dashboard-container-modern.variant-dark .metric-unit {
+    color: #9ca3af;
+}
+
+.dashboard-container-modern.variant-dark .chart-header,
+.dashboard-container-modern.variant-dark .table-header,
+.dashboard-container-modern.variant-dark .widget-header {
+    border-color: #374151;
+}
+
+.dashboard-container-modern.variant-dark .chart-footer,
+.dashboard-container-modern.variant-dark .table-footer {
+    border-color: #374151;
+}
+
+/* Estados para dashboard compacto */
+.dashboard-container-modern.compact .dashboard-metrics-grid {
+    gap: 1rem;
+}
+
+.dashboard-container-modern.compact .dashboard-metric-card {
+    margin-bottom: 1rem;
+}
+
+.dashboard-container-modern.compact .metric-content {
+    padding: 1.25rem;
+}
+
+.dashboard-container-modern.compact .chart-header {
+    padding: 1.25rem 1.25rem 0 1.25rem;
+}
+
+.dashboard-container-modern.compact .chart-content {
+    padding: 1.25rem;
+}
+
+.dashboard-container-modern.compact .chart-footer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-metric-card,
+.dashboard-chart-card,
+.dashboard-table-card,
+.dashboard-widget-card {
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.dashboard-metric-card:nth-child(1) { animation-delay: 0.1s; }
+.dashboard-metric-card:nth-child(2) { animation-delay: 0.2s; }
+.dashboard-metric-card:nth-child(3) { animation-delay: 0.3s; }
+.dashboard-metric-card:nth-child(4) { animation-delay: 0.4s; }
+.dashboard-metric-card:nth-child(5) { animation-delay: 0.5s; }
+.dashboard-metric-card:nth-child(6) { animation-delay: 0.6s; }
+.dashboard-metric-card:nth-child(7) { animation-delay: 0.7s; }
+.dashboard-metric-card:nth-child(8) { animation-delay: 0.8s; }
+</style>
+
+<script>
+class ModernDashboard {
+    constructor(dashboardId, options = {}) {
+        this.dashboardId = dashboardId;
+        this.element = document.getElementById(dashboardId);
+        this.metrics = [];
+        this.charts = [];
+        this.tables = [];
+        this.widgets = [];
+        
+        this.options = Object.assign({
+            autoRefresh: false,
+            refreshInterval: 30000, // 30 segundos
+            onRefresh: null,
+            onDataLoaded: null
+        }, options);
+        
+        this.refreshTimer = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Inicializar componentes
+        this.initMetrics();
+        this.initCharts();
+        this.initTables();
+        this.initWidgets();
+        
+        // Configurar auto-refresh
+        if (this.options.autoRefresh) {
+            this.startAutoRefresh();
+        }
+        
+        // Disparar evento de dados carregados
+        if (this.options.onDataLoaded) {
+            this.options.onDataLoaded();
+        }
+    }
+    
+    initMetrics() {
+        const metricCards = this.element.querySelectorAll('.dashboard-metric-card');
+        metricCards.forEach((card, index) => {
+            const metricId = `metric-${index}`;
+            const metricValue = card.querySelector('.metric-value');
+            
+            if (metricValue) {
+                this.metrics.push({
+                    id: metricId,
+                    element: card,
+                    valueElement: metricValue,
+                    currentValue: parseFloat(metricValue.textContent) || 0
+                });
+            }
+        });
+    }
+    
+    initCharts() {
+        const chartCards = this.element.querySelectorAll('.dashboard-chart-card');
+        chartCards.forEach((card, index) => {
+            const chartCanvas = card.querySelector('canvas');
+            if (chartCanvas) {
+                const chartId = chartCanvas.id;
+                const chartContext = chartCanvas.getContext('2d');
+                const chartInstance = new Chart(chartContext, {
+                    type: 'line',
+                    data: {
+                        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+                        datasets: [{
+                            label: 'Vendas',
+                            data: [12, 19, 3, 5, 2, 3],
+                            borderColor: '#034EA2',
+                            backgroundColor: 'rgba(3, 78, 162, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                this.charts.push({
+                    id: `chart-${index}`,
+                    element: card,
+                    canvas: chartCanvas,
+                    instance: chartInstance
+                });
+            }
+        });
+    }
+    
+    initTables() {
+        const tableCards = this.element.querySelectorAll('.dashboard-table-card');
+        tableCards.forEach((card, index) => {
+            this.tables.push({
+                id: `table-${index}`,
+                element: card
+            });
+        });
+    }
+    
+    initWidgets() {
+        const widgetCards = this.element.querySelectorAll('.dashboard-widget-card');
+        widgetCards.forEach((card, index) => {
+            this.widgets.push({
+                id: `widget-${index}`,
+                element: card
+            });
+        });
+    }
+    
+    startAutoRefresh() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+        }
+        
+        this.refreshTimer = setInterval(() => {
+            this.refreshData();
+        }, this.options.refreshInterval);
+    }
+    
+    stopAutoRefresh() {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+            this.refreshTimer = null;
+        }
+    }
+    
+    refreshData() {
+        // Simular atualização de dados
+        console.log('Atualizando dados do dashboard...');
+        
+        // Atualizar métricas
+        this.metrics.forEach(metric => {
+            // Simular variação aleatória
+            const variation = (Math.random() - 0.5) * 10;
+            this.updateMetricValue(metric.id, metric.currentValue + variation);
+        });
+        
+        // Atualizar gráficos
+        this.charts.forEach(chart => {
+            // Simular novos dados
+            const newData = chart.instance.data.datasets[0].data.map(value => 
+                Math.max(0, value + (Math.random() - 0.5) * 5)
+            );
+            
+            chart.instance.data.datasets[0].data = newData;
+            chart.instance.update();
+        });
+        
+        // Disparar evento de atualização
+        if (this.options.onRefresh) {
+            this.options.onRefresh();
+        }
+        
+        // Disparar evento personalizado
+        const event = new CustomEvent('dashboardRefresh', {
+            detail: { dashboardId: this.dashboardId }
+        });
+        document.dispatchEvent(event);
+    }
+    
+    updateMetricValue(metricId, newValue) {
+        const metric = this.metrics.find(m => m.id === metricId);
+        if (metric) {
+            // Animar transição
+            const startValue = metric.currentValue;
+            const startTime = performance.now();
+            const duration = 1000; // 1 segundo
+            
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function (easeInOutQuad)
+                const easeProgress = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                const currentValue = startValue + (newValue - startValue) * easeProgress;
+                
+                if (metric.valueElement) {
+                    // Formatar número
+                    if (Number.isInteger(currentValue)) {
+                        metric.valueElement.textContent = Math.round(currentValue).toString();
+                    } else {
+                        metric.valueElement.textContent = currentValue.toFixed(2);
+                    }
+                }
+                
+                metric.currentValue = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        }
+    }
+    
+    updateChartData(chartId, data) {
+        const chart = this.charts.find(c => c.id === chartId);
+        if (chart) {
+            chart.instance.data = data;
+            chart.instance.update();
+        }
+    }
+    
+    updateTableData(tableId, data) {
+        const table = this.tables.find(t => t.id === tableId);
+        if (table) {
+            // Implementar atualização da tabela
+            console.log('Atualizando dados da tabela:', tableId, data);
+        }
+    }
+    
+    addWidget(widgetConfig) {
+        const widgetsGrid = this.element.querySelector('.dashboard-widgets-grid');
+        if (widgetsGrid) {
+            const widgetElement = document.createElement('div');
+            widgetElement.className = 'dashboard-widget-card';
+            widgetElement.innerHTML = `
+                ${widgetConfig.header ? `
+                <div class="widget-header">
+                    <h3 class="widget-title">${widgetConfig.header.title}</h3>
+                    ${widgetConfig.header.actions ? `<div class="widget-actions">${widgetConfig.header.actions}</div>` : ''}
+                </div>
+                ` : ''}
+                <div class="widget-content">
+                    ${widgetConfig.content}
+                </div>
+            `;
+            
+            widgetsGrid.appendChild(widgetElement);
+            this.widgets.push({
+                id: `widget-${this.widgets.length}`,
+                element: widgetElement
+            });
+        }
+    }
+}
+
+// Funções utilitárias para criar e gerenciar dashboards
+function createDashboard(options) {
+    const {
+        id = `dashboard-${Date.now()}`,
+        title = '',
+        subtitle = '',
+        actions = '',
+        filters = '',
+        metrics = [],
+        charts = [],
+        tables = [],
+        widgets = [],
+        pagination = '',
+        classes = '',
+        variant = '',
+        autoRefresh = false,
+        refreshInterval = 30000
+    } = options;
+    
+    // Criar elemento do dashboard
+    const dashboardElement = document.createElement('div');
+    dashboardElement.className = `dashboard-container-modern ${classes} ${variant ? `variant-${variant}` : ''}`;
+    dashboardElement.id = id;
+    
+    let dashboardContent = '';
+    
+    dashboardContent += `
+        <div class="dashboard-header">
+            ${(title || subtitle) ? `
+            <div class="dashboard-title-section">
+                ${title ? `<h1 class="dashboard-title">${title}</h1>` : ''}
+                ${subtitle ? `<p class="dashboard-subtitle">${subtitle}</p>` : ''}
+            </div>
+            ` : ''}
+            ${actions ? `<div class="dashboard-actions">${actions}</div>` : ''}
+        </div>
+        
+        ${filters ? `<div class="dashboard-filters">${filters}</div>` : ''}
+        
+        <div class="dashboard-content">
+    `;
+    
+    // Métricas
+    if (metrics && metrics.length > 0) {
+        dashboardContent += `
+            <div class="dashboard-metrics-grid">
+        `;
+        
+        metrics.forEach((metric, index) => {
+            dashboardContent += `
+                <div class="dashboard-metric-card ${metric.size ? `metric-size-${metric.size}` : ''}">
+                    <div class="metric-content">
+                        ${metric.icon ? `
+                        <div class="metric-icon-container metric-bg-${metric.variant || 'primary'}">
+                            <i class="${metric.icon} metric-icon"></i>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="metric-info">
+                            ${metric.title ? `<h3 class="metric-title">${metric.title}</h3>` : ''}
+                            
+                            <div class="metric-value-container">
+                                ${metric.value ? `<span class="metric-value">${metric.value}</span>` : ''}
+                                ${metric.unit ? `<span class="metric-unit">${metric.unit}</span>` : ''}
+                            </div>
+                            
+                            ${metric.change ? `
+                            <div class="metric-change metric-change-${metric.change.direction || 'neutral'}">
+                                ${metric.change.direction === 'up' ? `<i class="fas fa-arrow-up"></i>` : ''}
+                                ${metric.change.direction === 'down' ? `<i class="fas fa-arrow-down"></i>` : ''}
+                                ${metric.change.direction === 'neutral' ? `<i class="fas fa-equals"></i>` : ''}
+                                <span class="metric-change-value">${metric.change.value}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ${metric.chart ? `<div class="metric-chart"><canvas id="metric-chart-${index}" height="50"></canvas></div>` : ''}
+                </div>
+            `;
+        });
+        
+        dashboardContent += `
+            </div>
+        `;
+    }
+    
+    // Gráficos
+    if (charts && charts.length > 0) {
+        dashboardContent += `
+            <div class="dashboard-charts-grid">
+        `;
+        
+        charts.forEach((chart, index) => {
+            dashboardContent += `
+                <div class="dashboard-chart-card ${chart.size ? `chart-size-${chart.size}` : ''}">
+                    <div class="chart-header">
+                        ${chart.title ? `<h3 class="chart-title">${chart.title}</h3>` : ''}
+                        ${chart.subtitle ? `<p class="chart-subtitle">${chart.subtitle}</p>` : ''}
+                    </div>
+                    <div class="chart-content">
+                        <canvas id="chart-${index}" height="${chart.height || 300}"></canvas>
+                    </div>
+                    ${chart.footer ? `<div class="chart-footer">${chart.footer}</div>` : ''}
+                </div>
+            `;
+        });
+        
+        dashboardContent += `
+            </div>
+        `;
+    }
+    
+    // Tabelas
+    if (tables && tables.length > 0) {
+        dashboardContent += `
+            <div class="dashboard-tables-grid">
+        `;
+        
+        tables.forEach((table, index) => {
+            dashboardContent += `
+                <div class="dashboard-table-card ${table.size ? `table-size-${table.size}` : ''}">
+                    <div class="table-header">
+                        ${table.title ? `<h3 class="table-title">${table.title}</h3>` : ''}
+                        ${table.actions ? `<div class="table-actions">${table.actions}</div>` : ''}
+                    </div>
+                    <div class="table-content">
+                        <div class="table-responsive">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        ${table.headers ? table.headers.map(header => `
+                                            <th class="${header.class || ''}">${header.label}</th>
+                                        `).join('') : ''}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${table.data ? table.data.map(row => `
+                                        <tr class="${row.class || ''}">
+                                            ${row.cells.map(cell => `<td class="${cell.class || ''}">${cell.content}</td>`).join('')}
+                                        </tr>
+                                    `).join('') : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    ${table.footer ? `<div class="table-footer">${table.footer}</div>` : ''}
+                </div>
+            `;
+        });
+        
+        dashboardContent += `
+            </div>
+        `;
+    }
+    
+    // Widgets
+    if (widgets && widgets.length > 0) {
+        dashboardContent += `
+            <div class="dashboard-widgets-grid">
+        `;
+        
+        widgets.forEach((widget, index) => {
+            dashboardContent += `
+                <div class="dashboard-widget-card ${widget.size ? `widget-size-${widget.size}` : ''}">
+                    ${widget.header ? `
+                    <div class="widget-header">
+                        <h3 class="widget-title">${widget.header.title}</h3>
+                        ${widget.header.actions ? `<div class="widget-actions">${widget.header.actions}</div>` : ''}
+                    </div>
+                    ` : ''}
+                    <div class="widget-content">
+                        ${widget.content}
+                    </div>
+                </div>
+            `;
+        });
+        
+        dashboardContent += `
+            </div>
+        `;
+    }
+    
+    dashboardContent += `
+        </div>
+        
+        ${pagination ? `<div class="dashboard-pagination">${pagination}</div>` : ''}
+    `;
+    
+    dashboardElement.innerHTML = dashboardContent;
+    
+    // Adicionar ao container desejado (ou body se não especificado)
+    const container = options.container ? document.querySelector(options.container) : document.body;
+    if (container) {
+        container.appendChild(dashboardElement);
+    }
+    
+    // Criar instância do dashboard
+    const dashboardInstance = new ModernDashboard(id, {
+        autoRefresh: autoRefresh,
+        refreshInterval: refreshInterval
+    });
+    
+    return dashboardInstance;
+}
+
+function refreshDashboard(dashboardId) {
+    const dashboardElement = document.getElementById(dashboardId);
+    if (dashboardElement) {
+        const dashboardInstance = window[`dashboard_${dashboardId}`];
+        if (dashboardInstance) {
+            dashboardInstance.refreshData();
+        }
+    }
+}
+
+function updateDashboardMetric(dashboardId, metricId, newValue) {
+    const dashboardInstance = window[`dashboard_${dashboardId}`];
+    if (dashboardInstance) {
+        dashboardInstance.updateMetricValue(metricId, newValue);
+    }
+}
+
+function updateDashboardChart(dashboardId, chartId, data) {
+    const dashboardInstance = window[`dashboard_${dashboardId}`];
+    if (dashboardInstance) {
+        dashboardInstance.updateChartData(chartId, data);
+    }
+}
+
+function addDashboardWidget(dashboardId, widgetConfig) {
+    const dashboardInstance = window[`dashboard_${dashboardId}`];
+    if (dashboardInstance) {
+        dashboardInstance.addWidget(widgetConfig);
+    }
+}
+
+// Inicializar dashboards quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe dashboard-init
+    const dashboardElements = document.querySelectorAll('[data-dashboard-init]');
+    
+    dashboardElements.forEach(element => {
+        const dashboardId = element.id;
+        const autoRefresh = element.getAttribute('data-auto-refresh') === 'true';
+        const refreshInterval = parseInt(element.getAttribute('data-refresh-interval')) || 30000;
+        
+        // Criar instância do dashboard
+        window[`dashboard_${dashboardId}`] = new ModernDashboard(dashboardId, {
+            autoRefresh: autoRefresh,
+            refreshInterval: refreshInterval
+        });
+    });
+});
+
+// Exportar funções para uso global
+window.ModernDashboard = ModernDashboard;
+window.createDashboard = createDashboard;
+window.refreshDashboard = refreshDashboard;
+window.updateDashboardMetric = updateDashboardMetric;
+window.updateDashboardChart = updateDashboardChart;
+window.addDashboardWidget = addDashboardWidget;
+</script>

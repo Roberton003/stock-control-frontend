@@ -1,0 +1,859 @@
+<!-- modal_component.html - Componente de modal moderno -->
+<div class="modal-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ modal_id }}" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" onclick="closeModal('{{ modal_id }}')"></div>
+    
+    <div class="modal-wrapper" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {% if icon %}
+                <div class="modal-icon-container">
+                    <i class="{{ icon }} modal-icon"></i>
+                </div>
+                {% endif %}
+                
+                <div class="modal-header-content">
+                    <h2 class="modal-title">
+                        {{ title }}
+                    </h2>
+                    {% if subtitle %}
+                    <p class="modal-subtitle">
+                        {{ subtitle }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                {% if closable %}
+                <button type="button" class="modal-close" onclick="closeModal('{{ modal_id }}')" aria-label="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+                {% endif %}
+            </div>
+            
+            <div class="modal-body">
+                {% if content %}
+                {{ content|safe }}
+                {% endif %}
+            </div>
+            
+            {% if actions %}
+            <div class="modal-footer">
+                {{ actions|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.modal-container-modern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.modal-container-modern.open {
+    display: flex;
+    animation: fadeInScaleUp 0.3s ease-out forwards;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.modal-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: {% if size == 'small' %}400px{% elif size == 'large' %}800px{% else %}600px{% endif %};
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    max-height: 90vh;
+    margin: 1rem 0;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.modal-icon-container {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    background-color: #eff6ff;
+    color: #034EA2;
+    font-size: 1.25rem;
+}
+
+.modal-header-content {
+    flex: 1;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.modal-subtitle {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: -0.5rem -0.5rem 0 0;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.modal-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: flex-end;
+    space-x: 0.75rem;
+}
+
+/* Tamanhos de modal */
+.modal-container-modern.size-small .modal-wrapper {
+    max-width: 400px;
+}
+
+.modal-container-modern.size-large .modal-wrapper {
+    max-width: 800px;
+}
+
+.modal-container-modern.size-extra-large .modal-wrapper {
+    max-width: 1000px;
+}
+
+.modal-container-modern.fullscreen .modal-wrapper {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.modal-container-modern.fullscreen .modal-content {
+    height: 90vh;
+}
+
+/* Variants de modal */
+.modal-container-modern.variant-success .modal-icon-container {
+    background-color: #f0fdf4;
+    color: #22c55e;
+}
+
+.modal-container-modern.variant-warning .modal-icon-container {
+    background-color: #fffdf5;
+    color: #f59e0b;
+}
+
+.modal-container-modern.variant-danger .modal-icon-container {
+    background-color: #fff5f5;
+    color: #ef4444;
+}
+
+.modal-container-modern.variant-info .modal-icon-container {
+    background-color: #f0f9ff;
+    color: #0ea5e9;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .modal-container-modern {
+        padding: 0.5rem;
+    }
+    
+    .modal-wrapper {
+        margin: 0.5rem 0;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-icon-container {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        margin-right: 0.75rem;
+    }
+    
+    .modal-title {
+        font-size: 1.125rem;
+    }
+    
+    .modal-subtitle {
+        font-size: 0.75rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem;
+        flex-direction: column;
+        space-x: 0;
+        space-y: 0.5rem;
+    }
+    
+    .modal-close {
+        margin: -0.25rem -0.25rem 0 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-container-modern {
+        padding: 0.25rem;
+    }
+    
+    .modal-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .modal-icon-container {
+        align-self: center;
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        margin: 0;
+    }
+}
+
+/* Animações */
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOutScaleDown {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.modal-container-modern.closing {
+    animation: fadeOutScaleDown 0.2s ease-in forwards;
+}
+
+/* Estados para modals flutuantes */
+.modal-container-modern.floating {
+    justify-content: flex-start;
+    padding-top: 2rem;
+}
+
+.modal-container-modern.floating .modal-wrapper {
+    margin-top: 2rem;
+}
+
+/* Estados para modals com sidebar */
+.modal-container-modern.with-sidebar {
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.modal-container-modern.with-sidebar .modal-wrapper {
+    display: flex;
+    max-width: 90%;
+    margin: 0;
+    height: 100vh;
+}
+
+.modal-container-modern.with-sidebar .modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+}
+
+.modal-container-modern.with-sidebar .modal-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Estados para modals de confirmação */
+.modal-container-modern.confirmation .modal-icon-container {
+    background-color: #f0f9ff;
+    color: #0ea5e9;
+}
+
+/* Estados para modals de alerta */
+.modal-container-modern.alert .modal-icon-container {
+    background-color: #fffdf5;
+    color: #f59e0b;
+}
+
+/* Estados para modals de erro */
+.modal-container-modern.error .modal-icon-container {
+    background-color: #fff5f5;
+    color: #ef4444;
+}
+
+/* Estados para modals de sucesso */
+.modal-container-modern.success .modal-icon-container {
+    background-color: #f0fdf4;
+    color: #22c55e;
+}
+
+/* Classes utilitárias para botões de ação */
+.modal-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-btn-primary {
+    background-color: #034EA2;
+    color: white;
+}
+
+.modal-btn-primary:hover {
+    background-color: #023a7a;
+}
+
+.modal-btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.modal-btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.modal-btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-btn-danger:hover {
+    background-color: #c82333;
+}
+
+.modal-btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.modal-btn-success:hover {
+    background-color: #218838;
+}
+
+.modal-btn-outline {
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.modal-btn-outline:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.modal-btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.modal-btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.modal-btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+.modal-btn-icon {
+    margin-right: 0.5rem;
+}
+</style>
+
+<script>
+class ModernModal {
+    constructor(modalId, options = {}) {
+        this.modalId = modalId;
+        this.element = document.getElementById(modalId);
+        this.backdrop = this.element.querySelector('.modal-backdrop');
+        this.closeButton = this.element.querySelector('.modal-close');
+        
+        this.options = Object.assign({
+            backdrop: true,
+            keyboard: true,
+            show: false,
+            onShow: null,
+            onHide: null,
+            onConfirm: null,
+            onCancel: null
+        }, options);
+        
+        this.isVisible = false;
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar eventos
+        if (this.backdrop && this.options.backdrop) {
+            this.backdrop.addEventListener('click', (e) => {
+                if (e.target === this.backdrop) {
+                    this.hide();
+                }
+            });
+        }
+        
+        if (this.closeButton) {
+            this.closeButton.addEventListener('click', () => {
+                this.hide();
+            });
+        }
+        
+        if (this.options.keyboard) {
+            this.element.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isVisible) {
+                    this.hide();
+                }
+            });
+        }
+        
+        // Mostrar modal se configurado
+        if (this.options.show) {
+            this.show();
+        }
+    }
+    
+    show() {
+        if (this.isVisible) return;
+        
+        this.element.classList.add('open');
+        this.element.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        this.isVisible = true;
+        
+        // Trigger focus trap
+        this.focusTrap();
+        
+        if (this.options.onShow) {
+            this.options.onShow();
+        }
+        
+        // Disparar evento personalizado
+        const event = new CustomEvent('modalShown', {
+            detail: { modalId: this.modalId }
+        });
+        document.dispatchEvent(event);
+    }
+    
+    hide() {
+        if (!this.isVisible) return;
+        
+        this.element.classList.add('closing');
+        this.element.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        this.isVisible = false;
+        
+        setTimeout(() => {
+            this.element.classList.remove('open', 'closing');
+            this.releaseFocus();
+            
+            if (this.options.onHide) {
+                this.options.onHide();
+            }
+            
+            // Disparar evento personalizado
+            const event = new CustomEvent('modalHidden', {
+                detail: { modalId: this.modalId }
+            });
+            document.dispatchEvent(event);
+        }, 200);
+    }
+    
+    toggle() {
+        if (this.isVisible) {
+            this.hide();
+        } else {
+            this.show();
+        }
+    }
+    
+    confirm() {
+        if (this.options.onConfirm) {
+            this.options.onConfirm();
+        }
+        this.hide();
+    }
+    
+    cancel() {
+        if (this.options.onCancel) {
+            this.options.onCancel();
+        }
+        this.hide();
+    }
+    
+    focusTrap() {
+        const focusableElements = this.element.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (firstElement) {
+            firstElement.focus();
+        }
+        
+        this.element.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        });
+    }
+    
+    releaseFocus() {
+        // Remover focus trap listener
+        this.element.removeEventListener('keydown');
+    }
+}
+
+// Funções utilitárias para criar e gerenciar modals
+function createModal(options) {
+    const {
+        id = `modal-${Date.now()}`,
+        title = '',
+        subtitle = '',
+        content = '',
+        actions = '',
+        size = 'medium',
+        variant = '',
+        icon = '',
+        closable = true,
+        backdrop = true,
+        keyboard = true,
+        show = false
+    } = options;
+    
+    // Criar elemento do modal
+    const modalElement = document.createElement('div');
+    modalElement.className = `modal-container-modern size-${size} variant-${variant}`;
+    modalElement.id = id;
+    modalElement.setAttribute('aria-hidden', 'true');
+    modalElement.setAttribute('role', 'dialog');
+    modalElement.setAttribute('aria-modal', 'true');
+    
+    modalElement.innerHTML = `
+        <div class="modal-backdrop" ${!backdrop ? 'style="display: none;"' : ''}></div>
+        <div class="modal-wrapper" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    ${icon ? `<div class="modal-icon-container"><i class="${icon} modal-icon"></i></div>` : ''}
+                    <div class="modal-header-content">
+                        <h2 class="modal-title">${title}</h2>
+                        ${subtitle ? `<p class="modal-subtitle">${subtitle}</p>` : ''}
+                    </div>
+                    ${closable ? `<button type="button" class="modal-close" onclick="closeModal('${id}')" aria-label="Fechar"><i class="fas fa-times"></i></button>` : ''}
+                </div>
+                <div class="modal-body">
+                    ${content}
+                </div>
+                ${actions ? `<div class="modal-footer">${actions}</div>` : ''}
+            </div>
+        </div>
+    `;
+    
+    // Adicionar ao body
+    document.body.appendChild(modalElement);
+    
+    // Criar instância do modal
+    const modalInstance = new ModernModal(id, {
+        backdrop: backdrop,
+        keyboard: keyboard,
+        show: show
+    });
+    
+    return modalInstance;
+}
+
+function showModal(modalId) {
+    const modalElement = document.getElementById(modalId);
+    if (modalElement) {
+        const modalInstance = window[`modal_${modalId}`];
+        if (modalInstance) {
+            modalInstance.show();
+        } else {
+            // Criar instância se não existir
+            window[`modal_${modalId}`] = new ModernModal(modalId);
+            window[`modal_${modalId}`].show();
+        }
+    }
+}
+
+function closeModal(modalId) {
+    const modalElement = document.getElementById(modalId);
+    if (modalElement) {
+        const modalInstance = window[`modal_${modalId}`];
+        if (modalInstance) {
+            modalInstance.hide();
+        } else {
+            // Remover elemento diretamente
+            modalElement.classList.add('closing');
+            setTimeout(() => {
+                if (modalElement.parentNode) {
+                    modalElement.parentNode.removeChild(modalElement);
+                }
+            }, 200);
+        }
+    }
+}
+
+function toggleModal(modalId) {
+    const modalElement = document.getElementById(modalId);
+    if (modalElement) {
+        const modalInstance = window[`modal_${modalId}`];
+        if (modalInstance) {
+            modalInstance.toggle();
+        } else {
+            // Criar instância se não existir
+            window[`modal_${modalId}`] = new ModernModal(modalId);
+            window[`modal_${modalId}`].toggle();
+        }
+    }
+}
+
+function closeAllModals() {
+    const modalElements = document.querySelectorAll('.modal-container-modern.open');
+    modalElements.forEach(element => {
+        const modalId = element.id;
+        closeModal(modalId);
+    });
+}
+
+// Modal de confirmação
+function confirmModal(options) {
+    const {
+        title = 'Confirmação',
+        message = 'Tem certeza que deseja continuar?',
+        icon = 'fas fa-question-circle',
+        confirmText = 'Confirmar',
+        cancelText = 'Cancelar',
+        confirmButtonClass = 'modal-btn modal-btn-primary',
+        cancelButtonClass = 'modal-btn modal-btn-secondary',
+        onConfirm = null,
+        onCancel = null
+    } = options;
+    
+    const modalId = `confirm-modal-${Date.now()}`;
+    
+    const content = `
+        <p>${message}</p>
+    `;
+    
+    const actions = `
+        <button type="button" class="${cancelButtonClass}" onclick="closeModal('${modalId}'); ${onCancel ? `${onCancel}();` : ''}">
+            ${cancelText}
+        </button>
+        <button type="button" class="${confirmButtonClass}" onclick="closeModal('${modalId}'); ${onConfirm ? `${onConfirm}();` : ''}">
+            ${confirmText}
+        </button>
+    `;
+    
+    const modal = createModal({
+        id: modalId,
+        title: title,
+        content: content,
+        actions: actions,
+        icon: icon,
+        variant: 'confirmation',
+        size: 'small'
+    });
+    
+    modal.show();
+    
+    return modal;
+}
+
+// Modal de alerta
+function alertModal(options) {
+    const {
+        title = 'Alerta',
+        message = '',
+        type = 'info',
+        icon = null,
+        buttonText = 'Ok',
+        buttonClass = 'modal-btn modal-btn-primary',
+        onClose = null
+    } = options;
+    
+    const modalId = `alert-modal-${Date.now()}`;
+    
+    // Determinar ícone
+    let alertIcon = icon;
+    if (!alertIcon) {
+        switch (type) {
+            case 'success':
+                alertIcon = 'fas fa-check-circle';
+                break;
+            case 'warning':
+                alertIcon = 'fas fa-exclamation-triangle';
+                break;
+            case 'error':
+                alertIcon = 'fas fa-exclamation-circle';
+                break;
+            default:
+                alertIcon = 'fas fa-info-circle';
+                break;
+        }
+    }
+    
+    const content = `
+        <p>${message}</p>
+    `;
+    
+    const actions = `
+        <button type="button" class="${buttonClass}" onclick="closeModal('${modalId}'); ${onClose ? `${onClose}();` : ''}">
+            ${buttonText}
+        </button>
+    `;
+    
+    const modal = createModal({
+        id: modalId,
+        title: title,
+        content: content,
+        actions: actions,
+        icon: alertIcon,
+        variant: type,
+        size: 'small'
+    });
+    
+    modal.show();
+    
+    return modal;
+}
+
+// Inicializar modals quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe modal-init
+    const modalElements = document.querySelectorAll('[data-modal-init]');
+    
+    modalElements.forEach(element => {
+        const modalId = element.id;
+        const backdrop = element.getAttribute('data-backdrop') !== 'false';
+        const keyboard = element.getAttribute('data-keyboard') !== 'false';
+        const show = element.getAttribute('data-show') === 'true';
+        
+        // Criar instância do modal
+        window[`modal_${modalId}`] = new ModernModal(modalId, {
+            backdrop: backdrop,
+            keyboard: keyboard,
+            show: show
+        });
+    });
+});
+
+// Eventos para fechar modals com ESC ou clique no backdrop
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const openModals = document.querySelectorAll('.modal-container-modern.open');
+        openModals.forEach(modal => {
+            const modalId = modal.id;
+            const modalInstance = window[`modal_${modalId}`];
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+    }
+});
+
+// Exportar funções para uso global
+window.ModernModal = ModernModal;
+window.createModal = createModal;
+window.showModal = showModal;
+window.closeModal = closeModal;
+window.toggleModal = toggleModal;
+window.closeAllModals = closeAllModals;
+window.confirmModal = confirmModal;
+window.alertModal = alertModal;
+</script>

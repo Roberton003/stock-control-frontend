@@ -1,0 +1,178 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Controle de Estoque",
+    "version": "1.0.0",
+    "description": "API para gerenciar produtos e movimentações de estoque."
+  },
+  "paths": {
+    "/api/produtos/": {
+      "get": {
+        "summary": "Lista todos os produtos",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo produto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Produto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso."
+          }
+        }
+      }
+    },
+    "/api/produtos/{id}/": {
+      "get": {
+        "summary": "Obtém um produto específico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do produto."
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um produto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Produto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um produto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto deletado com sucesso."
+          }
+        }
+      }
+    },
+    "/api/movimentacoes/": {
+      "get": {
+        "summary": "Lista todas as movimentações de estoque",
+        "responses": {
+          "200": {
+            "description": "Lista de movimentações."
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova movimentação de estoque",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentacaoEstoque"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Movimentação criada com sucesso."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Produto": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "quantidade": {
+            "type": "integer"
+          },
+          "fornecedor": {
+            "type": "string"
+          },
+          "data_validade": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "MovimentacaoEstoque": {
+        "type": "object",
+        "properties": {
+          "produto": {
+            "type": "integer"
+          },
+          "quantidade": {
+            "type": "integer"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "ENTRADA",
+              "SAIDA"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

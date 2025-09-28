@@ -1,0 +1,286 @@
+{% extends 'base/base_modern.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Produto - Controle de Estoque{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+  <!-- Cabeçalho -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Cadastro de Produto</h1>
+      <p class="mt-1 text-gray-600 dark:text-gray-400">Adicione ou edite informações de reagentes e materiais</p>
+    </div>
+    <div class="mt-4 md:mt-0">
+      <button class="btn btn-secondary flex items-center" onclick="history.back()">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- Formulário de Produto -->
+  <div class="dashboard-widget">
+    <div class="dashboard-widget-title">Informações do Produto</div>
+    
+    <form class="space-y-6 mt-6">
+      <!-- Informações Básicas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="product-name" class="form-label-modern">
+            Nome do Produto <span class="text-danger-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="product-name" 
+            name="product-name" 
+            class="form-input-modern" 
+            placeholder="Nome completo do produto"
+            required
+          >
+        </div>
+        
+        <div>
+          <label for="product-sku" class="form-label-modern">
+            SKU <span class="text-danger-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="product-sku" 
+            name="product-sku" 
+            class="form-input-modern" 
+            placeholder="Código único do produto"
+            required
+          >
+        </div>
+        
+        <div>
+          <label for="product-category" class="form-label-modern">
+            Categoria <span class="text-danger-500">*</span>
+          </label>
+          <select id="product-category" name="product-category" class="form-select-modern" required>
+            <option value="">Selecione uma categoria</option>
+            <option value="reagentes">Reagentes</option>
+            <option value="solventes">Solventes</option>
+            <option value="sais">Sais</option>
+            <option value="equipamentos">Equipamentos</option>
+            <option value="vidrarias">Vidrarias</option>
+            <option value="consumiveis">Consumíveis</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="product-supplier" class="form-label-modern">
+            Fornecedor <span class="text-danger-500">*</span>
+          </label>
+          <select id="product-supplier" name="product-supplier" class="form-select-modern" required>
+            <option value="">Selecione um fornecedor</option>
+            <option value="fornecedor1">Fornecedor Exemplo 1</option>
+            <option value="fornecedor2">Fornecedor Exemplo 2</option>
+            <option value="fornecedor3">Fornecedor Exemplo 3</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Detalhes do Produto -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label for="product-quantity" class="form-label-modern">
+            Quantidade Inicial <span class="text-danger-500">*</span>
+          </label>
+          <input 
+            type="number" 
+            id="product-quantity" 
+            name="product-quantity" 
+            class="form-input-modern" 
+            placeholder="Quantidade em estoque"
+            min="0"
+            step="0.01"
+            required
+          >
+        </div>
+        
+        <div>
+          <label for="product-unit" class="form-label-modern">
+            Unidade de Medida <span class="text-danger-500">*</span>
+          </label>
+          <select id="product-unit" name="product-unit" class="form-select-modern" required>
+            <option value="">Selecione uma unidade</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="un">un</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="product-min-stock" class="form-label-modern">
+            Nível Mínimo de Estoque <span class="text-danger-500">*</span>
+          </label>
+          <input 
+            type="number" 
+            id="product-min-stock" 
+            name="product-min-stock" 
+            class="form-input-modern" 
+            placeholder="Quantidade mínima"
+            min="0"
+            step="0.01"
+            required
+          >
+        </div>
+      </div>
+      
+      <!-- Informações Adicionais -->
+      <div>
+        <label for="product-description" class="form-label-modern">
+          Descrição
+        </label>
+        <textarea 
+          id="product-description" 
+          name="product-description" 
+          rows="4" 
+          class="form-textarea-modern" 
+          placeholder="Descrição detalhada do produto, incluindo instruções de armazenamento, precauções, etc."
+        ></textarea>
+      </div>
+      
+      <!-- Armazenamento -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="product-storage-location" class="form-label-modern">
+            Localização de Armazenamento
+          </label>
+          <input 
+            type="text" 
+            id="product-storage-location" 
+            name="product-storage-location" 
+            class="form-input-modern" 
+            placeholder="Localização física no laboratório"
+          >
+        </div>
+        
+        <div>
+          <label for="product-expiry-days" class="form-label-modern">
+            Dias para Vencimento
+          </label>
+          <input 
+            type="number" 
+            id="product-expiry-days" 
+            name="product-expiry-days" 
+            class="form-input-modern" 
+            placeholder="Dias até o vencimento"
+            min="0"
+          >
+        </div>
+      </div>
+      
+      <!-- Campos Condicionais -->
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <div class="flex items-center">
+          <input 
+            id="product-has-expiry" 
+            name="product-has-expiry" 
+            type="checkbox" 
+            class="form-checkbox-modern"
+          >
+          <label for="product-has-expiry" class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Este produto tem data de validade
+          </label>
+        </div>
+        
+        <div id="expiry-fields" class="hidden mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="product-default-expiry" class="form-label-modern">
+              Validade Padrão (meses)
+            </label>
+            <input 
+              type="number" 
+              id="product-default-expiry" 
+              name="product-default-expiry" 
+              class="form-input-modern" 
+              placeholder="Meses até o vencimento"
+              min="0"
+            >
+          </div>
+          
+          <div>
+            <label for="product-expiry-warning" class="form-label-modern">
+              Aviso Antecipado (dias)
+            </label>
+            <input 
+              type="number" 
+              id="product-expiry-warning" 
+              name="product-expiry-warning" 
+              class="form-input-modern" 
+              placeholder="Dias antes do vencimento para alerta"
+              min="0"
+            >
+          </div>
+        </div>
+      </div>
+      
+      <!-- Ações -->
+      <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <button type="button" class="btn btn-secondary" onclick="history.back()">
+          <i class="fas fa-times mr-2"></i>
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-save mr-2"></i>
+          Salvar Produto
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Função para mostrar/esconder campos de validade
+document.getElementById('product-has-expiry').addEventListener('change', function() {
+  const expiryFields = document.getElementById('expiry-fields');
+  if (this.checked) {
+    expiryFields.classList.remove('hidden');
+  } else {
+    expiryFields.classList.add('hidden');
+  }
+});
+
+// Função para validar formulário
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Obter valores dos campos
+  const productName = document.getElementById('product-name').value;
+  const productSku = document.getElementById('product-sku').value;
+  const productCategory = document.getElementById('product-category').value;
+  const productSupplier = document.getElementById('product-supplier').value;
+  const productQuantity = document.getElementById('product-quantity').value;
+  const productUnit = document.getElementById('product-unit').value;
+  const productMinStock = document.getElementById('product-min-stock').value;
+  
+  // Validar campos obrigatórios
+  if (!productName || !productSku || !productCategory || !productSupplier || !productQuantity || !productUnit || !productMinStock) {
+    showNotification('Por favor, preencha todos os campos obrigatórios.', 'warning');
+    return;
+  }
+  
+  // Validar quantidades
+  if (parseFloat(productQuantity) < 0) {
+    showNotification('A quantidade inicial não pode ser negativa.', 'warning');
+    return;
+  }
+  
+  if (parseFloat(productMinStock) < 0) {
+    showNotification('O nível mínimo de estoque não pode ser negativo.', 'warning');
+    return;
+  }
+  
+  // Simular envio do formulário
+  showNotification('Produto salvo com sucesso!', 'success');
+  setTimeout(() => {
+    window.location.href = '/produtos/list/';
+  }, 1000);
+});
+</script>
+{% endblock %}

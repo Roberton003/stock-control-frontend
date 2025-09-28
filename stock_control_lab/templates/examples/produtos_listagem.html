@@ -1,0 +1,255 @@
+{% extends 'base/base_modern.html' %}
+{% load static %}
+
+{% block title %}Produtos - Controle de Estoque{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+  <!-- Cabeçalho -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gerenciamento de Produtos</h1>
+      <p class="mt-1 text-gray-600 dark:text-gray-400">Lista de reagentes e materiais em estoque</p>
+    </div>
+    <div class="mt-4 md:mt-0 flex space-x-3">
+      <button class="btn btn-secondary flex items-center">
+        <i class="fas fa-download mr-2"></i>
+        Exportar
+      </button>
+      <button class="btn btn-primary flex items-center">
+        <i class="fas fa-plus mr-2"></i>
+        Novo Produto
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros e Busca -->
+  <div class="dashboard-widget mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="form-label-modern">Buscar</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+          <input 
+            type="text" 
+            class="form-input-modern pl-10" 
+            placeholder="Nome, SKU ou descrição"
+          >
+        </div>
+      </div>
+      
+      <div>
+        <label class="form-label-modern">Categoria</label>
+        <select class="form-select-modern">
+          <option value="">Todas as categorias</option>
+          <option value="reagentes">Reagentes</option>
+          <option value="solventes">Solventes</option>
+          <option value="sais">Sais</option>
+          <option value="equipamentos">Equipamentos</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="form-label-modern">Status</label>
+        <select class="form-select-modern">
+          <option value="">Todos os status</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+          <option value="abaixo-minimo">Abaixo do mínimo</option>
+        </select>
+      </div>
+      
+      <div class="flex items-end">
+        <button class="btn btn-secondary w-full">
+          <i class="fas fa-filter mr-2"></i>
+          Filtrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Produtos -->
+  <div class="dashboard-widget">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+      <h3 class="dashboard-widget-title">Produtos em Estoque</h3>
+      <div class="mt-4 md:mt-0 text-sm text-gray-600 dark:text-gray-400">
+        Mostrando 1-10 de 120 produtos
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-700">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produto</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">SKU</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantidade</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-flask text-blue-500 dark:text-blue-400"></i>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900 dark:text-white">Ácido Clorídrico 37%</div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">HCL-001</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">HCL-001-LT001</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">Ácidos</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">5000 mL</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">10 lotes</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                Em estoque
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-vial text-yellow-500 dark:text-yellow-400"></i>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900 dark:text-white">Etanol 95%</div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">ETOH-95</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">ETOH-95-LT045</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">Solventes</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">2500 mL</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">5 lotes</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                Abaixo do mínimo
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-prescription-bottle text-red-500 dark:text-red-400"></i>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900 dark:text-white">Sulfato de Cobre</div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">CUSO4-002</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">CUSO4-002-LT012</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">Sais</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900 dark:text-white">1500 g</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">3 lotes</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                Crítico
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <div class="flex space-x-2">
+                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Paginação -->
+    <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-6 py-4">
+      <div class="text-sm text-gray-700 dark:text-gray-300">
+        Mostrando <span class="font-medium">1</span> a <span class="font-medium">10</span> de <span class="font-medium">120</span> resultados
+      </div>
+      <div class="flex space-x-2">
+        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+          Anterior
+        </button>
+        <button class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+          1
+        </button>
+        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600">
+          2
+        </button>
+        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600">
+          3
+        </button>
+        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600">
+          ...
+        </button>
+        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600">
+          12
+        </button>
+        <button class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+          Próximo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

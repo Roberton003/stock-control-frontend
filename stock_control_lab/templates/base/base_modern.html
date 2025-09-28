@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | LabStock Control</title>
+    
+    <!-- CSS -->
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- JavaScript Libs via CDN (desenvolvimento) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Navigation -->
+    {% include 'base/navbar_modern.html' %}
+    
+    <!-- Sidebar (para telas maiores) -->
+    {% include 'base/sidebar_modern.html' %}
+    
+    <!-- Mobile Bottom Navigation -->
+    {% include 'base/mobile_nav_modern.html' %}
+    
+    <!-- Main Content -->
+    <main class="lg:ml-64 pt-16 pb-20 lg:pb-8">
+        <div class="px-4 sm:px-6 lg:px-8 py-6">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    {% include 'base/footer_modern.html' %}
+    
+    <!-- JavaScript -->
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

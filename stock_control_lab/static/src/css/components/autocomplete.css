@@ -1,0 +1,727 @@
+/*
+ * Componentes de Autocompletar e Seletores Inteligentes
+ * Elementos interativos para seleção e busca avançada
+ */
+
+/* Container de Autocomplete */
+.autocomplete-container {
+  @apply relative;
+}
+
+.autocomplete-container--inline {
+  @apply inline-block w-auto;
+}
+
+.autocomplete-container--block {
+  @apply block w-full;
+}
+
+.autocomplete-container--fluid {
+  @apply w-full;
+}
+
+/* Campo de Entrada do Autocomplete */
+.autocomplete-input {
+  @apply form-field w-full pr-10;
+}
+
+.autocomplete-input--loading {
+  @apply bg-gray-50 dark:bg-gray-700;
+}
+
+.autocomplete-input--focused {
+  @apply ring-2 ring-primary-500 ring-opacity-50 border-primary-500;
+}
+
+.autocomplete-input--error {
+  @apply form-field--error;
+}
+
+.autocomplete-input--success {
+  @apply form-field--success;
+}
+
+.autocomplete-input--warning {
+  @apply form-field--warning;
+}
+
+/* Ícone do Autocomplete */
+.autocomplete-icon {
+  @apply absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500 pointer-events-none;
+}
+
+.autocomplete-icon--loading {
+  @apply animate-spin text-primary-500;
+}
+
+.autocomplete-icon--clear {
+  @apply cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 pointer-events-auto;
+}
+
+/* Dropdown do Autocomplete */
+.autocomplete-dropdown {
+  @apply absolute z-50 mt-1 w-full bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden;
+  @apply max-h-60 overflow-y-auto;
+}
+
+.autocomplete-dropdown--above {
+  @apply mt-0 mb-1 bottom-full top-auto;
+}
+
+.autocomplete-dropdown--below {
+  @apply mt-1 top-full bottom-auto;
+}
+
+.autocomplete-dropdown--left {
+  @apply right-0 left-auto;
+}
+
+.autocomplete-dropdown--right {
+  @apply left-0 right-auto;
+}
+
+/* Grupo de Opções do Autocomplete */
+.autocomplete-option-group {
+  @apply p-2;
+}
+
+.autocomplete-option-group--with-label {
+  @apply pt-0;
+}
+
+/* Rótulo do Grupo de Opções */
+.autocomplete-option-group-label {
+  @apply px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider;
+}
+
+/* Opção do Autocomplete */
+.autocomplete-option {
+  @apply px-4 py-3 text-sm cursor-pointer transition-colors duration-150;
+}
+
+.autocomplete-option--selected {
+  @apply bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-200;
+}
+
+.autocomplete-option--focused {
+  @apply bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white;
+}
+
+.autocomplete-option--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.autocomplete-option--highlighted {
+  @apply font-semibold;
+}
+
+/* Texto da Opção */
+.autocomplete-option-text {
+  @apply block truncate;
+}
+
+.autocomplete-option-text--primary {
+  @apply font-medium text-gray-900 dark:text-white;
+}
+
+.autocomplete-option-text--secondary {
+  @apply text-sm text-gray-500 dark:text-gray-400 mt-1;
+}
+
+.autocomplete-option-text--highlighted {
+  @apply bg-yellow-200 dark:bg-yellow-800/50;
+}
+
+/* Ícone da Opção */
+.autocomplete-option-icon {
+  @apply w-5 h-5 mr-3 flex-shrink-0;
+}
+
+.autocomplete-option-icon--selected {
+  @apply text-primary-500 dark:text-primary-400;
+}
+
+/* Placeholder do Autocomplete */
+.autocomplete-placeholder {
+  @apply text-gray-400 dark:text-gray-500 italic;
+}
+
+/* Mensagem do Autocomplete */
+.autocomplete-message {
+  @apply px-4 py-3 text-sm text-gray-500 dark:text-gray-400 text-center;
+}
+
+.autocomplete-message--loading {
+  @apply flex items-center justify-center;
+}
+
+.autocomplete-message--empty {
+  @apply text-gray-400 dark:text-gray-500;
+}
+
+.autocomplete-message--error {
+  @apply text-danger-600 dark:text-danger-400;
+}
+
+/* Spinner do Autocomplete */
+.autocomplete-spinner {
+  @apply w-5 h-5 mr-2 animate-spin;
+}
+
+/* Container de Tags */
+.tags-container {
+  @apply flex flex-wrap gap-2 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 min-h-[42px];
+}
+
+.tags-container--focused {
+  @apply ring-2 ring-primary-500 ring-opacity-50 border-primary-500;
+}
+
+.tags-container--error {
+  @apply border-danger-500;
+}
+
+.tags-container--success {
+  @apply border-success-500;
+}
+
+.tags-container--warning {
+  @apply border-warning-500;
+}
+
+/* Tag */
+.tag {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200;
+}
+
+.tag--removable {
+  @apply pr-2;
+}
+
+.tag--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Botão de Remoção da Tag */
+.tag-remove-button {
+  @apply ml-2 text-primary-600 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-100 cursor-pointer;
+}
+
+.tag-remove-button--disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Ícone da Tag */
+.tag-icon {
+  @apply w-4 h-4 mr-2;
+}
+
+/* Seletores Inteligentes */
+.smart-selector {
+  @apply autocomplete-container;
+}
+
+.smart-selector-input {
+  @apply autocomplete-input;
+}
+
+.smart-selector-dropdown {
+  @apply autocomplete-dropdown;
+}
+
+.smart-selector-option {
+  @apply autocomplete-option;
+}
+
+.smart-selector-option--selected {
+  @apply autocomplete-option--selected;
+}
+
+.smart-selector-option--focused {
+  @apply autocomplete-option--focused;
+}
+
+.smart-selector-option--disabled {
+  @apply autocomplete-option--disabled;
+}
+
+/* Grupo do Smart Selector */
+.smart-selector-group {
+  @apply autocomplete-option-group;
+}
+
+.smart-selector-group--with-label {
+  @apply autocomplete-option-group--with-label;
+}
+
+.smart-selector-group-label {
+  @apply autocomplete-option-group-label;
+}
+
+/* Opção do Smart Selector */
+.smart-selector-option-text {
+  @apply autocomplete-option-text;
+}
+
+.smart-selector-option-text--primary {
+  @apply autocomplete-option-text--primary;
+}
+
+.smart-selector-option-text--secondary {
+  @apply autocomplete-option-text--secondary;
+}
+
+/* Mensagens do Smart Selector */
+.smart-selector-message {
+  @apply autocomplete-message;
+}
+
+.smart-selector-message--loading {
+  @apply autocomplete-message--loading;
+}
+
+.smart-selector-message--empty {
+  @apply autocomplete-message--empty;
+}
+
+.smart-selector-message--error {
+  @apply autocomplete-message--error;
+}
+
+/* Spinner do Smart Selector */
+.smart-selector-spinner {
+  @apply autocomplete-spinner;
+}
+
+/* Componentes Laboratoriais Específicos */
+.lab-autocomplete {
+  @apply autocomplete-container;
+}
+
+.lab-autocomplete-input {
+  @apply autocomplete-input form-lab-id;
+}
+
+.lab-autocomplete-dropdown {
+  @apply autocomplete-dropdown;
+}
+
+.lab-autocomplete-option {
+  @apply autocomplete-option;
+}
+
+.lab-autocomplete-option--selected {
+  @apply autocomplete-option--selected;
+}
+
+.lab-autocomplete-option--focused {
+  @apply autocomplete-option--focused;
+}
+
+.lab-autocomplete-option--disabled {
+  @apply autocomplete-option--disabled;
+}
+
+/* Reagente Autocomplete */
+.reagent-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.reagent-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.reagent-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.reagent-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.reagent-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.reagent-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.reagent-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Lote de Estoque Autocomplete */
+.stock-lot-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.stock-lot-autocomplete-input {
+  @apply lab-autocomplete-input form-lab-lot-number;
+}
+
+.stock-lot-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.stock-lot-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.stock-lot-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.stock-lot-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.stock-lot-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Fornecedor Autocomplete */
+.supplier-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.supplier-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.supplier-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.supplier-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.supplier-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.supplier-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.supplier-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Localização Autocomplete */
+.location-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.location-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.location-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.location-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.location-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.location-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.location-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Categoria Autocomplete */
+.category-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.category-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.category-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.category-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.category-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.category-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.category-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Usuário Autocomplete */
+.user-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.user-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.user-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.user-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.user-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.user-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.user-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Requisição Autocomplete */
+.requisition-autocomplete {
+  @apply lab-autocomplete;
+}
+
+.requisition-autocomplete-input {
+  @apply lab-autocomplete-input;
+}
+
+.requisition-autocomplete-dropdown {
+  @apply lab-autocomplete-dropdown;
+}
+
+.requisition-autocomplete-option {
+  @apply lab-autocomplete-option;
+}
+
+.requisition-autocomplete-option--selected {
+  @apply lab-autocomplete-option--selected;
+}
+
+.requisition-autocomplete-option--focused {
+  @apply lab-autocomplete-option--focused;
+}
+
+.requisition-autocomplete-option--disabled {
+  @apply lab-autocomplete-option--disabled;
+}
+
+/* Estados e Animações */
+.autocomplete-transition-enter {
+  @apply opacity-0 scale-95;
+}
+
+.autocomplete-transition-enter-active {
+  @apply opacity-100 scale-100 transition-all duration-200 ease-out;
+}
+
+.autocomplete-transition-exit {
+  @apply opacity-100 scale-100;
+}
+
+.autocomplete-transition-exit-active {
+  @apply opacity-0 scale-95 transition-all duration-200 ease-in;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .autocomplete-dropdown {
+    @apply max-h-48;
+  }
+  
+  .autocomplete-option {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .autocomplete-option-text--primary {
+    @apply text-sm;
+  }
+  
+  .autocomplete-option-text--secondary {
+    @apply text-xs mt-0.5;
+  }
+  
+  .tags-container {
+    @apply min-h-[38px] p-1.5;
+  }
+  
+  .tag {
+    @apply px-2 py-0.5 text-xs;
+  }
+  
+  .tag-icon {
+    @apply w-3 h-3 mr-1.5;
+  }
+  
+  .tag-remove-button {
+    @apply ml-1.5;
+  }
+  
+  .smart-selector-option-text--primary {
+    @apply text-sm;
+  }
+  
+  .smart-selector-option-text--secondary {
+    @apply text-xs mt-0.5;
+  }
+  
+  .lab-autocomplete-option-text--primary {
+    @apply text-sm;
+  }
+  
+  .lab-autocomplete-option-text--secondary {
+    @apply text-xs mt-0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .autocomplete-dropdown {
+    @apply max-h-40;
+  }
+  
+  .autocomplete-option {
+    @apply px-2.5 py-1.5 text-sm;
+  }
+  
+  .autocomplete-option-group-label {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  
+  .autocomplete-message {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  
+  .tags-container {
+    @apply min-h-[36px] p-1;
+  }
+  
+  .tag {
+    @apply px-1.5 py-0.5 text-xs;
+  }
+  
+  .tag-icon {
+    @apply w-3 h-3 mr-1;
+  }
+  
+  .tag-remove-button {
+    @apply ml-1;
+  }
+  
+  .autocomplete-icon {
+    @apply right-2 w-4 h-4;
+  }
+  
+  .autocomplete-icon--loading {
+    @apply w-4 h-4;
+  }
+  
+  .autocomplete-icon--clear {
+    @apply w-4 h-4;
+  }
+  
+  .smart-selector-option {
+    @apply px-2.5 py-1.5 text-sm;
+  }
+  
+  .smart-selector-option-group-label {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  
+  .smart-selector-message {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  
+  .lab-autocomplete-option {
+    @apply px-2.5 py-1.5 text-sm;
+  }
+  
+  .lab-autocomplete-option-group-label {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  
+  .lab-autocomplete-message {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .autocomplete-dropdown {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .autocomplete-option--focused {
+    @apply bg-gray-700;
+  }
+  
+  .autocomplete-option--selected {
+    @apply bg-primary-900/30;
+  }
+  
+  .autocomplete-message--empty {
+    @apply text-gray-500;
+  }
+  
+  .autocomplete-message--error {
+    @apply text-danger-400;
+  }
+  
+  .tags-container {
+    @apply bg-gray-700 border-gray-600;
+  }
+  
+  .tags-container--focused {
+    @apply ring-primary-500 ring-opacity-50 border-primary-500;
+  }
+  
+  .tag {
+    @apply bg-primary-900 text-primary-200;
+  }
+  
+  .tag-remove-button {
+    @apply text-primary-300 hover:text-primary-100;
+  }
+  
+  .smart-selector-dropdown {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .smart-selector-option--focused {
+    @apply bg-gray-700;
+  }
+  
+  .smart-selector-option--selected {
+    @apply bg-primary-900/30;
+  }
+  
+  .lab-autocomplete-dropdown {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .lab-autocomplete-option--focused {
+    @apply bg-gray-700;
+  }
+  
+  .lab-autocomplete-option--selected {
+    @apply bg-primary-900/30;
+  }
+}

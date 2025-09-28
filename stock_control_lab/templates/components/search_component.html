@@ -1,0 +1,676 @@
+<!-- search_component.html - Componente de busca moderna -->
+<div class="search-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ search_id }}">
+    <div class="search-wrapper">
+        <div class="search-input-container">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+                type="text" 
+                id="{{ search_id }}-input" 
+                class="search-input" 
+                placeholder="{{ placeholder|default:'Pesquisar...' }}"
+                {% if value %}value="{{ value }}"{% endif %}
+                autocomplete="off"
+            >
+            <button type="button" class="search-clear-btn" id="{{ search_id }}-clear" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        {% if show_filters %}
+        <button type="button" class="search-filter-btn" onclick="toggleSearchFilters('{{ search_id }}')">
+            <i class="fas fa-filter"></i>
+            <span>Filtros</span>
+        </button>
+        {% endif %}
+        
+        <button type="button" class="search-submit-btn" id="{{ search_id }}-submit">
+            <i class="fas fa-search"></i>
+            <span class="search-submit-text">Pesquisar</span>
+        </button>
+    </div>
+    
+    {% if show_filters %}
+    <div class="search-filters-container" id="{{ search_id }}-filters" style="display: none;">
+        <!-- Aqui vão os filtros adicionais -->
+        <div class="search-filters-content">
+            {% if filters %}
+                {{ filters|safe }}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="search-results-container" id="{{ search_id }}-results" style="display: none;">
+        <div class="search-results-header">
+            <span class="search-results-count" id="{{ search_id }}-count">0 resultados encontrados</span>
+            <button type="button" class="search-results-close" onclick="closeSearchResults('{{ search_id }}')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="search-results-list" id="{{ search_id }}-list">
+            <!-- Resultados da busca serão inseridos aqui -->
+        </div>
+    </div>
+</div>
+
+<style>
+.search-container-modern {
+    position: relative;
+    width: 100%;
+    max-width: {% if max_width %}{{ max_width }}{% else %}600px{% endif %};
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid #d1d5db;
+    transition: all 0.2s ease;
+}
+
+.search-wrapper:focus-within {
+    border-color: #034EA2;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.search-input-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #374151;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+}
+
+.search-clear-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.search-clear-btn:hover {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.search-filter-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #f9fafb;
+    border: none;
+    border-left: 1px solid #e5e7eb;
+    color: #4b5563;
+    cursor: pointer;
+    border-radius: 0 0.5rem 0.5rem 0;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.search-filter-btn:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.search-filter-btn i {
+    margin-right: 0.5rem;
+}
+
+.search-submit-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: #034EA2;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 0 0.5rem 0.5rem 0;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.search-submit-btn:hover {
+    background-color: #023a7a;
+}
+
+.search-submit-btn i {
+    margin-right: 0.5rem;
+}
+
+.search-filters-container {
+    margin-top: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.search-filters-content {
+    padding: 1.5rem;
+}
+
+.search-results-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    z-index: 50;
+}
+
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.search-results-count {
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.search-results-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.search-results-close:hover {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.search-results-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search-result-item:hover {
+    background-color: #f9fafb;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-title {
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.search-result-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.search-result-meta {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.25rem;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .search-container-modern {
+        max-width: 100%;
+    }
+    
+    .search-wrapper {
+        flex-direction: column;
+    }
+    
+    .search-input-container {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .search-filter-btn,
+    .search-submit-btn {
+        width: 100%;
+        justify-content: center;
+        border-radius: 0.375rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .search-filter-btn {
+        border-left: none;
+        border-radius: 0.375rem;
+    }
+    
+    .search-submit-text {
+        display: inline;
+    }
+}
+
+/* Estados para diferentes tamanhos de tela */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .search-submit-text {
+        display: none;
+    }
+    
+    .search-submit-btn {
+        padding: 0.75rem 1rem;
+    }
+    
+    .search-submit-btn i {
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 1025px) {
+    .search-submit-text {
+        display: inline;
+    }
+    
+    .search-submit-btn {
+        padding: 0.75rem 1.25rem;
+    }
+    
+    .search-submit-btn i {
+        margin-right: 0.5rem;
+    }
+}
+
+/* Estados para busca ativa */
+.search-wrapper.active {
+    border-color: #034EA2;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-results-container {
+    animation: fadeIn 0.2s ease-out;
+}
+</style>
+
+<script>
+class ModernSearch {
+    constructor(searchId, options = {}) {
+        this.searchId = searchId;
+        this.input = document.getElementById(`${searchId}-input`);
+        this.clearBtn = document.getElementById(`${searchId}-clear`);
+        this.submitBtn = document.getElementById(`${searchId}-submit`);
+        this.resultsContainer = document.getElementById(`${searchId}-results`);
+        this.resultsList = document.getElementById(`${searchId}-list`);
+        this.resultsCount = document.getElementById(`${searchId}-count`);
+        this.filtersContainer = document.getElementById(`${searchId}-filters`);
+        
+        this.options = Object.assign({
+            minLength: 2,
+            delay: 300,
+            endpoint: null,
+            onSelect: null
+        }, options);
+        
+        this.timeout = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar event listeners
+        this.input.addEventListener('input', (e) => {
+            this.handleInput(e);
+        });
+        
+        this.input.addEventListener('focus', (e) => {
+            this.handleFocus(e);
+        });
+        
+        this.input.addEventListener('blur', (e) => {
+            this.handleBlur(e);
+        });
+        
+        this.input.addEventListener('keydown', (e) => {
+            this.handleKeydown(e);
+        });
+        
+        this.clearBtn.addEventListener('click', (e) => {
+            this.clearSearch();
+        });
+        
+        this.submitBtn.addEventListener('click', (e) => {
+            this.performSearch();
+        });
+        
+        // Atualizar botão de limpar
+        this.updateClearButton();
+    }
+    
+    handleInput(e) {
+        const value = e.target.value;
+        
+        // Atualizar botão de limpar
+        this.updateClearButton();
+        
+        // Cancelar timeout anterior
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+        
+        // Se o valor for maior que o mínimo, realizar busca
+        if (value.length >= this.options.minLength) {
+            this.timeout = setTimeout(() => {
+                this.performSearch();
+            }, this.options.delay);
+        } else {
+            // Se o valor for menor que o mínimo, fechar resultados
+            this.closeResults();
+        }
+    }
+    
+    handleFocus(e) {
+        // Mostrar resultados se houver conteúdo
+        if (this.input.value.length >= this.options.minLength) {
+            this.showResults();
+        }
+    }
+    
+    handleBlur(e) {
+        // Fechar resultados após um pequeno delay para permitir cliques
+        setTimeout(() => {
+            this.closeResults();
+        }, 200);
+    }
+    
+    handleKeydown(e) {
+        // Tecla Enter
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.performSearch();
+        }
+        
+        // Tecla Escape
+        if (e.key === 'Escape') {
+            this.closeResults();
+        }
+    }
+    
+    updateClearButton() {
+        if (this.input.value.length > 0) {
+            this.clearBtn.style.display = 'block';
+        } else {
+            this.clearBtn.style.display = 'none';
+        }
+    }
+    
+    clearSearch() {
+        this.input.value = '';
+        this.updateClearButton();
+        this.closeResults();
+        
+        // Disparar evento personalizado
+        const clearEvent = new CustomEvent('searchCleared', {
+            detail: {
+                searchId: this.searchId
+            }
+        });
+        
+        document.dispatchEvent(clearEvent);
+    }
+    
+    performSearch() {
+        const query = this.input.value.trim();
+        
+        if (query.length < this.options.minLength) {
+            return;
+        }
+        
+        // Se houver endpoint, fazer busca via AJAX
+        if (this.options.endpoint) {
+            this.searchWithEndpoint(query);
+        } else {
+            // Disparar evento personalizado
+            const searchEvent = new CustomEvent('searchPerformed', {
+                detail: {
+                    searchId: this.searchId,
+                    query: query
+                }
+            });
+            
+            document.dispatchEvent(searchEvent);
+        }
+    }
+    
+    searchWithEndpoint(query) {
+        // Mostrar indicador de carregamento
+        this.showLoading();
+        
+        // Fazer requisição AJAX
+        fetch(this.options.endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': this.getCSRFToken()
+            },
+            body: JSON.stringify({
+                query: query
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.displayResults(data.results);
+        })
+        .catch(error => {
+            console.error('Erro na busca:', error);
+            this.showError('Ocorreu um erro ao realizar a busca');
+        });
+    }
+    
+    showLoading() {
+        this.resultsList.innerHTML = `
+            <div class="search-result-item">
+                <div class="flex items-center justify-center w-full py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <span class="ml-3 text-gray-600">Pesquisando...</span>
+                </div>
+            </div>
+        `;
+        this.showResults();
+    }
+    
+    showError(message) {
+        this.resultsList.innerHTML = `
+            <div class="search-result-item">
+                <div class="flex items-center justify-center w-full py-8">
+                    <div class="text-red-500">
+                        <i class="fas fa-exclamation-circle text-xl mb-2"></i>
+                        <p>${message}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        this.showResults();
+    }
+    
+    displayResults(results) {
+        if (!results || results.length === 0) {
+            this.resultsList.innerHTML = `
+                <div class="search-result-item">
+                    <div class="text-center w-full py-8">
+                        <i class="fas fa-search text-gray-400 text-2xl mb-2"></i>
+                        <p class="text-gray-500">Nenhum resultado encontrado</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="search-result-item" data-id="${result.id}" onclick="selectSearchResult('${this.searchId}', ${result.id})">
+                        <div>
+                            <div class="search-result-title">${result.title}</div>
+                            ${result.description ? `<div class="search-result-description">${result.description}</div>` : ''}
+                            ${result.meta ? `<div class="search-result-meta">${result.meta}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            this.resultsList.innerHTML = html;
+        }
+        
+        // Atualizar contador
+        this.resultsCount.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''} encontrado${results.length !== 1 ? 's' : ''}`;
+        
+        this.showResults();
+    }
+    
+    showResults() {
+        this.resultsContainer.style.display = 'block';
+    }
+    
+    closeResults() {
+        this.resultsContainer.style.display = 'none';
+    }
+    
+    selectResult(resultId) {
+        // Chamar callback se definido
+        if (this.options.onSelect) {
+            this.options.onSelect(resultId);
+        }
+        
+        // Fechar resultados
+        this.closeResults();
+        
+        // Disparar evento personalizado
+        const selectEvent = new CustomEvent('searchResultSelected', {
+            detail: {
+                searchId: this.searchId,
+                resultId: resultId
+            }
+        });
+        
+        document.dispatchEvent(selectEvent);
+    }
+    
+    getCSRFToken() {
+        // Obter token CSRF do cookie
+        const name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+}
+
+// Funções globais
+function toggleSearchFilters(searchId) {
+    const filtersContainer = document.getElementById(`${searchId}-filters`);
+    if (filtersContainer.style.display === 'none') {
+        filtersContainer.style.display = 'block';
+    } else {
+        filtersContainer.style.display = 'none';
+    }
+}
+
+function closeSearchResults(searchId) {
+    const resultsContainer = document.getElementById(`${searchId}-results`);
+    resultsContainer.style.display = 'none';
+}
+
+function selectSearchResult(searchId, resultId) {
+    const searchInstance = window[`search_${searchId}`];
+    if (searchInstance) {
+        searchInstance.selectResult(resultId);
+    }
+}
+
+// Inicializar buscas quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe search-init
+    const searchElements = document.querySelectorAll('[data-search-init]');
+    
+    searchElements.forEach(element => {
+        const searchId = element.id;
+        const endpoint = element.getAttribute('data-search-endpoint');
+        const minLength = parseInt(element.getAttribute('data-search-min-length')) || 2;
+        const delay = parseInt(element.getAttribute('data-search-delay')) || 300;
+        
+        // Criar instância da busca
+        window[`search_${searchId}`] = new ModernSearch(searchId, {
+            minLength: minLength,
+            delay: delay,
+            endpoint: endpoint
+        });
+    });
+});
+
+// Exportar classe e funções para uso global
+window.ModernSearch = ModernSearch;
+window.toggleSearchFilters = toggleSearchFilters;
+window.closeSearchResults = closeSearchResults;
+window.selectSearchResult = selectSearchResult;
+</script>

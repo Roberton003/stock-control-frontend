@@ -1,0 +1,264 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div 
+    class="container mx-auto p-4 md:p-6"
+    x-data="dashboardManager()"
+    x-init="init()"
+>
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-text-heading">Dashboard do Laboratório</h1>
+        <p class="text-text-muted mt-2">Visão geral do estoque e métricas em tempo real</p>
+    </div>
+
+    <!-- Loading & Error States -->
+    <div x-show="isLoading" class="text-center p-10">
+        <p class="text-text-muted">Carregando dados do dashboard...</p>
+    </div>
+    
+    <div x-show="error" class="card bg-red-500/10 border-accent-red text-accent-red p-6 text-center">
+        <h3 class="text-xl font-bold mb-2">Erro ao Carregar Dados</h3>
+        <p class="mb-4" x-text="error"></p>
+        <button class="btn btn-danger" @click="init()">Tentar novamente</button>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div x-show="!isLoading && summary" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Métricas Principais -->
+        <div class="dashboard-widget flex flex-col justify-between">
+            <h3 class="dashboard-widget-title">Valor Total em Estoque</h3>
+            <p class="text-3xl font-bold text-text-heading" x-text="summary.total_stock_value ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(summary.total_stock_value) : 'R$ 0,00'"></p>
+        </div>
+
+        <div class="dashboard-widget flex flex-col justify-between">
+            <h3 class="dashboard-widget-title">Itens com Estoque Baixo</h3>
+            <p class="text-3xl font-bold text-accent-pink" x-text="summary.low_stock_items.length"></p>
+        </div>
+
+        <div class="dashboard-widget flex flex-col justify-between">
+            <h3 class="dashboard-widget-title">Itens Próximos do Vencimento</h3>
+            <p class="text-3xl font-bold text-accent-purple" x-text="summary.expiring_soon_items.length"></p>
+        </div>
+
+        <div class="dashboard-widget flex flex-col justify-between">
+            <h3 class="dashboard-widget-title">Reagentes Ativos</h3>
+            <p class="text-3xl font-bold text-primary-blue" x-text="summary.active_reagents_count"></p>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="dashboard-widget md:col-span-2 lg:col-span-3">
+            <h2 class="dashboard-widget-title">Consumo de Reagentes (Últimos 6 Meses)</h2>
+            <div class="chart-container">
+                <canvas id="consumptionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="dashboard-widget md:col-span-2 lg:col-span-1">
+            <h2 class="dashboard-widget-title">Validade dos Lotes</h2>
+            <div class="chart-container">
+                <canvas id="expiryChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabelas e Listas -->
+        <div class="dashboard-widget md:col-span-2">
+            <h2 class="dashboard-widget-title">Estoque Baixo</h2>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Reagente</th>
+                            <th>Estoque</th>
+                            <th>Mínimo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="item in summary.low_stock_items.slice(0, 5)" :key="item.id">
+                            <tr>
+                                <td x-text="item.name"></td>
+                                <td><span class="badge bg-accent-pink/20 text-accent-pink" x-text="item.current_stock"></span></td>
+                                <td x-text="item.min_stock"></td>
+                            </tr>
+                        </template>
+                        <tr x-show="summary.low_stock_items.length === 0">
+                            <td colspan="3" class="text-center py-4">Nenhum item com estoque baixo.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="dashboard-widget md:col-span-2">
+            <h2 class="dashboard-widget-title">Próximos do Vencimento</h2>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Reagente</th>
+                            <th>Lote</th>
+                            <th>Validade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="item in summary.expiring_soon_items.slice(0, 5)" :key="item.id">
+                            <tr>
+                                <td x-text="item.reagent"></td>
+                                <td><span class="badge bg-accent-purple/20 text-accent-purple" x-text="item.lot_number"></span></td>
+                                <td x-text="new Date(item.expiry_date).toLocaleDateString('pt-BR')"></td>
+                            </tr>
+                        </template>
+                        <tr x-show="summary.expiring_soon_items.length === 0">
+                            <td colspan="3" class="text-center py-4">Nenhum item próximo do vencimento.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const getCssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+function dashboardManager() {
+    return {
+        summary: null,
+        isLoading: true,
+        error: '',
+        consumptionChart: null,
+        expiryChart: null,
+
+        init() {
+            this.fetchData();
+        },
+
+        async fetchData() {
+            this.isLoading = true;
+            this.error = '';
+            try {
+                const response = await fetch("{% url 'dashboard-summary' %}");
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Falha ao buscar dados do dashboard.');
+                }
+                this.summary = await response.json();
+                this.renderCharts();
+            } catch (e) {
+                this.error = e.message;
+                console.error(e);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        renderCharts() {
+            this.$nextTick(() => {
+                this.renderConsumptionChart();
+                this.renderExpiryChart();
+            });
+        },
+
+        renderConsumptionChart() {
+            const ctx = document.getElementById('consumptionChart').getContext('2d');
+            if (this.consumptionChart) this.consumptionChart.destroy();
+            
+            const textColor = getCssVar('--color-text-muted');
+            const gridColor = getCssVar('--color-border');
+
+            this.consumptionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: this.summary.consumption_data.labels,
+                    datasets: [{
+                        label: 'Consumo (unidades)',
+                        data: this.summary.consumption_data.values,
+                        backgroundColor: getCssVar('--color-primary-blue') + '80', // 50% opacity
+                        borderColor: getCssVar('--color-primary-blue'),
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            grid: { color: gridColor },
+                            ticks: { color: textColor }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: textColor }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        },
+
+        renderExpiryChart() {
+            const ctx = document.getElementById('expiryChart').getContext('2d');
+            if (this.expiryChart) this.expiryChart.destroy();
+
+            const textColor = getCssVar('--color-text-muted');
+
+            this.expiryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: this.summary.expiry_data.labels,
+                    datasets: [{
+                        data: this.summary.expiry_data.values,
+                        backgroundColor: [
+                            getCssVar('--color-accent-red') + 'B3', // 70% opacity
+                            getCssVar('--color-accent-purple') + 'B3',
+                            getCssVar('--color-primary-blue') + 'B3'
+                        ],
+                        borderColor: [
+                            getCssVar('--color-accent-red'),
+                            getCssVar('--color-accent-purple'),
+                            getCssVar('--color-primary-blue')
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'bottom',
+                            labels: {
+                                color: textColor,
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+</script>
+{% endblock %}

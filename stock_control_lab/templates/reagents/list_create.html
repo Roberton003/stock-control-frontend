@@ -1,0 +1,199 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Gestão de Reagentes{% endblock %}
+
+{% block content %}
+<div 
+    class="container mx-auto p-4 md:p-8" 
+    x-data="reagentManager()"
+    x-init="init()"
+>
+    <h1 class="text-3xl font-bold mb-6 text-text-heading">Gestão de Reagentes</h1>
+
+    <!-- Feedback Messages -->
+    <div x-show="successMessage" class="alert alert-success" role="alert">
+        <span x-text="successMessage"></span>
+    </div>
+    <div x-show="errorMessage" class="alert alert-danger" role="alert">
+        <span x-text="errorMessage"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Reagent List -->
+        <div class="lg:col-span-2 card">
+            <h2 class="dashboard-widget-title">Reagentes Cadastrados</h2>
+            <div x-show="isLoading" class="text-center p-4">
+                <p class="text-text-muted">Carregando reagentes...</p>
+            </div>
+            <div x-show="!isLoading && reagents.length === 0" class="text-center p-4">
+                <p class="text-text-muted">Nenhum reagente encontrado.</p>
+            </div>
+            <div x-show="!isLoading && reagents.length > 0" class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>SKU</th>
+                            <th>Estoque Mín.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="reagent in reagents" :key="reagent.id">
+                            <tr>
+                                <td x-text="reagent.name"></td>
+                                <td x-text="reagent.sku"></td>
+                                <td x-text="reagent.min_stock_level"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Create Reagent Form -->
+        <div class="lg:col-span-1 card">
+            <h2 class="dashboard-widget-title">Cadastrar Novo Reagente</h2>
+            <form @submit.prevent="saveReagent" class="space-y-4">
+                <div>
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" id="name" x-model="newReagent.name" class="form-input" required>
+                </div>
+                <div>
+                    <label for="sku" class="form-label">SKU</label>
+                    <input type="text" id="sku" x-model="newReagent.sku" class="form-input" required>
+                </div>
+                <div>
+                    <label for="category" class="form-label">Categoria</label>
+                    <select id="category" x-model="newReagent.category" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        <template x-for="category in categories" :key="category.id">
+                            <option :value="category.id" x-text="category.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="supplier" class="form-label">Fornecedor</label>
+                    <select id="supplier" x-model="newReagent.supplier" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        <template x-for="supplier in suppliers" :key="supplier.id">
+                            <option :value="supplier.id" x-text="supplier.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label for="min_stock_level" class="form-label">Nível Mínimo de Estoque</label>
+                    <input type="number" step="0.01" id="min_stock_level" x-model="newReagent.min_stock_level" class="form-input" required>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="btn btn-primary w-full">
+                        <span x-show="!isSaving">Cadastrar Reagente</span>
+                        <span x-show="isSaving">Salvando...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function reagentManager() {
+        return {
+            reagents: [],
+            categories: [],
+            suppliers: [],
+            newReagent: {
+                name: '',
+                sku: '',
+                category: '',
+                supplier: '',
+                min_stock_level: 0,
+            },
+            isLoading: true,
+            isSaving: false,
+            successMessage: '',
+            errorMessage: '',
+
+            async init() {
+                this.isLoading = true;
+                await Promise.all([
+                    this.fetchReagents(),
+                    this.fetchCategories(),
+                    this.fetchSuppliers()
+                ]);
+                this.isLoading = false;
+            },
+
+            async fetchReagents() {
+                try {
+                    const response = await fetch("{% url 'produto-list-create' %}");
+                    this.reagents = await response.json();
+                } catch (error) {
+                    this.errorMessage = 'Falha ao carregar reagentes.';
+                    console.error(error);
+                }
+            },
+
+            async fetchCategories() {
+                try {
+                    const response = await fetch("{% url 'category-list-create' %}");
+                    this.categories = await response.json();
+                } catch (error) {
+                    this.errorMessage = 'Falha ao carregar categorias.';
+                    console.error(error);
+                }
+            },
+
+            async fetchSuppliers() {
+                try {
+                    const response = await fetch("{% url 'supplier-list-create' %}");
+                    this.suppliers = await response.json();
+                } catch (error) {
+                    this.errorMessage = 'Falha ao carregar fornecedores.';
+                    console.error(error);
+                }
+            },
+
+            async saveReagent() {
+                this.isSaving = true;
+                this.successMessage = '';
+                this.errorMessage = '';
+
+                try {
+                    const response = await fetch("{% url 'produto-list-create' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: JSON.stringify(this.newReagent),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(JSON.stringify(errorData));
+                    }
+
+                    this.successMessage = 'Reagente cadastrado com sucesso!';
+                    this.resetForm();
+                    await this.fetchReagents(); // Refresh list
+
+                } catch (error) {
+                    this.errorMessage = 'Erro ao salvar reagente. Verifique os campos.';
+                    console.error('Save error:', error);
+                } finally {
+                    this.isSaving = false;
+                    setTimeout(() => { this.successMessage = ''; this.errorMessage = ''; }, 5000);
+                }
+            },
+
+            resetForm() {
+                this.newReagent = { name: '', sku: '', category: '', supplier: '', min_stock_level: 0 };
+            }
+        }
+    }
+</script>
+{% endblock %}

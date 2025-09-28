@@ -1,0 +1,444 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulários Intuitivos - StockLab</title>
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Exemplos de Formulários Intuitivos</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Formulário de Reagente -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Cadastro de Reagente</h2>
+                    <p class="form-subtitle">Preencha as informações básicas do reagente</p>
+                </div>
+                
+                <form data-intuitive-form class="form-body">
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Informações Básicas</h3>
+                            <p class="form-section-description">Dados essenciais do reagente químico</p>
+                        </div>
+                        
+                        <div class="form-grid form-grid--2-cols">
+                            <div class="form-field-group">
+                                <label for="reagent-name" class="form-field-label form-field-label--required">Nome do Reagente</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="text" 
+                                        id="reagent-name" 
+                                        name="reagent-name" 
+                                        required 
+                                        minlength="3" 
+                                        maxlength="100"
+                                        class="form-field"
+                                        placeholder="Ex: Ácido Clorídrico Concentrado"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-sku" class="form-field-label form-field-label--required">SKU</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="text" 
+                                        id="reagent-sku" 
+                                        name="reagent-sku" 
+                                        required 
+                                        data-validate-sku="true"
+                                        class="form-field form-lab-sku"
+                                        placeholder="Ex: HCL-001"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-category" class="form-field-label form-field-label--required">Categoria</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="reagent-category" 
+                                        name="reagent-category" 
+                                        required 
+                                        class="form-select form-lab-category"
+                                    >
+                                        <option value="">Selecione uma categoria</option>
+                                        <option value="ácidos">Ácidos</option>
+                                        <option value="bases">Bases</option>
+                                        <option value="sais">Sais</option>
+                                        <option value="solventes">Solventes</option>
+                                        <option value="indicadores">Indicadores</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-supplier" class="form-field-label form-field-label--required">Fornecedor</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="reagent-supplier" 
+                                        name="reagent-supplier" 
+                                        required 
+                                        class="form-select form-lab-supplier"
+                                    >
+                                        <option value="">Selecione um fornecedor</option>
+                                        <option value="quimica-analitica">Química Analítica Ltda</option>
+                                        <option value="laboratorio-merck">Laboratório Merck</option>
+                                        <option value="sigma-aldrich">Sigma-Aldrich</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-min-stock" class="form-field-label form-field-label--required">Nível Mínimo de Estoque</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="number" 
+                                        id="reagent-min-stock" 
+                                        name="reagent-min-stock" 
+                                        required 
+                                        min="0" 
+                                        step="0.01"
+                                        class="form-field form-lab-quantity"
+                                        placeholder="0.00"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-unit" class="form-field-label form-field-label--required">Unidade</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="reagent-unit" 
+                                        name="reagent-unit" 
+                                        required 
+                                        class="form-select form-lab-unit"
+                                    >
+                                        <option value="">Selecione uma unidade</option>
+                                        <option value="ml">mL</option>
+                                        <option value="l">L</option>
+                                        <option value="mg">mg</option>
+                                        <option value="g">g</option>
+                                        <option value="kg">kg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Detalhes Adicionais</h3>
+                            <p class="form-section-description">Informações complementares do reagente</p>
+                        </div>
+                        
+                        <div class="form-grid form-grid--2-cols">
+                            <div class="form-field-group">
+                                <label for="reagent-storage" class="form-field-label">Condições de Armazenamento</label>
+                                <div class="form-field-container">
+                                    <textarea 
+                                        id="reagent-storage" 
+                                        name="reagent-storage" 
+                                        rows="3"
+                                        class="form-textarea form-lab-storage-conditions"
+                                        placeholder="Ex: Temperatura ambiente, protegido da luz"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="reagent-description" class="form-field-label">Descrição</label>
+                                <div class="form-field-container">
+                                    <textarea 
+                                        id="reagent-description" 
+                                        name="reagent-description" 
+                                        rows="3"
+                                        class="form-textarea form-lab-description"
+                                        placeholder="Ex: Ácido clorídrico concentrado, 37%"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-action-button form-action-button--secondary">Cancelar</button>
+                        <button type="submit" class="form-action-button form-action-button--primary">Salvar Reagente</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Formulário de Lote de Estoque -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Cadastro de Lote</h2>
+                    <p class="form-subtitle">Registre um novo lote de estoque</p>
+                </div>
+                
+                <form data-intuitive-form class="form-body">
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Informações do Lote</h3>
+                            <p class="form-section-description">Dados específicos do lote de reagente</p>
+                        </div>
+                        
+                        <div class="form-grid form-grid--2-cols">
+                            <div class="form-field-group">
+                                <label for="stock-lot-reagent" class="form-field-label form-field-label--required">Reagente</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="stock-lot-reagent" 
+                                        name="stock-lot-reagent" 
+                                        required 
+                                        class="form-select form-lab-reagent"
+                                    >
+                                        <option value="">Selecione um reagente</option>
+                                        <option value="hcl">Ácido Clorídrico Concentrado</option>
+                                        <option value="naoh">Hidróxido de Sódio</option>
+                                        <option value="h2so4">Ácido Sulfúrico</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="stock-lot-number" class="form-field-label form-field-label--required">Número do Lote</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="text" 
+                                        id="stock-lot-number" 
+                                        name="stock-lot-number" 
+                                        required 
+                                        class="form-field form-lab-lot-number"
+                                        placeholder="Ex: HCL20250917A"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="stock-lot-location" class="form-field-label form-field-label--required">Localização</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="stock-lot-location" 
+                                        name="stock-lot-location" 
+                                        required 
+                                        class="form-select form-lab-location"
+                                    >
+                                        <option value="">Selecione uma localização</option>
+                                        <option value="prateleira-a1">Prateleira A-1</option>
+                                        <option value="prateleira-a2">Prateleira A-2</option>
+                                        <option value="armario-5">Armário 5</option>
+                                        <option value="geladeira-2">Geladeira 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="stock-lot-expiry" class="form-field-label form-field-label--required">Data de Validade</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="text" 
+                                        id="stock-lot-expiry" 
+                                        name="stock-lot-expiry" 
+                                        required 
+                                        data-validate-date="true"
+                                        class="form-field form-lab-expiry-date"
+                                        placeholder="DD/MM/AAAA"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="stock-lot-purchase-price" class="form-field-label form-field-label--required">Preço de Compra</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="number" 
+                                        id="stock-lot-purchase-price" 
+                                        name="stock-lot-purchase-price" 
+                                        required 
+                                        min="0" 
+                                        step="0.01"
+                                        class="form-field form-lab-purchase-price"
+                                        placeholder="0.00"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="stock-lot-initial-quantity" class="form-field-label form-field-label--required">Quantidade Inicial</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="number" 
+                                        id="stock-lot-initial-quantity" 
+                                        name="stock-lot-initial-quantity" 
+                                        required 
+                                        min="0" 
+                                        step="0.01"
+                                        class="form-field form-lab-initial-quantity"
+                                        placeholder="0.00"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Documentação</h3>
+                            <p class="form-section-description">Anexos e certificados do lote</p>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-field-group">
+                                <label for="stock-lot-attachments" class="form-field-label">Anexos</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="file" 
+                                        id="stock-lot-attachments" 
+                                        name="stock-lot-attachments" 
+                                        multiple 
+                                        class="form-field form-lab-file"
+                                    >
+                                    <p class="form-field-help">Você pode anexar múltiplos arquivos (FISPQ, CoA, etc.)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-action-button form-action-button--secondary">Cancelar</button>
+                        <button type="submit" class="form-action-button form-action-button--primary">Salvar Lote</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Formulário de Requisição -->
+            <div class="form-container form-container--wide lg:col-span-2">
+                <div class="form-header">
+                    <h2 class="form-title">Nova Requisição</h2>
+                    <p class="form-subtitle">Solicite materiais para uso no laboratório</p>
+                </div>
+                
+                <form data-intuitive-form class="form-body">
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Detalhes da Requisição</h3>
+                            <p class="form-section-description">Informe os itens e quantidades necessárias</p>
+                        </div>
+                        
+                        <div class="form-grid form-grid--responsive">
+                            <div class="form-field-group">
+                                <label for="requisition-reagent" class="form-field-label form-field-label--required">Reagente</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="requisition-reagent" 
+                                        name="requisition-reagent" 
+                                        required 
+                                        class="form-select form-lab-reagent"
+                                    >
+                                        <option value="">Selecione um reagente</option>
+                                        <option value="hcl">Ácido Clorídrico Concentrado</option>
+                                        <option value="naoh">Hidróxido de Sódio</option>
+                                        <option value="h2so4">Ácido Sulfúrico</option>
+                                        <option value="etoh">Etanol</option>
+                                        <option value="nacl">Cloreto de Sódio</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="requisition-quantity" class="form-field-label form-field-label--required">Quantidade</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="number" 
+                                        id="requisition-quantity" 
+                                        name="requisition-quantity" 
+                                        required 
+                                        min="0" 
+                                        step="0.01"
+                                        class="form-field form-lab-quantity"
+                                        placeholder="0.00"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="requisition-unit" class="form-field-label form-field-label--required">Unidade</label>
+                                <div class="form-field-container">
+                                    <select 
+                                        id="requisition-unit" 
+                                        name="requisition-unit" 
+                                        required 
+                                        class="form-select form-lab-unit"
+                                    >
+                                        <option value="">Selecione uma unidade</option>
+                                        <option value="ml">mL</option>
+                                        <option value="l">L</option>
+                                        <option value="mg">mg</option>
+                                        <option value="g">g</option>
+                                        <option value="kg">kg</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-field-group">
+                                <label for="requisition-purpose" class="form-field-label">Finalidade</label>
+                                <div class="form-field-container">
+                                    <input 
+                                        type="text" 
+                                        id="requisition-purpose" 
+                                        name="requisition-purpose" 
+                                        class="form-field"
+                                        placeholder="Ex: Análise de amostra B-12"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-field-group mt-6">
+                            <label for="requisition-notes" class="form-field-label">Observações</label>
+                            <div class="form-field-container">
+                                <textarea 
+                                    id="requisition-notes" 
+                                    name="requisition-notes" 
+                                    rows="4"
+                                    class="form-textarea form-lab-notes"
+                                    placeholder="Adicione qualquer informação adicional relevante para esta requisição..."
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions form-actions--right">
+                        <button type="button" class="form-action-button form-action-button--secondary">Cancelar</button>
+                        <button type="submit" class="form-action-button form-action-button--primary">Enviar Requisição</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    <script>
+        // Inicializar formulários quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Os formulários já são inicializados automaticamente pelo IntuitiveFormManager
+            // Mas podemos adicionar inicialização manual se necessário
+            
+            // Adicionar evento de submit para demonstração
+            document.querySelectorAll('[data-intuitive-form]').forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Formulário enviado com sucesso! (Demonstração)');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

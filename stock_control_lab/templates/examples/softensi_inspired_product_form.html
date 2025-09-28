@@ -1,0 +1,605 @@
+{% extends 'base/base_modern.html' %}
+{% load static %}
+
+{% block title %}Formulário de Produto - Controle de Estoque Laboratorial{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- Cabeçalho Principal -->
+  <header class="bg-white dark:bg-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <i class="fas fa-flask text-blue-600 text-2xl mr-2"></i>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">LabStock Control</span>
+          </div>
+          <nav class="ml-6 flex space-x-8">
+            <a href="#" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Dashboard
+            </a>
+            <a href="#" class="border-blue-500 text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Produtos
+            </a>
+            <a href="#" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Lotes
+            </a>
+            <a href="#" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Movimentações
+            </a>
+            <a href="#" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Relatórios
+            </a>
+          </nav>
+        </div>
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <button type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <i class="fas fa-save mr-2"></i>
+              Salvar
+            </button>
+          </div>
+          <div class="ml-4 flex items-center md:ml-6">
+            <button class="bg-white dark:bg-gray-800 p-1 rounded-full text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <span class="sr-only">Ver notificações</span>
+              <i class="fas fa-bell text-xl"></i>
+            </button>
+            <div class="ml-3 relative">
+              <div>
+                <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <span class="sr-only">Abrir menu do usuário</span>
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Cabeçalho da Página -->
+    <div class="md:flex md:items-center md:justify-between mb-8">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:text-3xl sm:truncate">
+          Cadastro de Produto
+        </h2>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Adicione ou edite informações de reagentes e materiais
+        </p>
+      </div>
+      <div class="mt-4 flex md:mt-0 md:ml-4 space-x-3">
+        <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <i class="fas fa-times mr-2"></i>
+          Cancelar
+        </button>
+        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <i class="fas fa-save mr-2"></i>
+          Salvar Produto
+        </button>
+      </div>
+    </div>
+
+    <!-- Formulário de Produto -->
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+          Informações do Produto
+        </h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Preencha todos os campos obrigatórios para cadastrar um novo produto
+        </p>
+      </div>
+      
+      <form class="px-4 py-5 sm:p-6">
+        <!-- Mensagens de Erro/Sucesso -->
+        <div class="mb-6">
+          <div class="rounded-md bg-yellow-50 dark:bg-yellow-900/30 p-4 hidden" id="warning-message">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-triangle text-yellow-400 dark:text-yellow-400 text-xl"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">Atenção</h3>
+                <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
+                  <p>Preencha todos os campos obrigatórios marcados com *</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="rounded-md bg-red-50 dark:bg-red-900/30 p-4 hidden" id="error-message">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-circle text-red-400 dark:text-red-400 text-xl"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800 dark:text-red-200">Erro</h3>
+                <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                  <p>Ocorreu um erro ao salvar o produto. Por favor, tente novamente.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="rounded-md bg-green-50 dark:bg-green-900/30 p-4 hidden" id="success-message">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-check-circle text-green-400 dark:text-green-400 text-xl"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-green-800 dark:text-green-200">Sucesso</h3>
+                <div class="mt-2 text-sm text-green-700 dark:text-green-300">
+                  <p>Produto salvo com sucesso!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Seções do Formulário -->
+        <div class="space-y-8">
+          <!-- Informações Básicas -->
+          <div>
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <h4 class="text-lg font-medium text-gray-900 dark:text-white">Informações Básicas</h4>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Informações essenciais sobre o produto
+              </p>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="product-name" class="form-label-modern">
+                  Nome do Produto <span class="text-danger-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="product-name" 
+                  name="product-name" 
+                  class="form-input-modern" 
+                  placeholder="Nome completo do produto"
+                  required
+                >
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  Ex: Ácido Clorídrico 37%
+                </p>
+              </div>
+              
+              <div>
+                <label for="product-sku" class="form-label-modern">
+                  SKU <span class="text-danger-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="product-sku" 
+                  name="product-sku" 
+                  class="form-input-modern" 
+                  placeholder="Código único do produto"
+                  required
+                >
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  Ex: HCL-001 ou CUSO4-002
+                </p>
+              </div>
+              
+              <div>
+                <label for="product-category" class="form-label-modern">
+                  Categoria <span class="text-danger-500">*</span>
+                </label>
+                <select id="product-category" name="product-category" class="form-select-modern" required>
+                  <option value="">Selecione uma categoria</option>
+                  <option value="reagentes">Reagentes</option>
+                  <option value="solventes">Solventes</option>
+                  <option value="sais">Sais</option>
+                  <option value="equipamentos">Equipamentos</option>
+                  <option value="vidrarias">Vidrarias</option>
+                  <option value="consumiveis">Consumíveis</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="product-supplier" class="form-label-modern">
+                  Fornecedor <span class="text-danger-500">*</span>
+                </label>
+                <select id="product-supplier" name="product-supplier" class="form-select-modern" required>
+                  <option value="">Selecione um fornecedor</option>
+                  <option value="fornecedor1">Fornecedor Exemplo 1</option>
+                  <option value="fornecedor2">Fornecedor Exemplo 2</option>
+                  <option value="fornecedor3">Fornecedor Exemplo 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Detalhes do Produto -->
+          <div>
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <h4 class="text-lg font-medium text-gray-900 dark:text-white">Detalhes do Produto</h4>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Informações técnicas e de armazenamento
+              </p>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label for="product-quantity" class="form-label-modern">
+                  Quantidade Inicial <span class="text-danger-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="product-quantity" 
+                  name="product-quantity" 
+                  class="form-input-modern" 
+                  placeholder="Quantidade em estoque"
+                  min="0"
+                  step="0.01"
+                  required
+                >
+              </div>
+              
+              <div>
+                <label for="product-unit" class="form-label-modern">
+                  Unidade de Medida <span class="text-danger-500">*</span>
+                </label>
+                <select id="product-unit" name="product-unit" class="form-select-modern" required>
+                  <option value="">Selecione uma unidade</option>
+                  <option value="ml">ml</option>
+                  <option value="l">l</option>
+                  <option value="g">g</option>
+                  <option value="kg">kg</option>
+                  <option value="un">un</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="product-min-stock" class="form-label-modern">
+                  Nível Mínimo de Estoque <span class="text-danger-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="product-min-stock" 
+                  name="product-min-stock" 
+                  class="form-input-modern" 
+                  placeholder="Quantidade mínima"
+                  min="0"
+                  step="0.01"
+                  required
+                >
+              </div>
+            </div>
+            
+            <div class="mt-6">
+              <label for="product-description" class="form-label-modern">
+                Descrição
+              </label>
+              <textarea 
+                id="product-description" 
+                name="product-description" 
+                rows="4" 
+                class="form-textarea-modern" 
+                placeholder="Descrição detalhada do produto, incluindo instruções de armazenamento, precauções, etc."
+              ></textarea>
+            </div>
+          </div>
+          
+          <!-- Armazenamento -->
+          <div>
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <h4 class="text-lg font-medium text-gray-900 dark:text-white">Armazenamento</h4>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Informações sobre localização e validade
+              </p>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="product-storage-location" class="form-label-modern">
+                  Localização de Armazenamento
+                </label>
+                <input 
+                  type="text" 
+                  id="product-storage-location" 
+                  name="product-storage-location" 
+                  class="form-input-modern" 
+                  placeholder="Localização física no laboratório"
+                >
+              </div>
+              
+              <div>
+                <label for="product-expiry-days" class="form-label-modern">
+                  Dias para Vencimento
+                </label>
+                <input 
+                  type="number" 
+                  id="product-expiry-days" 
+                  name="product-expiry-days" 
+                  class="form-input-modern" 
+                  placeholder="Dias até o vencimento"
+                  min="0"
+                >
+              </div>
+            </div>
+            
+            <div class="mt-6">
+              <div class="flex items-center">
+                <input 
+                  id="product-has-expiry" 
+                  name="product-has-expiry" 
+                  type="checkbox" 
+                  class="form-checkbox-modern"
+                >
+                <label for="product-has-expiry" class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Este produto tem data de validade
+                </label>
+              </div>
+              
+              <div id="expiry-fields" class="hidden mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="product-default-expiry" class="form-label-modern">
+                    Validade Padrão (meses)
+                  </label>
+                  <input 
+                    type="number" 
+                    id="product-default-expiry" 
+                    name="product-default-expiry" 
+                    class="form-input-modern" 
+                    placeholder="Meses até o vencimento"
+                    min="0"
+                  >
+                </div>
+                
+                <div>
+                  <label for="product-expiry-warning" class="form-label-modern">
+                    Aviso Antecipado (dias)
+                  </label>
+                  <input 
+                    type="number" 
+                    id="product-expiry-warning" 
+                    name="product-expiry-warning" 
+                    class="form-input-modern" 
+                    placeholder="Dias antes do vencimento para alerta"
+                    min="0"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Anexos -->
+          <div>
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+              <h4 class="text-lg font-medium text-gray-900 dark:text-white">Anexos</h4>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Documentos e imagens relacionados ao produto
+              </p>
+            </div>
+            
+            <div class="mt-6">
+              <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md">
+                <div class="space-y-1 text-center">
+                  <i class="fas fa-cloud-upload-alt text-gray-400 dark:text-gray-500 text-3xl mx-auto"></i>
+                  <div class="flex text-sm text-gray-600 dark:text-gray-400">
+                    <label for="file-upload" class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                      <span>Enviar um arquivo</span>
+                      <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                    </label>
+                    <p class="pl-1">ou arraste e solte</p>
+                  </div>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">
+                    PNG, JPG, GIF até 10MB
+                  </p>
+                </div>
+              </div>
+              
+              <div class="mt-4">
+                <div class="flex items-center justify-between py-3 px-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div class="flex items-center">
+                    <i class="fas fa-file-pdf text-red-500 dark:text-red-400 text-xl mr-3"></i>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white">ficha_tecnica_hcl.pdf</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">2.4 MB</p>
+                    </div>
+                  </div>
+                  <div class="flex space-x-2">
+                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Ações do Formulário -->
+        <div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-700">
+          <div class="flex justify-end space-x-3">
+            <button type="button" class="btn-modern btn-secondary">
+              <i class="fas fa-times mr-2"></i>
+              Cancelar
+            </button>
+            <button type="submit" class="btn-modern btn-primary">
+              <i class="fas fa-save mr-2"></i>
+              Salvar Produto
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script>
+// Função para mostrar/esconder campos de validade
+document.getElementById('product-has-expiry').addEventListener('change', function() {
+  const expiryFields = document.getElementById('expiry-fields');
+  if (this.checked) {
+    expiryFields.classList.remove('hidden');
+  } else {
+    expiryFields.classList.add('hidden');
+  }
+});
+
+// Função para simular envio do formulário
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Mostrar mensagem de sucesso
+  document.getElementById('success-message').classList.remove('hidden');
+  document.getElementById('warning-message').classList.add('hidden');
+  document.getElementById('error-message').classList.add('hidden');
+  
+  // Rolagem suave para a mensagem
+  document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+  
+  // Esconder mensagem após 3 segundos
+  setTimeout(() => {
+    document.getElementById('success-message').classList.add('hidden');
+  }, 3000);
+});
+</script>
+
+<style>
+/* Estilos específicos para o formulário */
+.form-label-modern {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.form-input-modern,
+.form-textarea-modern,
+.form-select-modern {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #374151;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  appearance: none;
+}
+
+.form-input-modern:focus,
+.form-textarea-modern:focus,
+.form-select-modern:focus {
+  color: #374151;
+  background-color: #ffffff;
+  border-color: #034EA2;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.form-input-modern::placeholder,
+.form-textarea-modern::placeholder,
+.form-select-modern::placeholder {
+  color: #9ca3af;
+}
+
+.form-textarea-modern {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-select-modern {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+.form-checkbox-modern {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  color: #034EA2;
+  accent-color: #034EA2;
+}
+
+.btn-modern {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-modern:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.btn-primary {
+  background-color: #034EA2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #023a7a;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+  .form-label-modern {
+    font-size: 0.75rem;
+  }
+  
+  .form-input-modern,
+  .form-textarea-modern,
+  .form-select-modern {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .btn-modern {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .form-label-modern {
+    font-size: 0.8125rem;
+  }
+  
+  .form-input-modern,
+  .form-textarea-modern,
+  .form-select-modern {
+    font-size: 0.8125rem;
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .btn-modern {
+    font-size: 0.8125rem;
+    padding: 0.625rem 0.875rem;
+  }
+}
+</style>
+{% endblock %}

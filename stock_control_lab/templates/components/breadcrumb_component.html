@@ -1,0 +1,297 @@
+<!-- breadcrumb_component.html - Componente de breadcrumb moderno -->
+<nav class="breadcrumb-container-modern {% if classes %}{{ classes }}{% endif %}" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list">
+        {% for item in items %}
+        <li class="breadcrumb-item {% if item.active %}breadcrumb-item-active{% endif %}">
+            {% if item.url and not item.active %}
+            <a href="{{ item.url }}" class="breadcrumb-link">
+                {% if item.icon %}
+                <i class="{{ item.icon }} breadcrumb-icon"></i>
+                {% endif %}
+                {{ item.label }}
+            </a>
+            {% else %}
+            <span class="breadcrumb-current">
+                {% if item.icon %}
+                <i class="{{ item.icon }} breadcrumb-icon"></i>
+                {% endif %}
+                {{ item.label }}
+            </span>
+            {% endif %}
+            
+            {% if not forloop.last %}
+            <i class="fas fa-chevron-right breadcrumb-separator"></i>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>
+
+<style>
+.breadcrumb-container-modern {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 0;
+}
+
+.breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+.breadcrumb-item:last-child {
+    margin-right: 0;
+}
+
+.breadcrumb-link {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    background-color: #f3f4f6;
+    color: #034EA2;
+}
+
+.breadcrumb-current {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    color: #1f2937;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.breadcrumb-separator {
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin: 0 0.25rem;
+}
+
+.breadcrumb-icon {
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Variações de estilo */
+.breadcrumb-container-modern.compact {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.breadcrumb-container-modern.compact .breadcrumb-link,
+.breadcrumb-container-modern.compact .breadcrumb-current {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+}
+
+.breadcrumb-container-modern.large {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+.breadcrumb-container-modern.large .breadcrumb-link,
+.breadcrumb-container-modern.large .breadcrumb-current {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+}
+
+/* Estilos para diferentes temas */
+.breadcrumb-container-modern.light {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+.breadcrumb-container-modern.dark {
+    background-color: #1f2937;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+.breadcrumb-container-modern.dark .breadcrumb-link {
+    color: #9ca3af;
+}
+
+.breadcrumb-container-modern.dark .breadcrumb-link:hover {
+    background-color: #374151;
+    color: #034EA2;
+}
+
+.breadcrumb-container-modern.dark .breadcrumb-current {
+    color: #ffffff;
+}
+
+.breadcrumb-container-modern.dark .breadcrumb-separator {
+    color: #4b5563;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .breadcrumb-container-modern {
+        margin-bottom: 1rem;
+        padding: 0.5rem 0;
+    }
+    
+    .breadcrumb-item {
+        margin-right: 0.25rem;
+    }
+    
+    .breadcrumb-link,
+    .breadcrumb-current {
+        padding: 0.125rem 0.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .breadcrumb-icon {
+        margin-right: 0.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .breadcrumb-separator {
+        margin: 0 0.125rem;
+        font-size: 0.625rem;
+    }
+    
+    /* Ocultar ícones em telas muito pequenas */
+    .breadcrumb-icon {
+        display: none;
+    }
+    
+    .breadcrumb-link .breadcrumb-icon,
+    .breadcrumb-current .breadcrumb-icon {
+        display: none;
+    }
+}
+</style>
+
+<script>
+// Função para atualizar o breadcrumb dinamicamente
+function updateBreadcrumb(breadcrumbId, newItems) {
+    const breadcrumb = document.getElementById(breadcrumbId);
+    if (!breadcrumb) return;
+    
+    const ol = breadcrumb.querySelector('.breadcrumb-list');
+    if (!ol) return;
+    
+    // Limpar conteúdo atual
+    ol.innerHTML = '';
+    
+    // Adicionar novos itens
+    newItems.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'breadcrumb-item';
+        
+        if (item.active) {
+            li.classList.add('breadcrumb-item-active');
+            li.innerHTML = `
+                <span class="breadcrumb-current">
+                    ${item.icon ? `<i class="${item.icon} breadcrumb-icon"></i>` : ''}
+                    ${item.label}
+                </span>
+            `;
+        } else {
+            li.innerHTML = `
+                <a href="${item.url}" class="breadcrumb-link">
+                    ${item.icon ? `<i class="${item.icon} breadcrumb-icon"></i>` : ''}
+                    ${item.label}
+                </a>
+            `;
+        }
+        
+        // Adicionar separador se não for o último item
+        if (index < newItems.length - 1) {
+            const separator = document.createElement('i');
+            separator.className = 'fas fa-chevron-right breadcrumb-separator';
+            li.appendChild(separator);
+        }
+        
+        ol.appendChild(li);
+    });
+}
+
+// Função para adicionar item ao breadcrumb
+function addBreadcrumbItem(breadcrumbId, item) {
+    const breadcrumb = document.getElementById(breadcrumbId);
+    if (!breadcrumb) return;
+    
+    const ol = breadcrumb.querySelector('.breadcrumb-list');
+    if (!ol) return;
+    
+    // Remover separador do último item existente
+    const lastItem = ol.lastElementChild;
+    if (lastItem) {
+        const separator = lastItem.querySelector('.breadcrumb-separator');
+        if (separator) {
+            separator.remove();
+        }
+    }
+    
+    // Adicionar novo item
+    const li = document.createElement('li');
+    li.className = 'breadcrumb-item';
+    
+    if (item.active) {
+        li.classList.add('breadcrumb-item-active');
+        li.innerHTML = `
+            <span class="breadcrumb-current">
+                ${item.icon ? `<i class="${item.icon} breadcrumb-icon"></i>` : ''}
+                ${item.label}
+            </span>
+        `;
+    } else {
+        li.innerHTML = `
+            <a href="${item.url}" class="breadcrumb-link">
+                ${item.icon ? `<i class="${item.icon} breadcrumb-icon"></i>` : ''}
+                ${item.label}
+            </a>
+        `;
+    }
+    
+    ol.appendChild(li);
+}
+
+// Função para remover último item do breadcrumb
+function removeLastBreadcrumbItem(breadcrumbId) {
+    const breadcrumb = document.getElementById(breadcrumbId);
+    if (!breadcrumb) return;
+    
+    const ol = breadcrumb.querySelector('.breadcrumb-list');
+    if (!ol) return;
+    
+    // Remover último item
+    const lastItem = ol.lastElementChild;
+    if (lastItem) {
+        lastItem.remove();
+    }
+    
+    // Adicionar separador ao novo último item
+    const newLastItem = ol.lastElementChild;
+    if (newLastItem) {
+        const separator = document.createElement('i');
+        separator.className = 'fas fa-chevron-right breadcrumb-separator';
+        newLastItem.appendChild(separator);
+    }
+}
+
+// Exportar funções para uso global
+window.updateBreadcrumb = updateBreadcrumb;
+window.addBreadcrumbItem = addBreadcrumbItem;
+window.removeLastBreadcrumbItem = removeLastBreadcrumbItem;
+</script>

@@ -1,0 +1,129 @@
+# API Contracts: Testes de Controle de Estoque na Web
+
+**Feature Number**: 003  
+**Feature Branch**: `003-gostaria-que-testassemos`  
+**Created**: 27 de setembro de 2025
+
+## Overview
+Esta documentação descreve os contratos de API relevantes para testes completos do sistema de controle de estoque.
+
+## Authentication Endpoints
+
+### POST /api/auth/login/
+- **Descrição**: Endpoint para autenticação de usuários
+- **Request**:
+  - Headers: `Content-Type: application/json`
+  - Body: `{ "username": "string", "password": "string" }`
+- **Responses**:
+  - 200: `{ "token": "string", "user": { "id": number, "username": "string", "email": "string" } }`
+  - 400: `{ "error": "Invalid credentials" }`
+  - 401: `{ "error": "Authentication failed" }`
+
+### POST /api/auth/logout/
+- **Descrição**: Endpoint para encerrar sessão do usuário
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+- **Responses**:
+  - 200: `{ "message": "Successfully logged out" }`
+  - 401: `{ "error": "Authentication required" }`
+
+## Stock Management Endpoints
+
+### GET /api/reagents/
+- **Descrição**: Listar reagentes/itens de estoque
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+  - Query params: `page`, `limit`, `search`, `category`
+- **Responses**:
+  - 200: `{ "count": number, "next": "string", "previous": "string", "results": [ Array of reagents ] }`
+  - 401: `{ "error": "Authentication required" }`
+
+### POST /api/reagents/
+- **Descrição**: Criar novo reagente/item de estoque
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+  - Body: `{ "name": "string", "description": "string", "category": "string", "quantity": number, "location": "string" }`
+- **Responses**:
+  - 201: `{ "id": number, "name": "string", "description": "string", "category": "string", "quantity": number, "location": "string", "created_at": "datetime" }`
+  - 400: `{ "error": "Validation failed", "details": { } }`
+  - 401: `{ "error": "Authentication required" }`
+
+### GET /api/reagents/{id}/
+- **Descrição**: Obter detalhes de um reagente específico
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+- **Responses**:
+  - 200: `{ "id": number, "name": "string", "description": "string", "category": "string", "quantity": number, "location": "string", "created_at": "datetime", "updated_at": "datetime" }`
+  - 401: `{ "error": "Authentication required" }`
+  - 404: `{ "error": "Reagent not found" }`
+
+### PUT /api/reagents/{id}/
+- **Descrição**: Atualizar informações de um reagente
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+  - Body: `{ "name": "string", "description": "string", "category": "string", "quantity": number, "location": "string" }`
+- **Responses**:
+  - 200: `{ "id": number, "name": "string", "description": "string", "category": "string", "quantity": number, "location": "string", "created_at": "datetime", "updated_at": "datetime" }`
+  - 400: `{ "error": "Validation failed", "details": { } }`
+  - 401: `{ "error": "Authentication required" }`
+  - 404: `{ "error": "Reagent not found" }`
+
+### DELETE /api/reagents/{id}/
+- **Descrição**: Remover um reagente do sistema
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+- **Responses**:
+  - 204: No content
+  - 401: `{ "error": "Authentication required" }`
+  - 404: `{ "error": "Reagent not found" }`
+
+## Stock Movements Endpoints
+
+### POST /api/stock-movements/
+- **Descrição**: Registrar movimentação de estoque (entrada/saída)
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+  - Body: `{ "reagent_id": number, "movement_type": "entry|withdrawal", "quantity": number, "reason": "string" }`
+- **Responses**:
+  - 201: `{ "id": number, "reagent_id": number, "movement_type": "entry|withdrawal", "quantity": number, "reason": "string", "date": "datetime" }`
+  - 400: `{ "error": "Validation failed", "details": { } }`
+  - 401: `{ "error": "Authentication required" }`
+
+## Dashboard Endpoints
+
+### GET /api/dashboard/summary/
+- **Descrição**: Obter resumo para o dashboard
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+- **Responses**:
+  - 200: `{ "total_reagents": number, "low_stock_count": number, "expiring_soon_count": number, "recent_movements": [ Array of movements ] }`
+  - 401: `{ "error": "Authentication required" }`
+
+### GET /api/dashboard/reports/
+- **Descrição**: Obter dados para relatórios no dashboard
+- **Request**:
+  - Headers: `Authorization: Token <token>`
+- **Responses**:
+  - 200: `{ "stock_value": number, "movement_trends": [ Array of trend data ], "category_distribution": [ Array of category data ] }`
+  - 401: `{ "error": "Authentication required" }`
+
+## Error Response Format
+- 400: `{ "error": "Bad Request", "details": { "field_name": ["error message"] } }`
+- 401: `{ "error": "Authentication Required" }`
+- 403: `{ "error": "Permission Denied" }`
+- 404: `{ "error": "Resource Not Found" }`
+- 500: `{ "error": "Internal Server Error" }`
+
+## Testing Considerations
+
+### Authentication Flow
+- O token de autenticação deve ser incluído em todos os endpoints que requerem autorização
+- Tokens expirados devem resultar em resposta 401
+
+### Rate Limiting
+- APIs podem ter limites de requisições por minuto
+- Testar comportamento quando limite é atingido
+
+### Pagination
+- Endpoints de listagem devem suportar paginação
+- Verificar comportamento com diferentes tamanhos de página

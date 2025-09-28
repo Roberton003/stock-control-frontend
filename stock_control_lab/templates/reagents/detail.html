@@ -1,0 +1,155 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ reagent.name }} - Detalhes{% endblock %}
+
+{% block content %}
+<div 
+    class="container mx-auto p-4 md:p-8"
+    x-data="reagentDetailManager({{ reagent.pk }})"
+    x-init="init()"
+>
+    <!-- Loading State -->
+    <div x-show="isLoading" class="text-center p-8">
+        <p>Carregando detalhes do reagente...</p>
+    </div>
+
+    <!-- Error State -->
+    <div x-show="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline" x-text="error"></span>
+    </div>
+
+    <!-- Main Content -->
+    <div x-show="!isLoading && reagent">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Detalhes: <span x-text="reagent.name"></span></h1>
+
+        <!-- General Info -->
+        <div class="card mb-6">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4">Informações Gerais</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p><strong>SKU:</strong> <span x-text="reagent.sku"></span></p>
+                    <p><strong>Categoria:</strong> <span x-text="reagent.category_name || 'N/A'"></span></p>
+                    <p><strong>Fornecedor:</strong> <span x-text="reagent.supplier_name || 'N/A'"></span></p>
+                    <p><strong>Estoque Mínimo:</strong> <span x-text="reagent.min_stock_level"></span></p>
+                    <p><strong>Condições de Armazenamento:</strong> <span x-text="reagent.storage_conditions || 'N/A'"></span></p>
+                    <p><strong>Valor Atual:</strong> <span x-text="reagent.current_value ? utils.formatCurrency(reagent.current_value) : 'N/A'"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock Lots -->
+        <div class="card mb-6">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4">Lotes em Estoque</h2>
+                <div x-show="stockLots.length === 0" class="text-center p-4">
+                    <p>Nenhum lote em estoque para este reagente.</p>
+                </div>
+                <div x-show="stockLots.length > 0" class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lote</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Validade</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qtd. Atual</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QR Code</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <template x-for="lot in stockLots" :key="lot.id">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap" x-text="lot.lot_number"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap" x-text="new Date(lot.expiry_date).toLocaleDateString('pt-BR')"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap" x-text="lot.current_quantity"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img :src="lot.qr_code_image" alt="QR Code" class="w-12 h-12">
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attachments -->
+        <div class="card">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4">Anexos</h2>
+                <div x-show="attachments.length === 0" class="text-center p-4">
+                    <p>Nenhum anexo para este reagente.</p>
+                </div>
+                <ul x-show="attachments.length > 0" class="space-y-2">
+                    <template x-for="attachment in attachments" :key="attachment.id">
+                        <li>
+                            <a :href="attachment.file" target="_blank" class="text-primary-600 hover:underline" x-text="attachment.description"></a>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function reagentDetailManager(reagentId) {
+    return {
+        reagentId: reagentId,
+        reagent: null,
+        stockLots: [],
+        attachments: [],
+        isLoading: true,
+        error: '',
+
+        async init() {
+            this.isLoading = true;
+            this.error = '';
+            try {
+                await Promise.all([
+                    this.fetchReagentDetails(),
+                    this.fetchStockLots(),
+                    this.fetchAttachments(),
+                ]);
+            } catch (e) {
+                this.error = 'Não foi possível carregar os dados completos do reagente.';
+                console.error(e);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        async fetchReagentDetails() {
+            // This assumes your API can expand related fields or you make separate calls
+            const response = await fetch(`/api/v1/reagents/${this.reagentId}/`);
+            if (!response.ok) throw new Error('Failed to fetch reagent details');
+            const data = await response.json();
+            
+            // Fetch related names if they are not in the main payload
+            const categoryResponse = await fetch(`/api/v1/categories/${data.category}/`);
+            const categoryData = await categoryResponse.json();
+            data.category_name = categoryData.name;
+
+            const supplierResponse = await fetch(`/api/v1/suppliers/${data.supplier}/`);
+            const supplierData = await supplierResponse.json();
+            data.supplier_name = supplierData.name;
+
+            this.reagent = data;
+        },
+
+        async fetchStockLots() {
+            const response = await fetch(`/api/v1/stock-lots/?reagent=${this.reagentId}`);
+            if (!response.ok) throw new Error('Failed to fetch stock lots');
+            this.stockLots = await response.json();
+        },
+
+        async fetchAttachments() {
+            const response = await fetch(`/api/v1/attachments/?reagent=${this.reagentId}`);
+            if (!response.ok) throw new Error('Failed to fetch attachments');
+            this.attachments = await response.json();
+        },
+    };
+}
+</script>
+{% endblock %}

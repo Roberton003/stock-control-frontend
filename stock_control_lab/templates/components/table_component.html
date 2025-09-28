@@ -1,0 +1,839 @@
+<!-- table_component.html - Componente de tabela moderna -->
+<div class="table-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ table_id }}">
+    {% if title %}
+    <div class="table-header-modern">
+        <h3 class="table-title-modern">{{ title }}</h3>
+        {% if subtitle %}
+        <p class="table-subtitle-modern">{{ subtitle }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if actions %}
+    <div class="table-actions-modern">
+        {{ actions|safe }}
+    </div>
+    {% endif %}
+    
+    <div class="table-wrapper-modern">
+        <table class="table-modern {% if striped %}table-striped{% endif %} {% if hover %}table-hover{% endif %} {% if bordered %}table-bordered{% endif %}">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                    <th class="{% if column.class %}{{ column.class }}{% endif %} {% if column.sortable %}sortable{% endif %}" {% if column.sortable %}data-sort="{{ column.field }}"{% endif %}>
+                        {{ column.label }}
+                        {% if column.sortable %}
+                        <span class="sort-indicator-modern">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        {% endif %}
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr class="{% if row.class %}{{ row.class }}{% endif %}">
+                    {% for column in columns %}
+                    <td class="{% if column.td_class %}{{ column.td_class }}{% endif %}">
+                        {% if column.field %}
+                            {{ row|get_item:column.field }}
+                        {% else %}
+                            {{ column.content|safe }}
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="{{ columns|length }}" class="text-center py-4 text-gray-500">
+                        Nenhum dado disponível
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if pagination %}
+    <div class="table-pagination-modern">
+        {{ pagination|safe }}
+    </div>
+    {% endif %}
+    
+    {% if footer %}
+    <div class="table-footer-modern">
+        {{ footer|safe }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.table-container-modern {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.table-container-modern:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.table-header-modern {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.table-title-modern {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.table-subtitle-modern {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.table-actions-modern {
+    padding: 0 1.5rem 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-wrapper-modern {
+    overflow-x: auto;
+    padding: 0 1.5rem;
+}
+
+.table-modern {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.table-modern th {
+    background-color: #f9fafb;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+}
+
+.table-modern td {
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #4b5563;
+    font-size: 0.875rem;
+}
+
+.table-modern tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f9fafb;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #e5e7eb;
+}
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.sort-indicator-modern {
+    margin-left: 0.5rem;
+    color: #9ca3af;
+    transition: color 0.2s ease;
+}
+
+.sortable:hover .sort-indicator-modern {
+    color: #034EA2;
+}
+
+.sortable.asc .sort-indicator-modern i {
+    color: #034EA2;
+}
+
+.sortable.desc .sort-indicator-modern i {
+    color: #034EA2;
+    transform: rotate(180deg);
+}
+
+.table-pagination-modern {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.pagination-info-modern {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.pagination-controls-modern {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.pagination-button-modern {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-button-modern:hover:not(:disabled) {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.pagination-button-modern:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-button-modern.active {
+    background-color: #034EA2;
+    color: white;
+    border-color: #034EA2;
+}
+
+.table-footer-modern {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .table-container-modern {
+        margin-bottom: 1rem;
+    }
+    
+    .table-header-modern {
+        padding: 1rem 1rem 0 1rem;
+    }
+    
+    .table-actions-modern {
+        padding: 0 1rem 1rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .table-wrapper-modern {
+        padding: 0 1rem;
+    }
+    
+    .table-modern th,
+    .table-modern td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .table-title-modern {
+        font-size: 1rem;
+    }
+    
+    .table-subtitle-modern {
+        font-size: 0.75rem;
+    }
+    
+    .table-pagination-modern {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .pagination-info-modern {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+    
+    .pagination-controls-modern {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .pagination-button-modern {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .table-footer-modern {
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .table-container-modern .table-title-modern {
+        font-size: 1.0625rem;
+    }
+    
+    .table-container-modern .table-subtitle-modern {
+        font-size: 0.8125rem;
+    }
+    
+    .table-container-modern .table-modern th,
+    .table-container-modern .table-modern td {
+        padding: 0.875rem;
+        font-size: 0.8125rem;
+    }
+}
+
+/* Estados para diferentes variantes */
+.table-container-modern.variant-primary {
+    border-top: 4px solid #034EA2;
+}
+
+.table-container-modern.variant-success {
+    border-top: 4px solid #28a745;
+}
+
+.table-container-modern.variant-warning {
+    border-top: 4px solid #ffc107;
+}
+
+.table-container-modern.variant-danger {
+    border-top: 4px solid #dc3545;
+}
+
+.table-container-modern.variant-info {
+    border-top: 4px solid #17a2b8;
+}
+
+/* Estados para tabelas com gradientes */
+.table-container-modern.gradient-blue {
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    color: white;
+    border: none;
+}
+
+.table-container-modern.gradient-blue .table-title-modern,
+.table-container-modern.gradient-blue .table-subtitle-modern {
+    color: white;
+}
+
+.table-container-modern.gradient-blue .table-subtitle-modern {
+    opacity: 0.8;
+}
+
+.table-container-modern.gradient-blue th {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.table-container-modern.gradient-blue td {
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-container-modern.gradient-blue .table-pagination-modern {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.table-container-modern.gradient-blue .table-footer-modern {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Estados para tabelas com sombra mais forte */
+.table-container-modern.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.table-container-modern.shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Estados para tabelas com bordas arredondadas */
+.table-container-modern.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.table-container-modern.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.table-container-modern.rounded-2xl {
+    border-radius: 1rem;
+}
+
+/* Estados para tabelas com preenchimento compacto */
+.table-container-modern.compact th,
+.table-container-modern.compact td {
+    padding: 0.5rem;
+}
+
+.table-container-modern.compact .table-header-modern {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.table-container-modern.compact .table-actions-modern {
+    padding: 0 1rem 0.75rem 1rem;
+}
+
+.table-container-modern.compact .table-wrapper-modern {
+    padding: 0 1rem;
+}
+
+.table-container-modern.compact .table-pagination-modern {
+    padding: 0.75rem 1rem;
+}
+
+.table-container-modern.compact .table-footer-modern {
+    padding: 0.75rem 1rem;
+}
+
+/* Estados para tabelas com preenchimento espaçoso */
+.table-container-modern.spacious th,
+.table-container-modern.spacious td {
+    padding: 1.25rem;
+}
+
+.table-container-modern.spacious .table-header-modern {
+    padding: 2rem 2rem 0 2rem;
+}
+
+.table-container-modern.spacious .table-actions-modern {
+    padding: 0 2rem 1.5rem 2rem;
+}
+
+.table-container-modern.spacious .table-wrapper-modern {
+    padding: 0 2rem;
+}
+
+.table-container-modern.spacious .table-pagination-modern {
+    padding: 1.5rem 2rem;
+}
+
+.table-container-modern.spacious .table-footer-modern {
+    padding: 1.5rem 2rem;
+}
+
+/* Estados para tabelas com ações em linha */
+.table-actions-inline-modern {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.table-action-button-modern {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.table-action-button-modern.edit {
+    background-color: rgba(3, 78, 162, 0.1);
+    color: #034EA2;
+}
+
+.table-action-button-modern.edit:hover {
+    background-color: rgba(3, 78, 162, 0.2);
+}
+
+.table-action-button-modern.delete {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.table-action-button-modern.delete:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+}
+
+.table-action-button-modern.view {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.table-action-button-modern.view:hover {
+    background-color: rgba(23, 162, 184, 0.2);
+}
+
+/* Estados para tabelas com status visuais */
+.table-status-modern {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.table-status-modern.active {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.table-status-modern.inactive {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.table-status-modern.pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.table-status-modern.expired {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Estados para tabelas com badges */
+.table-badge-modern {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.table-badge-modern.primary {
+    background-color: rgba(3, 78, 162, 0.1);
+    color: #034EA2;
+}
+
+.table-badge-modern.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.table-badge-modern.warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.table-badge-modern.danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.table-badge-modern.info {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+/* Estados para tabelas com ícones */
+.table-icon-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.table-icon-modern.primary {
+    background-color: rgba(3, 78, 162, 0.1);
+    color: #034EA2;
+}
+
+.table-icon-modern.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.table-icon-modern.warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.table-icon-modern.danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.table-icon-modern.info {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+/* Estados para tabelas com destaque de linha */
+.table-row-highlight-modern {
+    background-color: rgba(3, 78, 162, 0.05);
+    border-left: 3px solid #034EA2;
+}
+
+.table-row-warning-modern {
+    background-color: rgba(255, 193, 7, 0.05);
+    border-left: 3px solid #ffc107;
+}
+
+.table-row-danger-modern {
+    background-color: rgba(220, 53, 69, 0.05);
+    border-left: 3px solid #dc3545;
+}
+
+.table-row-success-modern {
+    background-color: rgba(40, 167, 69, 0.05);
+    border-left: 3px solid #28a745;
+}
+
+/* Estados para tabelas com pesquisa */
+.table-search-modern {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.table-search-input-modern {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    font-size: 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.table-search-input-modern:focus {
+    outline: none;
+    border-color: #034EA2;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.1);
+}
+
+.table-search-icon-modern {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+/* Estados para tabelas com filtros */
+.table-filters-modern {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.table-filter-modern {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.table-filter-label-modern {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table-filter-select-modern,
+.table-filter-input-modern {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.table-filter-select-modern:focus,
+.table-filter-input-modern:focus {
+    outline: none;
+    border-color: #034EA2;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.1);
+}
+
+/* Estados para tabelas com exportação */
+.table-export-modern {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.table-export-button-modern {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.table-export-button-modern:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.table-export-button-modern.pdf {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.2);
+}
+
+.table-export-button-modern.pdf:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.3);
+}
+
+.table-export-button-modern.excel {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border-color: rgba(40, 167, 69, 0.2);
+}
+
+.table-export-button-modern.excel:hover {
+    background-color: rgba(40, 167, 69, 0.2);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+
+.table-export-button-modern.csv {
+    background-color: rgba(3, 78, 162, 0.1);
+    color: #034EA2;
+    border-color: rgba(3, 78, 162, 0.2);
+}
+
+.table-export-button-modern.csv:hover {
+    background-color: rgba(3, 78, 162, 0.2);
+    border-color: rgba(3, 78, 162, 0.3);
+}
+
+/* Animações */
+@keyframes tableFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table-container-modern {
+    animation: tableFadeIn 0.3s ease-out forwards;
+}
+
+/* Estados para tabelas com loading */
+.table-loading-modern {
+    position: relative;
+    min-height: 200px;
+}
+
+.table-loading-modern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-loading-modern::after::before {
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid #e5e7eb;
+    border-top-color: #034EA2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estados para tabelas com erro */
+.table-error-modern {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.table-error-modern .table-title-modern {
+    color: #dc3545;
+}
+
+.table-error-modern .table-subtitle-modern {
+    color: #dc3545;
+}
+
+/* Estados para tabelas com sucesso */
+.table-success-modern {
+    border-color: #28a745;
+    background-color: #f0fdf4;
+}
+
+.table-success-modern .table-title-modern {
+    color: #28a745;
+}
+
+.table-success-modern .table-subtitle-modern {
+    color: #28a745;
+}
+
+/* Estados para tabelas com aviso */
+.table-warning-modern {
+    border-color: #ffc107;
+    background-color: #fffdf5;
+}
+
+.table-warning-modern .table-title-modern {
+    color: #ffc107;
+}
+
+.table-warning-modern .table-subtitle-modern {
+    color: #ffc107;
+}

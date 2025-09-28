@@ -1,0 +1,185 @@
+<!-- button_example.html - Exemplo de uso do componente de botão -->
+{% extends 'base/base_modern.html' %}
+{% load static %}
+
+{% block title %}Exemplo de Botão Moderno{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Exemplos de Botões Modernos</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Botão Primário -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Primário</h2>
+            <button class="btn-modern btn-primary btn-md">
+                <i class="fas fa-plus mr-2"></i>
+                Adicionar Item
+            </button>
+        </div>
+        
+        <!-- Botão Secundário -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Secundário</h2>
+            <button class="btn-modern btn-secondary btn-md">
+                <i class="fas fa-edit mr-2"></i>
+                Editar Item
+            </button>
+        </div>
+        
+        <!-- Botão de Sucesso -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão de Sucesso</h2>
+            <button class="btn-modern btn-success btn-md">
+                <i class="fas fa-check mr-2"></i>
+                Confirmar
+            </button>
+        </div>
+        
+        <!-- Botão de Perigo -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão de Perigo</h2>
+            <button class="btn-modern btn-danger btn-md">
+                <i class="fas fa-trash mr-2"></i>
+                Excluir
+            </button>
+        </div>
+        
+        <!-- Botão de Aviso -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão de Aviso</h2>
+            <button class="btn-modern btn-warning btn-md">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                Atenção
+            </button>
+        </div>
+        
+        <!-- Botão de Informação -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão de Informação</h2>
+            <button class="btn-modern btn-info btn-md">
+                <i class="fas fa-info-circle mr-2"></i>
+                Informações
+            </button>
+        </div>
+        
+        <!-- Botão com Ícone -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão com Ícone</h2>
+            <button class="btn-modern btn-primary btn-md">
+                <i class="fas fa-download mr-2"></i>
+                Baixar Relatório
+            </button>
+        </div>
+        
+        <!-- Botão com Loading -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão com Loading</h2>
+            <button class="btn-modern btn-primary btn-md" id="loading-button">
+                <i class="fas fa-spinner fa-spin mr-2"></i>
+                Processando...
+            </button>
+        </div>
+        
+        <!-- Botão Desabilitado -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Desabilitado</h2>
+            <button class="btn-modern btn-primary btn-md" disabled>
+                <i class="fas fa-lock mr-2"></i>
+                Bloqueado
+            </button>
+        </div>
+        
+        <!-- Botão com Tamanho Pequeno -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Pequeno</h2>
+            <button class="btn-modern btn-primary btn-sm">
+                <i class="fas fa-save mr-1"></i>
+                Salvar
+            </button>
+        </div>
+        
+        <!-- Botão com Tamanho Médio -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Médio</h2>
+            <button class="btn-modern btn-primary btn-md">
+                <i class="fas fa-save mr-2"></i>
+                Salvar
+            </button>
+        </div>
+        
+        <!-- Botão com Tamanho Grande -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão Grande</h2>
+            <button class="btn-modern btn-primary btn-lg">
+                <i class="fas fa-save mr-3"></i>
+                Salvar Alterações
+            </button>
+        </div>
+        
+        <!-- Botão em Bloco -->
+        <div class="bg-white rounded-xl shadow-lg p-6 md:col-span-2 lg:col-span-3">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão em Bloco</h2>
+            <button class="btn-modern btn-primary btn-lg btn-block">
+                <i class="fas fa-sign-in-alt mr-3"></i>
+                Entrar no Sistema
+            </button>
+        </div>
+        
+        <!-- Botão com Efeito Hover -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão com Efeito Hover</h2>
+            <button class="btn-modern btn-primary btn-md btn-hover-glow">
+                <i class="fas fa-magic mr-2"></i>
+                Efeito Hover
+            </button>
+        </div>
+        
+        <!-- Botão com Animação de Clique -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão com Animação de Clique</h2>
+            <button class="btn-modern btn-primary btn-md btn-click-animation">
+                <i class="fas fa-hand-pointer mr-2"></i>
+                Clique Aqui
+            </button>
+        </div>
+        
+        <!-- Botão com Gradiente -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Botão com Gradiente</h2>
+            <button class="btn-modern btn-gradient btn-md">
+                <i class="fas fa-rainbow mr-2"></i>
+                Gradiente
+            </button>
+        </div>
+    </div>
+    
+    <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Exemplo de Uso no Código</h2>
+        <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
+&lt;button class="btn-modern btn-primary btn-md"&gt;
+    &lt;i class="fas fa-plus mr-2"&gt;&lt;/i&gt;
+    Adicionar Item
+&lt;/button&gt;</pre>
+    </div>
+</div>
+
+<script>
+// Função para demonstrar o efeito de loading
+document.getElementById('loading-button').addEventListener('click', function() {
+    const button = this;
+    const originalText = button.innerHTML;
+    
+    // Mostrar estado de loading
+    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processando...';
+    button.disabled = true;
+    
+    // Simular uma operação assíncrona
+    setTimeout(function() {
+        // Restaurar estado original
+        button.innerHTML = originalText;
+        button.disabled = false;
+    }, 2000);
+});
+</script>
+{% endblock %}

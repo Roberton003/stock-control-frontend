@@ -1,0 +1,2013 @@
+<!-- button_component.html - Componente de botão moderno -->
+<button 
+    type="{{ type|default:'button' }}" 
+    class="btn-modern {% if variant %}btn-{{ variant }}{% else %}btn-primary{% endif %} {% if size %}btn-{{ size }}{% endif %} {% if block %}btn-block{% endif %} {% if disabled %}btn-disabled{% endif %} {% if classes %}{{ classes }}{% endif %}"
+    {% if disabled %}disabled{% endif %}
+    {% if onclick %}onclick="{{ onclick }}"{% endif %}
+    {% if id %}id="{{ id }}"{% endif %}
+    {% if name %}name="{{ name }}"{% endif %}
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if title %}title="{{ title }}"{% endif %}
+>
+    {% if icon %}
+    <i class="{{ icon }} btn-icon"></i>
+    {% endif %}
+    <span class="btn-text">{{ text }}</span>
+    {% if loading %}
+    <i class="fas fa-spinner fa-spin btn-loading-icon"></i>
+    {% endif %}
+</button>
+
+<style>
+/* Estilos para botões modernos */
+.btn-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Estados do botão */
+.btn-modern:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.btn-modern:focus-visible {
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.5);
+}
+
+.btn-modern:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-modern:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-modern:disabled,
+.btn-modern.btn-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Variantes de cor */
+.btn-primary {
+    background-color: #034EA2;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #023a7a;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #5a6268;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.btn-warning:hover:not(:disabled) {
+    background-color: #e0a800;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover:not(:disabled) {
+    background-color: #138496;
+}
+
+.btn-light {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #dee2e6;
+}
+
+.btn-light:hover:not(:disabled) {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+.btn-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+.btn-dark:hover:not(:disabled) {
+    background-color: #23272b;
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    color: #034EA2;
+    border: 1px solid #034EA2;
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+    background-color: #034EA2;
+    color: white;
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-outline-success {
+    background-color: transparent;
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.btn-outline-success:hover:not(:disabled) {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-outline-warning {
+    background-color: transparent;
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.btn-outline-warning:hover:not(:disabled) {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.btn-outline-info {
+    background-color: transparent;
+    color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+
+.btn-outline-info:hover:not(:disabled) {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-outline-light {
+    background-color: transparent;
+    color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+}
+
+.btn-outline-light:hover:not(:disabled) {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    color: #343a40;
+    border: 1px solid #343a40;
+}
+
+.btn-outline-dark:hover:not(:disabled) {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Tamanhos */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.btn-md {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.5rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.75rem;
+}
+
+.btn-xl {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    border-radius: 0.75rem;
+}
+
+/* Botão em bloco */
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* Ícones nos botões */
+.btn-icon {
+    margin-right: 0.5rem;
+}
+
+.btn-loading-icon {
+    margin-left: 0.5rem;
+}
+
+/* Botão com sombra */
+.btn-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-shadow:hover:not(:disabled) {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Botão com borda arredondada */
+.btn-rounded {
+    border-radius: 9999px;
+}
+
+/* Botão com efeito hover especial */
+.btn-hover-glow {
+    position: relative;
+}
+
+.btn-hover-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.btn-hover-glow:hover::before {
+    opacity: 1;
+}
+
+/* Botão com animação de clique */
+.btn-click-animation {
+    transition: all 0.1s ease;
+}
+
+.btn-click-animation:active {
+    transform: scale(0.95);
+}
+
+/* Botão com gradiente */
+.btn-gradient {
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    color: white;
+    border: none;
+}
+
+.btn-gradient:hover:not(:disabled) {
+    background: linear-gradient(135deg, #023a7a 0%, #034EA2 100%);
+}
+
+/* Botão com efeito de ripple */
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ripple .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Botão com efeito de pulse */
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(3, 78, 162, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(3, 78, 162, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(3, 78, 162, 0);
+    }
+}
+
+/* Botão com efeito de hover 3D */
+.btn-3d {
+    box-shadow: 0 4px 0 #023a7a;
+    transform: translateY(0);
+}
+
+.btn-3d:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #023a7a;
+}
+
+.btn-3d:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #023a7a;
+}
+
+/* Botão com efeito de borda animada */
+.btn-animated-border {
+    position: relative;
+    background: transparent;
+    border: none;
+}
+
+.btn-animated-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #034EA2;
+    border-radius: inherit;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    transition: clip-path 0.3s ease;
+}
+
+.btn-animated-border:hover::before {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.btn-animated-border span {
+    position: relative;
+    z-index: 1;
+    background: #034EA2;
+    padding: 0.5rem 1rem;
+    border-radius: inherit;
+}
+
+/* Botão com efeito de preenchimento */
+.btn-fill {
+    position: relative;
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    overflow: hidden;
+}
+
+.btn-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #034EA2;
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.btn-fill:hover::before {
+    left: 0;
+}
+
+.btn-fill span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.btn-fill:hover span {
+    color: white;
+}
+
+/* Botão com efeito de fundo animado */
+.btn-animated-bg {
+    background: linear-gradient(90deg, #034EA2, #0466c8, #034EA2);
+    background-size: 200% 100%;
+    animation: gradientBG 2s linear infinite;
+    color: white;
+    border: none;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* Botão com efeito de texto animado */
+.btn-animated-text {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-animated-text .btn-text {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.btn-animated-text:hover .btn-text {
+    transform: translateX(10px);
+}
+
+.btn-animated-text .btn-text::after {
+    content: '→';
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateX(-10px);
+}
+
+.btn-animated-text:hover .btn-text::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Botão com efeito de zoom */
+.btn-zoom {
+    transform: scale(1);
+    transition: transform 0.2s ease;
+}
+
+.btn-zoom:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+/* Botão com efeito de rotação */
+.btn-rotate {
+    transition: transform 0.3s ease;
+}
+
+.btn-rotate:hover:not(:disabled) {
+    transform: rotate(5deg);
+}
+
+/* Botão com efeito de flip */
+.btn-flip {
+    perspective: 1000px;
+}
+
+.btn-flip-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.btn-flip:hover .btn-flip-inner {
+    transform: rotateY(180deg);
+}
+
+.btn-flip-front,
+.btn-flip-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-flip-back {
+    transform: rotateY(180deg);
+}
+
+/* Botão com efeito de blur */
+.btn-blur {
+    backdrop-filter: blur(10px);
+    background: rgba(3, 78, 162, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-blur:hover:not(:disabled) {
+    backdrop-filter: blur(15px);
+    background: rgba(3, 78, 162, 0.9);
+}
+
+/* Botão com efeito de glassmorphism */
+.btn-glass {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.btn-glass:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Botão com efeito de neumorphism */
+.btn-neumorphic {
+    background: #e0e0e0;
+    border-radius: 16px;
+    box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #efefef;
+    border: none;
+    color: #034EA2;
+}
+
+.btn-neumorphic:hover:not(:disabled) {
+    box-shadow: 4px 4px 8px #d1d1d1, -4px -4px 8px #efefef;
+}
+
+.btn-neumorphic:active {
+    box-shadow: inset 8px 8px 16px #d1d1d1, inset -8px -8px 16px #efefef;
+}
+
+/* Botão com efeito de holograma */
+.btn-hologram {
+    position: relative;
+    background: linear-gradient(45deg, #034EA2, #0466c8, #034EA2);
+    background-size: 400% 400%;
+    animation: gradient 3s ease infinite;
+    color: white;
+    border: none;
+    overflow: hidden;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.btn-hologram::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(30deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-hologram:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de glitch */
+.btn-glitch {
+    position: relative;
+    background: #034EA2;
+    color: white;
+    border: none;
+    overflow: hidden;
+}
+
+.btn-glitch::before,
+.btn-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #034EA2;
+    color: white;
+    clip: rect(0, 0, 0, 0);
+}
+
+.btn-glitch:hover::before {
+    animation: glitch-1 0.3s linear infinite;
+    clip: rect(24%, 100%, 41%, 0);
+}
+
+.btn-glitch:hover::after {
+    animation: glitch-2 0.3s linear infinite;
+    clip: rect(12%, 100%, 78%, 0);
+}
+
+@keyframes glitch-1 {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+    0% { transform: translate(0); }
+    20% { transform: translate(3px, -3px); }
+    40% { transform: translate(3px, 3px); }
+    60% { transform: translate(-3px, -3px); }
+    80% { transform: translate(-3px, 3px); }
+    100% { transform: translate(0); }
+}
+
+/* Botão com efeito de vaporwave */
+.btn-vaporwave {
+    background: linear-gradient(45deg, #ff71ce, #01cdfe, #05ffa1, #b967ff);
+    background-size: 400% 400%;
+    animation: vaporwave 4s ease infinite;
+    color: white;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes vaporwave {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Botão com efeito de cyberpunk */
+.btn-cyberpunk {
+    background: #000;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-cyberpunk::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(3, 78, 162, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.btn-cyberpunk:hover::before {
+    left: 100%;
+}
+
+.btn-cyberpunk:hover {
+    box-shadow: 0 0 20px #034EA2, 0 0 40px #034EA2;
+    text-shadow: 0 0 10px #034EA2;
+}
+
+/* Botão com efeito de pixel art */
+.btn-pixel {
+    background: #034EA2;
+    color: white;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    padding: 12px 16px;
+    position: relative;
+    border: 4px solid #023a7a;
+}
+
+.btn-pixel::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 4px solid #0466c8;
+    pointer-events: none;
+}
+
+.btn-pixel:hover {
+    background: #0466c8;
+    transform: translate(2px, 2px);
+}
+
+/* Botão com efeito de retrô */
+.btn-retro {
+    background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
+    color: #333;
+    border: 2px solid #aaa;
+    border-radius: 0;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    box-shadow: inset -2px -2px 0 #888, inset 2px 2px 0 #fff;
+}
+
+.btn-retro:hover {
+    background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+    box-shadow: inset -2px -2px 0 #777, inset 2px 2px 0 #eee;
+}
+
+.btn-retro:active {
+    box-shadow: inset 2px 2px 0 #888, inset -2px -2px 0 #fff;
+    transform: translate(2px, 2px);
+}
+
+/* Botão com efeito de neon */
+.btn-neon {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+    color: white;
+    background: #034EA2;
+    box-shadow: 0 0 20px #034EA2, 0 0 40px #034EA2;
+    border-color: #034EA2;
+}
+
+.btn-neon:focus {
+    outline: none;
+    box-shadow: 0 0 20px #034EA2, 0 0 40px #034EA2;
+}
+
+/* Botão com efeito de hover reverso */
+.btn-reverse-hover {
+    background: #034EA2;
+    color: white;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-reverse-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.btn-reverse-hover:hover::before {
+    transform: translateX(0);
+}
+
+.btn-reverse-hover span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.btn-reverse-hover:hover span {
+    color: #034EA2;
+}
+
+/* Botão com efeito de preenchimento de cor */
+.btn-fill-color {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-fill-color::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #034EA2;
+    transition: width 0.3s ease;
+    z-index: 0;
+}
+
+.btn-fill-color:hover::before {
+    width: 100%;
+}
+
+.btn-fill-color span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.btn-fill-color:hover span {
+    color: white;
+}
+
+/* Botão com efeito de borda animada */
+.btn-animated-border-2 {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.btn-animated-border-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #034EA2;
+    border-radius: inherit;
+    box-sizing: border-box;
+    transform: scale(1.1);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.btn-animated-border-2:hover::before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Botão com efeito de texto fluindo */
+.btn-flow-text {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-flow-text span {
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.btn-flow-text:hover span {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.btn-flow-text::after {
+    content: attr(data-hover);
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.btn-flow-text:hover::after {
+    left: 0;
+}
+
+/* Botão com efeito de sombra pulsante */
+.btn-pulse-shadow {
+    background: #034EA2;
+    color: white;
+    border: none;
+    box-shadow: 0 0 0 0 rgba(3, 78, 162, 0.7);
+    animation: pulse-shadow 2s infinite;
+}
+
+@keyframes pulse-shadow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(3, 78, 162, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(3, 78, 162, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(3, 78, 162, 0);
+    }
+}
+
+/* Botão com efeito de desfoque */
+.btn-blur-hover {
+    background: #034EA2;
+    color: white;
+    border: none;
+    filter: blur(0);
+    transition: filter 0.3s ease;
+}
+
+.btn-blur-hover:hover {
+    filter: blur(1px);
+}
+
+/* Botão com efeito de distorção */
+.btn-distortion {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-distortion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.1) 2px,
+        rgba(255, 255, 255, 0.1) 4px
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-distortion:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de fragmentação */
+.btn-fragment {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-fragment span {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-fragment::before,
+.btn-fragment::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #023a7a;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.btn-fragment::after {
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+}
+
+.btn-fragment:hover::before {
+    transform: translate(-5px, -5px);
+}
+
+.btn-fragment:hover::after {
+    transform: translate(5px, 5px);
+}
+
+/* Botão com efeito de luz */
+.btn-light {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-light::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    transform: rotate(30deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-light:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de vidro */
+.btn-glass-2 {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.btn-glass-2:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Botão com efeito de néon */
+.btn-neon-2 {
+    background: #000;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-neon-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #034EA2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.btn-neon-2:hover {
+    color: white;
+    box-shadow: 0 0 20px #034EA2, 0 0 40px #034EA2;
+}
+
+.btn-neon-2:hover::before {
+    opacity: 0.1;
+}
+
+/* Botão com efeito de holograma */
+.btn-hologram-2 {
+    background: linear-gradient(45deg, #034EA2, #0466c8, #034EA2);
+    background-size: 200% 200%;
+    color: white;
+    border: none;
+    animation: hologram 3s ease infinite;
+}
+
+@keyframes hologram {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.btn-hologram-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-hologram-2:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de partículas */
+.btn-particles {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-particles::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-particles:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de brilho */
+.btn-shine {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-shine:hover::before {
+    left: 100%;
+}
+
+/* Botão com efeito de reflexo */
+.btn-reflection {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-reflection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-reflection:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de textura */
+.btn-texture {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23023a7a"/><path d="M0 0L100 100M100 0L0 100" stroke="%230466c8" stroke-width="1"/></svg>');
+    opacity: 0.1;
+    background-size: 20px 20px;
+}
+
+/* Botão com efeito de degrade */
+.btn-gradient-2 {
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 50%, #023a7a 100%);
+    color: white;
+    border: none;
+}
+
+.btn-gradient-2:hover {
+    background: linear-gradient(135deg, #023a7a 0%, #034EA2 50%, #0466c8 100%);
+}
+
+/* Botão com efeito de camada */
+.btn-layered {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-layered::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: #0466c8;
+    z-index: -1;
+}
+
+.btn-layered::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    background: #023a7a;
+    z-index: -2;
+}
+
+/* Botão com efeito de profundidade */
+.btn-depth {
+    background: #034EA2;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 0 #023a7a;
+    position: relative;
+    top: 0;
+    transition: all 0.1s ease;
+}
+
+.btn-depth:hover {
+    top: 2px;
+    box-shadow: 0 2px 0 #023a7a;
+}
+
+.btn-depth:active {
+    top: 4px;
+    box-shadow: none;
+}
+
+/* Botão com efeito de borda dupla */
+.btn-double-border {
+    background: #034EA2;
+    color: white;
+    border: double 4px transparent;
+    border-radius: 16px;
+    background-image: linear-gradient(#034EA2, #034EA2), linear-gradient(to right, #0466c8, #023a7a);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+/* Botão com efeito de preenchimento diagonal */
+.btn-diagonal-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-diagonal-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-diagonal-fill:hover::before {
+    left: 100%;
+}
+
+/* Botão com efeito de borda animada */
+.btn-animated-border-3 {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-animated-border-3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #034EA2;
+    transition: width 0.3s ease;
+}
+
+.btn-animated-border-3::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 0;
+    background: #034EA2;
+    transition: height 0.3s ease 0.3s;
+}
+
+.btn-animated-border-3:hover::before {
+    width: 100%;
+}
+
+.btn-animated-border-3:hover::after {
+    height: 100%;
+}
+
+/* Botão com efeito de preenchimento circular */
+.btn-circular-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50px;
+}
+
+.btn-circular-fill::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.btn-circular-fill:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Botão com efeito de texto animado */
+.btn-animated-text-2 {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-animated-text-2 span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.btn-animated-text-2:hover span {
+    transform: translateY(-100%);
+}
+
+.btn-animated-text-2::after {
+    content: attr(data-hover);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    z-index: 2;
+}
+
+.btn-animated-text-2:hover::after {
+    transform: translateY(-100%);
+}
+
+/* Botão com efeito de borda pulsante */
+.btn-pulse-border {
+    background: #034EA2;
+    color: white;
+    border: 2px solid #034EA2;
+    animation: pulseBorder 2s infinite;
+}
+
+@keyframes pulseBorder {
+    0% { border-color: #034EA2; }
+    50% { border-color: #0466c8; }
+    100% { border-color: #034EA2; }
+}
+
+/* Botão com efeito de preenchimento degradê */
+.btn-gradient-fill {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-gradient-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+
+.btn-gradient-fill:hover::before {
+    transform: scaleX(1);
+}
+
+.btn-gradient-fill span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.btn-gradient-fill:hover span {
+    color: white;
+}
+
+/* Botão com efeito de borda ondulada */
+.btn-wave-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-wave-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0 50 Q 25 30, 50 50 T 100 50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/></svg>');
+    background-size: 100% 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-wave-border:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de preenchimento metálico */
+.btn-metallic {
+    background: linear-gradient(135deg, #c0c0c0, #ffffff, #c0c0c0);
+    color: #333;
+    border: 2px solid #a0a0a0;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 0 #808080;
+}
+
+.btn-metallic:hover {
+    background: linear-gradient(135deg, #d0d0d0, #ffffff, #d0d0d0);
+}
+
+/* Botão com efeito de cristal */
+.btn-crystal {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-crystal::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    transform: rotate(30deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-crystal:hover::before {
+    opacity: 0.3;
+}
+
+/* Botão com efeito de néon pulsante */
+.btn-neon-pulse {
+    background: #000;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    animation: neonPulse 2s infinite;
+}
+
+@keyframes neonPulse {
+    0% { box-shadow: 0 0 5px #034EA2; }
+    50% { box-shadow: 0 0 20px #034EA2, 0 0 30px #034EA2; }
+    100% { box-shadow: 0 0 5px #034EA2; }
+}
+
+.btn-neon-pulse:hover {
+    color: white;
+    background: #034EA2;
+    animation: none;
+}
+
+/* Botão com efeito de preenchimento de partículas */
+.btn-particle-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-particle-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-particle-fill:hover::before {
+    opacity: 0.3;
+}
+
+/* Botão com efeito de texto fluindo verticalmente */
+.btn-vertical-flow {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-vertical-flow span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.btn-vertical-flow:hover span {
+    transform: translateY(-100%);
+}
+
+.btn-vertical-flow::after {
+    content: attr(data-hover);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    z-index: 2;
+}
+
+.btn-vertical-flow:hover::after {
+    transform: translateY(-100%);
+}
+
+/* Botão com efeito de borda irregular */
+.btn-irregular-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-irregular-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #034EA2;
+    border-radius: 50% 20% / 10% 40%;
+    box-sizing: border-box;
+    transform: scale(1.1);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.btn-irregular-border:hover::before {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: 20% 50% / 40% 10%;
+}
+
+/* Botão com efeito de preenchimento degradê animado */
+.btn-animated-gradient {
+    background: linear-gradient(270deg, #034EA2, #0466c8, #023a7a, #034EA2);
+    background-size: 400% 400%;
+    animation: gradientBG 4s ease infinite;
+    color: white;
+    border: none;
+}
+
+/* Botão com efeito de borda de diamante */
+.btn-diamond-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.btn-diamond-border::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: #0466c8;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    z-index: -1;
+}
+
+/* Botão com efeito de preenchimento de néon */
+.btn-neon-fill {
+    background: #000;
+    color: #034EA2;
+    border: 2px solid #034EA2;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-neon-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #034EA2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.btn-neon-fill:hover {
+    color: white;
+    box-shadow: 0 0 10px #034EA2, 0 0 20px #034EA2;
+}
+
+.btn-neon-fill:hover::before {
+    opacity: 0.1;
+}
+
+/* Botão com efeito de borda de seta */
+.btn-arrow-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    padding-right: 2rem;
+}
+
+.btn-arrow-border::after {
+    content: '→';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.btn-arrow-border:hover::after {
+    transform: translateY(-50%) translateX(5px);
+}
+
+/* Botão com efeito de preenchimento de onda */
+.btn-wave-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-wave-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0 50 Q 25 30, 50 50 T 100 50" fill="rgba(255,255,255,0.2)"/></svg>');
+    background-size: 100% 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-wave-fill:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de borda de texto */
+.btn-text-border {
+    background: transparent;
+    color: #034EA2;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #034EA2, #0466c8) 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-text-border::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #034EA2, #0466c8);
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.btn-text-border:hover::before {
+    transform: translateY(0);
+}
+
+/* Botão com efeito de preenchimento de cubo */
+.btn-cube-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+.btn-cube-fill:hover {
+    transform: rotateX(10deg) rotateY(10deg);
+}
+
+.btn-cube-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-cube-fill:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de borda de fogo */
+.btn-fire-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
+.btn-fire-border::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: conic-gradient(from 0deg, transparent, orange, red, orange, transparent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+.btn-fire-border:hover::before {
+    opacity: 0.5;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Botão com efeito de preenchimento de água */
+.btn-water-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-water-fill::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    transition: height 0.5s ease;
+}
+
+.btn-water-fill:hover::before {
+    height: 100%;
+}
+
+/* Botão com efeito de borda de nuvem */
+.btn-cloud-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cloud-border::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.btn-cloud-border:hover::before {
+    opacity: 0.3;
+}
+
+/* Botão com efeito de preenchimento de estrela */
+.btn-star-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-star-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="rgba(255,255,255,0.2)"/></svg>');
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-star-fill:hover::before {
+    opacity: 0.3;
+}
+
+/* Botão com efeito de borda de coração */
+.btn-heart-border {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-heart-border::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="rgba(255,255,255,0.3)"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-heart-border:hover::before {
+    opacity: 1;
+}
+
+/* Botão com efeito de preenchimento de flor */
+.btn-flower-fill {
+    background: #034EA2;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-flower-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="rgba(255,255,255,0.2)"/><circle cx="30" cy="30" r="5" fill="rgba(255,255,255,0.2)"/><circle cx="70" cy="30" r="5" fill="rgba(255,255,255,0.2)"/><circle cx="30" cy="70" r="5" fill="rgba(255,255,255,0.2)"/><circle cx="70" cy="70" r="5" fill="rgba(255,255,255,0.2)"/></svg>');
+    background-size: 30px 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-flower-fill:hover::before {
+    opacity: 0.3;
+}

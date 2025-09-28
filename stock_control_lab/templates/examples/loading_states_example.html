@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estados de Loading e Erro - StockLab</title>
+    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Exemplos de Estados de Loading e Erro</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Exemplo de Loading Spinner -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Loading Spinner</h2>
+                </div>
+                <div class="card-body">
+                    <div id="spinner-example" class="loading-container h-32">
+                        <div class="loading-spinner loading-spinner--large"></div>
+                        <p class="loading-text">Carregando dados...</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="toggleSpinner()">Alternar Loading</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Skeleton Loading -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Skeleton Loading</h2>
+                </div>
+                <div class="card-body">
+                    <div id="skeleton-example" class="space-y-4">
+                        <div class="lab-loading-row">
+                            <div class="lab-loading-avatar loading-skeleton"></div>
+                            <div class="lab-loading-text-group space-y-2">
+                                <div class="lab-loading-text-line loading-skeleton"></div>
+                                <div class="lab-loading-text-line lab-loading-text-line--short loading-skeleton"></div>
+                            </div>
+                        </div>
+                        <div class="lab-loading-row">
+                            <div class="lab-loading-avatar loading-skeleton"></div>
+                            <div class="lab-loading-text-group space-y-2">
+                                <div class="lab-loading-text-line loading-skeleton"></div>
+                                <div class="lab-loading-text-line lab-loading-text-line--short loading-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="toggleSkeleton()">Alternar Skeleton</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Estado de Erro -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Estado de Erro</h2>
+                </div>
+                <div class="card-body">
+                    <div id="error-example" class="error-container h-64">
+                        <svg class="error-icon error-icon--large mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="error-title error-title--large mb-2">Erro de Conexão</h3>
+                        <p class="error-message error-message--large mb-6">Não foi possível conectar ao servidor.</p>
+                        <div class="error-actions">
+                            <button class="btn btn-primary" onclick="retryConnection()">Tentar novamente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Estado Vazio -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Estado Vazio</h2>
+                </div>
+                <div class="card-body">
+                    <div id="empty-example" class="empty-state h-64">
+                        <svg class="empty-state-icon empty-state-icon--large mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <h3 class="empty-state-title">Nenhum item encontrado</h3>
+                        <p class="empty-state-message mb-6">Não há itens para exibir neste momento.</p>
+                        <button class="btn btn-primary">Adicionar Novo Item</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Progress Loading -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Progress Loading</h2>
+                </div>
+                <div class="card-body">
+                    <div id="progress-example" class="flex flex-col items-center justify-center h-32">
+                        <p class="loading-text mb-4">Processando dados...</p>
+                        <div class="loading-progress w-full max-w-xs">
+                            <div class="loading-progress-bar loading-progress--indeterminate"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="toggleProgress()">Alternar Progress</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exemplo de Toast Feedback -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Toast Feedback</h2>
+                </div>
+                <div class="card-body">
+                    <div class="space-y-4">
+                        <button class="btn btn-success w-full" onclick="showToast('Operação realizada com sucesso!', 'success')">
+                            Toast de Sucesso
+                        </button>
+                        <button class="btn btn-warning w-full" onclick="showToast('Atenção: estoque baixo!', 'warning')">
+                            Toast de Aviso
+                        </button>
+                        <button class="btn btn-danger w-full" onclick="showToast('Erro ao processar requisição.', 'error')">
+                            Toast de Erro
+                        </button>
+                        <button class="btn btn-secondary w-full" onclick="showToast('Informação importante.', 'info')">
+                            Toast de Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'dist/js/main.js' %}"></script>
+    <script>
+        // Funções para os exemplos
+        let spinnerVisible = true;
+        let skeletonVisible = true;
+        let progressVisible = true;
+        
+        function toggleSpinner() {
+            const spinnerExample = document.getElementById('spinner-example');
+            if (spinnerVisible) {
+                spinnerExample.innerHTML = '<p class="text-center text-gray-500">Dados carregados com sucesso!</p>';
+            } else {
+                spinnerExample.innerHTML = `
+                    <div class="loading-spinner loading-spinner--large"></div>
+                    <p class="loading-text">Carregando dados...</p>
+                `;
+                spinnerExample.className = 'loading-container h-32';
+            }
+            spinnerVisible = !spinnerVisible;
+        }
+        
+        function toggleSkeleton() {
+            const skeletonExample = document.getElementById('skeleton-example');
+            if (skeletonVisible) {
+                skeletonExample.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                            <h3 class="font-medium">Item 1</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Descrição do item 1</p>
+                        </div>
+                        <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                            <h3 class="font-medium">Item 2</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Descrição do item 2</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                skeletonExample.innerHTML = `
+                    <div class="lab-loading-row">
+                        <div class="lab-loading-avatar loading-skeleton"></div>
+                        <div class="lab-loading-text-group space-y-2">
+                            <div class="lab-loading-text-line loading-skeleton"></div>
+                            <div class="lab-loading-text-line lab-loading-text-line--short loading-skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="lab-loading-row">
+                        <div class="lab-loading-avatar loading-skeleton"></div>
+                        <div class="lab-loading-text-group space-y-2">
+                            <div class="lab-loading-text-line loading-skeleton"></div>
+                            <div class="lab-loading-text-line lab-loading-text-line--short loading-skeleton"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            skeletonVisible = !skeletonVisible;
+        }
+        
+        function retryConnection() {
+            const errorExample = document.getElementById('error-example');
+            errorExample.innerHTML = `
+                <div class="loading-spinner loading-spinner--large mb-4"></div>
+                <p class="loading-text">Tentando reconectar...</p>
+            `;
+            
+            // Simular tentativa de reconexão
+            setTimeout(() => {
+                errorExample.innerHTML = `
+                    <svg class="error-icon error-icon--large mb-4 text-success-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <h3 class="error-title error-title--large mb-2">Conectado!</h3>
+                    <p class="error-message error-message--large">Conexão restabelecida com sucesso.</p>
+                `;
+            }, 2000);
+        }
+        
+        function toggleProgress() {
+            const progressExample = document.getElementById('progress-example');
+            if (progressVisible) {
+                progressExample.innerHTML = '<p class="text-center text-success-500 font-medium">Processo concluído!</p>';
+            } else {
+                progressExample.innerHTML = `
+                    <p class="loading-text mb-4">Processando dados...</p>
+                    <div class="loading-progress w-full max-w-xs">
+                        <div class="loading-progress-bar loading-progress--indeterminate"></div>
+                    </div>
+                `;
+            }
+            progressVisible = !progressVisible;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+/* Paleta de cores baseada na imagem de referência de design */
+:root {
+  /* Tema Escuro */
+  --color-background: #131722; /* Fundo principal escuro */
+  --color-card-background: #1C212E; /* Fundo dos cards */
+  --color-border: #374151; /* Cor da borda sutil */
+
+  /* Cores de Texto */
+  --color-text-base: #E0E0E0; /* Cor do texto principal */
+  --color-text-heading: #FFFFFF; /* Cor dos títulos */
+  --color-text-muted: #9CA3AF; /* Cor para texto secundário */
+
+  /* Cores de Destaque (Acentos) */
+  --color-primary-blue: #3B82F6; /* Azul principal para gráficos e links */
+  --color-accent-pink: #EC4899; /* Rosa/Magenta para destaques */
+  --color-accent-purple: #8B5CF6; /* Roxo para destaques */
+  --color-accent-green: #10B981; /* Verde para valores positivos */
+  --color-accent-red: #EF4444;   /* Vermelho para alertas/negativos */
+}

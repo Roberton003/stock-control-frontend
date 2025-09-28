@@ -1,0 +1,1087 @@
+<!-- login_form_component.html - Componente de formulário de login moderno -->
+<div class="login-container-modern {% if classes %}{{ classes }}{% endif %}" id="{{ form_id }}">
+    <div class="login-card-modern">
+        {% if logo %}
+        <div class="login-logo-modern">
+            <img src="{{ logo }}" alt="Logo" class="login-logo-img">
+        </div>
+        {% endif %}
+        
+        {% if title %}
+        <div class="login-header-modern">
+            <h1 class="login-title-modern">{{ title }}</h1>
+            {% if subtitle %}
+            <p class="login-subtitle-modern">{{ subtitle }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <form class="login-form-modern" id="{{ form_id }}-form" method="post" action="{% if action %}{{ action }}{% else %}#{% endif %}">
+            {% csrf_token %}
+            
+            {% if messages %}
+            <div class="login-messages-modern">
+                {% for message in messages %}
+                <div class="login-message-modern login-message-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="login-fields-modern">
+                <div class="login-field-modern">
+                    <label for="{{ form_id }}-username" class="login-label-modern">
+                        <i class="fas fa-user login-icon-modern"></i>
+                        Usuário
+                    </label>
+                    <input 
+                        type="text" 
+                        id="{{ form_id }}-username" 
+                        name="username" 
+                        class="login-input-modern" 
+                        placeholder="Digite seu nome de usuário"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+                
+                <div class="login-field-modern">
+                    <label for="{{ form_id }}-password" class="login-label-modern">
+                        <i class="fas fa-lock login-icon-modern"></i>
+                        Senha
+                    </label>
+                    <input 
+                        type="password" 
+                        id="{{ form_id }}-password" 
+                        name="password" 
+                        class="login-input-modern" 
+                        placeholder="Digite sua senha"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button type="button" class="login-toggle-password" onclick="togglePasswordVisibility('{{ form_id }}-password')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                {% if remember_me %}
+                <div class="login-field-modern login-field-checkbox">
+                    <input 
+                        type="checkbox" 
+                        id="{{ form_id }}-remember" 
+                        name="remember" 
+                        class="login-checkbox-modern"
+                    >
+                    <label for="{{ form_id }}-remember" class="login-checkbox-label-modern">
+                        Lembrar-me
+                    </label>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="login-actions-modern">
+                <button type="submit" class="login-button-modern">
+                    <i class="fas fa-sign-in-alt login-button-icon"></i>
+                    Entrar
+                </button>
+                
+                {% if forgot_password %}
+                <a href="{{ forgot_password_url|default:'#' }}" class="login-forgot-password">
+                    Esqueceu sua senha?
+                </a>
+                {% endif %}
+            </div>
+        </form>
+        
+        {% if social_login %}
+        <div class="login-social-modern">
+            <div class="login-divider-modern">
+                <span>ou continue com</span>
+            </div>
+            
+            <div class="login-social-buttons-modern">
+                {% if social_login.google %}
+                <button type="button" class="login-social-button-modern login-social-google">
+                    <i class="fab fa-google"></i>
+                </button>
+                {% endif %}
+                
+                {% if social_login.facebook %}
+                <button type="button" class="login-social-button-modern login-social-facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                {% endif %}
+                
+                {% if social_login.microsoft %}
+                <button type="button" class="login-social-button-modern login-social-microsoft">
+                    <i class="fab fa-microsoft"></i>
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if signup_link %}
+        <div class="login-footer-modern">
+            <p>
+                Não tem uma conta? 
+                <a href="{{ signup_link_url|default:'#' }}" class="login-signup-link">
+                    Cadastre-se
+                </a>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.login-container-modern {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    padding: 1rem;
+}
+
+.login-card-modern {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+.login-logo-modern {
+    padding: 2rem 2rem 1rem 2rem;
+    text-align: center;
+}
+
+.login-logo-img {
+    height: 64px;
+    width: auto;
+    margin: 0 auto;
+}
+
+.login-header-modern {
+    padding: 0 2rem 1rem 2rem;
+    text-align: center;
+}
+
+.login-title-modern {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+}
+
+.login-subtitle-modern {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 400;
+}
+
+.login-form-modern {
+    padding: 0 2rem 1rem 2rem;
+}
+
+.login-messages-modern {
+    margin-bottom: 1.5rem;
+}
+
+.login-message-modern {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.login-message-modern.login-message-error {
+    background-color: #fff5f5;
+    color: #dc3545;
+    border: 1px solid #fed7d7;
+}
+
+.login-message-modern.login-message-success {
+    background-color: #f0fdf4;
+    color: #28a745;
+    border: 1px solid #c6f6d5;
+}
+
+.login-message-modern.login-message-info {
+    background-color: #f0f9ff;
+    color: #17a2b8;
+    border: 1px solid #bee3f8;
+}
+
+.login-message-modern.login-message-warning {
+    background-color: #fffdf5;
+    color: #ffc107;
+    border: 1px solid #feedaf;
+}
+
+.login-fields-modern {
+    margin-bottom: 1.5rem;
+}
+
+.login-field-modern {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.login-field-modern:last-child {
+    margin-bottom: 0;
+}
+
+.login-label-modern {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.login-icon-modern {
+    margin-right: 0.5rem;
+    color: #034EA2;
+}
+
+.login-input-modern {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #374151;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    appearance: none;
+}
+
+.login-input-modern:focus {
+    color: #374151;
+    background-color: #ffffff;
+    border-color: #034EA2;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.login-input-modern::placeholder {
+    color: #9ca3af;
+}
+
+.login-toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 2.25rem;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.login-toggle-password:hover {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.login-field-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.login-checkbox-modern {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    color: #034EA2;
+    accent-color: #034EA2;
+    margin-right: 0.75rem;
+}
+
+.login-checkbox-label-modern {
+    font-weight: 400;
+    color: #374151;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.login-actions-modern {
+    margin-bottom: 1.5rem;
+}
+
+.login-button-modern {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #034EA2;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-button-modern:hover {
+    background-color: #023a7a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.login-button-modern:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.login-button-icon {
+    margin-right: 0.5rem;
+}
+
+.login-forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #034EA2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.login-forgot-password:hover {
+    color: #023a7a;
+    text-decoration: underline;
+}
+
+.login-social-modern {
+    padding: 0 2rem 1.5rem 2rem;
+}
+
+.login-divider-modern {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.login-divider-modern::before,
+.login-divider-modern::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.login-divider-modern::before {
+    margin-right: 1rem;
+}
+
+.login-divider-modern::after {
+    margin-left: 1rem;
+}
+
+.login-social-buttons-modern {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.login-social-button-modern {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.login-social-button-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: #9ca3af;
+}
+
+.login-social-google:hover {
+    background-color: #f1f3f4;
+    color: #db4437;
+}
+
+.login-social-facebook:hover {
+    background-color: #f1f3f4;
+    color: #4267b2;
+}
+
+.login-social-microsoft:hover {
+    background-color: #f1f3f4;
+    color: #0078d4;
+}
+
+.login-footer-modern {
+    padding: 1.5rem 2rem;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.login-footer-modern p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.login-signup-link {
+    color: #034EA2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.login-signup-link:hover {
+    color: #023a7a;
+    text-decoration: underline;
+}
+
+/* Estados responsivos */
+@media (max-width: 768px) {
+    .login-container-modern {
+        padding: 0.5rem;
+    }
+    
+    .login-card-modern {
+        border-radius: 0;
+        max-width: none;
+        margin: 0;
+        height: 100vh;
+        box-shadow: none;
+    }
+    
+    .login-logo-modern {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+    
+    .login-header-modern {
+        padding: 0 1.5rem 1rem 1.5rem;
+    }
+    
+    .login-form-modern {
+        padding: 0 1.5rem 1rem 1.5rem;
+    }
+    
+    .login-social-modern {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+    
+    .login-footer-modern {
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .login-card-modern {
+        max-width: 350px;
+    }
+}
+
+/* Animações */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.login-container-modern {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Estados para diferentes variantes */
+.login-container-modern.variant-dark {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.login-container-modern.variant-dark .login-card-modern {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+}
+
+.login-container-modern.variant-dark .login-title-modern {
+    color: #ffffff;
+}
+
+.login-container-modern.variant-dark .login-subtitle-modern {
+    color: #9ca3af;
+}
+
+.login-container-modern.variant-dark .login-input-modern {
+    background-color: #111827;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+.login-container-modern.variant-dark .login-input-modern:focus {
+    border-color: #034EA2;
+    box-shadow: 0 0 0 3px rgba(3, 78, 162, 0.25);
+}
+
+.login-container-modern.variant-dark .login-input-modern::placeholder {
+    color: #4b5563;
+}
+
+.login-container-modern.variant-dark .login-checkbox-label-modern {
+    color: #d1d5db;
+}
+
+.login-container-modern.variant-dark .login-divider-modern {
+    color: #6b7280;
+}
+
+.login-container-modern.variant-dark .login-divider-modern::before,
+.login-container-modern.variant-dark .login-divider-modern::after {
+    border-bottom: 1px solid #374151;
+}
+
+.login-container-modern.variant-dark .login-social-button-modern {
+    background-color: #111827;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+.login-container-modern.variant-dark .login-footer-modern {
+    background-color: #111827;
+    border-top: 1px solid #374151;
+}
+
+.login-container-modern.variant-dark .login-footer-modern p {
+    color: #9ca3af;
+}
+
+.login-container-modern.variant-dark .login-message-modern.login-message-error {
+    background-color: #2c1212;
+    color: #dc3545;
+    border: 1px solid #4a1818;
+}
+
+.login-container-modern.variant-dark .login-message-modern.login-message-success {
+    background-color: #122c12;
+    color: #28a745;
+    border: 1px solid #184a18;
+}
+
+.login-container-modern.variant-dark .login-message-modern.login-message-info {
+    background-color: #122c2c;
+    color: #17a2b8;
+    border: 1px solid #184a4a;
+}
+
+.login-container-modern.variant-dark .login-message-modern.login-message-warning {
+    background-color: #2c2c12;
+    color: #ffc107;
+    border: 1px solid #4a4a18;
+}
+
+/* Estados para login com fundo branco */
+.login-container-modern.variant-light {
+    background-color: #f9fafb;
+}
+
+.login-container-modern.variant-light .login-card-modern {
+    border: 1px solid #e5e7eb;
+}
+
+/* Estados para login com fundo transparente */
+.login-container-modern.variant-transparent {
+    background: transparent;
+}
+
+.login-container-modern.variant-transparent .login-card-modern {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.login-container-modern.variant-transparent.variant-dark .login-card-modern {
+    background-color: rgba(31, 41, 55, 0.95);
+}
+</style>
+
+<script>
+class ModernLoginForm {
+    constructor(formId, options = {}) {
+        this.formId = formId;
+        this.formElement = document.getElementById(`${formId}-form`);
+        this.usernameInput = document.getElementById(`${formId}-username`);
+        this.passwordInput = document.getElementById(`${formId}-password`);
+        this.rememberCheckbox = document.getElementById(`${formId}-remember`);
+        this.submitButton = this.formElement.querySelector('.login-button-modern');
+        
+        this.options = Object.assign({
+            onLogin: null,
+            onError: null,
+            showLoading: true,
+            validateOnSubmit: true
+        }, options);
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar eventos ao formulário
+        if (this.formElement) {
+            this.formElement.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleSubmit();
+            });
+        }
+        
+        // Adicionar eventos aos campos
+        if (this.usernameInput) {
+            this.usernameInput.addEventListener('input', () => {
+                this.validateUsername();
+            });
+        }
+        
+        if (this.passwordInput) {
+            this.passwordInput.addEventListener('input', () => {
+                this.validatePassword();
+            });
+        }
+        
+        // Adicionar evento de tecla Enter para submissão
+        if (this.usernameInput && this.passwordInput) {
+            [this.usernameInput, this.passwordInput].forEach(input => {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleSubmit();
+                    }
+                });
+            });
+        }
+    }
+    
+    validateUsername() {
+        const username = this.usernameInput.value.trim();
+        if (username.length < 3) {
+            this.showFieldError(this.usernameInput, 'O nome de usuário deve ter pelo menos 3 caracteres');
+            return false;
+        }
+        
+        this.clearFieldError(this.usernameInput);
+        return true;
+    }
+    
+    validatePassword() {
+        const password = this.passwordInput.value;
+        if (password.length < 6) {
+            this.showFieldError(this.passwordInput, 'A senha deve ter pelo menos 6 caracteres');
+            return false;
+        }
+        
+        this.clearFieldError(this.passwordInput);
+        return true;
+    }
+    
+    showFieldError(field, message) {
+        // Remover mensagem de erro existente
+        const existingError = field.parentNode.querySelector('.field-error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Adicionar nova mensagem de erro
+        const errorElement = document.createElement('div');
+        errorElement.className = 'field-error-message';
+        errorElement.textContent = message;
+        errorElement.style.color = '#dc3545';
+        errorElement.style.fontSize = '0.75rem';
+        errorElement.style.marginTop = '0.25rem';
+        errorElement.style.fontWeight = '500';
+        
+        field.parentNode.appendChild(errorElement);
+        field.classList.add('error');
+    }
+    
+    clearFieldError(field) {
+        const errorElement = field.parentNode.querySelector('.field-error-message');
+        if (errorElement) {
+            errorElement.remove();
+        }
+        field.classList.remove('error');
+    }
+    
+    async handleSubmit() {
+        // Validar campos se necessário
+        if (this.options.validateOnSubmit) {
+            const isUsernameValid = this.validateUsername();
+            const isPasswordValid = this.validatePassword();
+            
+            if (!isUsernameValid || !isPasswordValid) {
+                return;
+            }
+        }
+        
+        // Mostrar estado de carregamento se configurado
+        if (this.options.showLoading) {
+            this.showLoadingState();
+        }
+        
+        // Coletar dados do formulário
+        const formData = new FormData(this.formElement);
+        const data = Object.fromEntries(formData.entries());
+        
+        try {
+            // Chamar função de callback se definida
+            if (this.options.onLogin) {
+                await this.options.onLogin(data);
+            } else {
+                // Implementação padrão de login
+                await this.defaultLogin(data);
+            }
+            
+            // Disparar evento personalizado
+            const loginEvent = new CustomEvent('loginSuccess', {
+                detail: { username: data.username }
+            });
+            document.dispatchEvent(loginEvent);
+        } catch (error) {
+            // Tratar erro
+            this.handleError(error);
+            
+            // Disparar evento personalizado
+            const errorEvent = new CustomEvent('loginError', {
+                detail: { error: error.message }
+            });
+            document.dispatchEvent(errorEvent);
+        } finally {
+            // Esconder estado de carregamento
+            if (this.options.showLoading) {
+                this.hideLoadingState();
+            }
+        }
+    }
+    
+    async defaultLogin(data) {
+        // Implementação padrão de login
+        // Esta função seria substituída pela implementação real
+        console.log('Login padrão:', data);
+        
+        // Simular chamada assíncrona
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Simular sucesso ou erro aleatório
+                if (Math.random() > 0.2) {
+                    resolve({ success: true });
+                } else {
+                    reject(new Error('Credenciais inválidas'));
+                }
+            }, 1000);
+        });
+    }
+    
+    handleError(error) {
+        // Chamar função de callback se definida
+        if (this.options.onError) {
+            this.options.onError(error);
+        } else {
+            // Implementação padrão de tratamento de erro
+            this.showErrorMessage(error.message || 'Ocorreu um erro durante o login');
+        }
+    }
+    
+    showLoadingState() {
+        if (this.submitButton) {
+            this.submitButton.disabled = true;
+            this.submitButton.innerHTML = `
+                <i class="fas fa-spinner fa-spin login-button-icon"></i>
+                Entrando...
+            `;
+        }
+    }
+    
+    hideLoadingState() {
+        if (this.submitButton) {
+            this.submitButton.disabled = false;
+            this.submitButton.innerHTML = `
+                <i class="fas fa-sign-in-alt login-button-icon"></i>
+                Entrar
+            `;
+        }
+    }
+    
+    showErrorMessage(message) {
+        // Remover mensagens existentes
+        const existingMessages = this.formElement.querySelector('.login-messages-modern');
+        if (existingMessages) {
+            existingMessages.remove();
+        }
+        
+        // Adicionar nova mensagem de erro
+        const messagesContainer = document.createElement('div');
+        messagesContainer.className = 'login-messages-modern';
+        messagesContainer.innerHTML = `
+            <div class="login-message-modern login-message-error">
+                ${message}
+            </div>
+        `;
+        
+        // Inserir antes dos campos
+        const fieldsContainer = this.formElement.querySelector('.login-fields-modern');
+        if (fieldsContainer) {
+            this.formElement.insertBefore(messagesContainer, fieldsContainer);
+        }
+    }
+    
+    clearMessages() {
+        const messagesContainer = this.formElement.querySelector('.login-messages-modern');
+        if (messagesContainer) {
+            messagesContainer.remove();
+        }
+    }
+    
+    setCredentials(username, password) {
+        if (this.usernameInput) {
+            this.usernameInput.value = username;
+        }
+        if (this.passwordInput) {
+            this.passwordInput.value = password;
+        }
+    }
+    
+    focusUsername() {
+        if (this.usernameInput) {
+            this.usernameInput.focus();
+        }
+    }
+    
+    focusPassword() {
+        if (this.passwordInput) {
+            this.passwordInput.focus();
+        }
+    }
+}
+
+// Funções utilitárias
+function togglePasswordVisibility(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.nextElementSibling;
+    const icon = button.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+function createLoginForm(options) {
+    const {
+        id = `login-form-${Date.now()}`,
+        title = 'Login',
+        subtitle = 'Entre com suas credenciais',
+        logo = null,
+        action = '#',
+        method = 'post',
+        remember_me = true,
+        forgot_password = true,
+        forgot_password_url = '#',
+        social_login = null,
+        signup_link = false,
+        signup_link_url = '#',
+        classes = '',
+        onLogin = null,
+        onError = null
+    } = options;
+    
+    // Criar elemento do formulário
+    const formElement = document.createElement('div');
+    formElement.className = `login-container-modern ${classes}`;
+    formElement.id = id;
+    
+    formElement.innerHTML = `
+        <div class="login-card-modern">
+            ${logo ? `
+            <div class="login-logo-modern">
+                <img src="${logo}" alt="Logo" class="login-logo-img">
+            </div>
+            ` : ''}
+            
+            <div class="login-header-modern">
+                <h1 class="login-title-modern">${title}</h1>
+                ${subtitle ? `<p class="login-subtitle-modern">${subtitle}</p>` : ''}
+            </div>
+            
+            <form class="login-form-modern" id="${id}-form" method="${method}" action="${action}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="">
+                
+                <div class="login-fields-modern">
+                    <div class="login-field-modern">
+                        <label for="${id}-username" class="login-label-modern">
+                            <i class="fas fa-user login-icon-modern"></i>
+                            Usuário
+                        </label>
+                        <input 
+                            type="text" 
+                            id="${id}-username" 
+                            name="username" 
+                            class="login-input-modern" 
+                            placeholder="Digite seu nome de usuário"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+                    
+                    <div class="login-field-modern">
+                        <label for="${id}-password" class="login-label-modern">
+                            <i class="fas fa-lock login-icon-modern"></i>
+                            Senha
+                        </label>
+                        <input 
+                            type="password" 
+                            id="${id}-password" 
+                            name="password" 
+                            class="login-input-modern" 
+                            placeholder="Digite sua senha"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="login-toggle-password" onclick="togglePasswordVisibility('${id}-password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    ${remember_me ? `
+                    <div class="login-field-modern login-field-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="${id}-remember" 
+                            name="remember" 
+                            class="login-checkbox-modern"
+                        >
+                        <label for="${id}-remember" class="login-checkbox-label-modern">
+                            Lembrar-me
+                        </label>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <div class="login-actions-modern">
+                    <button type="submit" class="login-button-modern">
+                        <i class="fas fa-sign-in-alt login-button-icon"></i>
+                        Entrar
+                    </button>
+                    
+                    ${forgot_password ? `
+                    <a href="${forgot_password_url}" class="login-forgot-password">
+                        Esqueceu sua senha?
+                    </a>
+                    ` : ''}
+                </div>
+            </form>
+            
+            ${social_login ? `
+            <div class="login-social-modern">
+                <div class="login-divider-modern">
+                    <span>ou continue com</span>
+                </div>
+                
+                <div class="login-social-buttons-modern">
+                    ${social_login.google ? `<button type="button" class="login-social-button-modern login-social-google"><i class="fab fa-google"></i></button>` : ''}
+                    ${social_login.facebook ? `<button type="button" class="login-social-button-modern login-social-facebook"><i class="fab fa-facebook-f"></i></button>` : ''}
+                    ${social_login.microsoft ? `<button type="button" class="login-social-button-modern login-social-microsoft"><i class="fab fa-microsoft"></i></button>` : ''}
+                </div>
+            </div>
+            ` : ''}
+            
+            ${signup_link ? `
+            <div class="login-footer-modern">
+                <p>
+                    Não tem uma conta? 
+                    <a href="${signup_link_url}" class="login-signup-link">
+                        Cadastre-se
+                    </a>
+                </p>
+            </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Adicionar ao container desejado (ou body se não especificado)
+    const container = options.container ? document.querySelector(options.container) : document.body;
+    if (container) {
+        container.appendChild(formElement);
+    }
+    
+    // Criar instância do formulário
+    const formInstance = new ModernLoginForm(id, {
+        onLogin: onLogin,
+        onError: onError
+    });
+    
+    return formInstance;
+}
+
+// Inicializar formulários quando o documento estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    // Procurar por elementos com classe login-form-init
+    const formElements = document.querySelectorAll('[data-login-form-init]');
+    
+    formElements.forEach(element => {
+        const formId = element.id;
+        const action = element.getAttribute('data-action') || '#';
+        const method = element.getAttribute('data-method') || 'post';
+        const rememberMe = element.getAttribute('data-remember-me') !== 'false';
+        const forgotPassword = element.getAttribute('data-forgot-password') === 'true';
+        const signupLink = element.getAttribute('data-signup-link') === 'true';
+        
+        // Criar instância do formulário
+        window[`loginForm_${formId}`] = new ModernLoginForm(formId, {
+            action: action,
+            method: method,
+            remember_me: rememberMe,
+            forgot_password: forgotPassword,
+            signup_link: signupLink
+        });
+    });
+});
+
+// Exportar funções para uso global
+window.ModernLoginForm = ModernLoginForm;
+window.createLoginForm = createLoginForm;
+window.togglePasswordVisibility = togglePasswordVisibility;
+</script>

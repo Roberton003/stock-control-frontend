@@ -1,0 +1,19 @@
+@layer components {
+  .form-label {
+    @apply block mb-1 font-semibold text-text-muted;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    @apply block w-full bg-background border-border-color rounded-md shadow-sm;
+    @apply text-text-base placeholder-text-muted;
+    @apply focus:border-primary-blue focus:ring focus:ring-primary-blue focus:ring-opacity-50;
+  }
+
+  .form-input:disabled,
+  .form-select:disabled,
+  .form-textarea:disabled {
+    @apply bg-gray-800 opacity-70 cursor-not-allowed;
+  }
+}

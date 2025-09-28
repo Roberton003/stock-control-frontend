@@ -1,0 +1,112 @@
+<!-- card_component.html - Componente de card moderno -->
+<div class="card-modern {% if classes %}{{ classes }}{% endif %}">
+    {% if header %}
+    <div class="card-header-modern">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-gray-900">{{ header }}</h3>
+            {% if actions %}
+            <div class="flex space-x-2">
+                {{ actions|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="card-body-modern">
+        {{ content|safe }}
+    </div>
+    
+    {% if footer %}
+    <div class="card-footer-modern">
+        {{ footer|safe }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.card-modern {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-header-modern {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.card-body-modern {
+    padding: 1.5rem;
+}
+
+.card-footer-modern {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+/* Variantes de cards */
+.card-modern.primary {
+    border-top: 4px solid #034EA2;
+}
+
+.card-modern.success {
+    border-top: 4px solid #28a745;
+}
+
+.card-modern.warning {
+    border-top: 4px solid #ffc107;
+}
+
+.card-modern.danger {
+    border-top: 4px solid #dc3545;
+}
+
+.card-modern.info {
+    border-top: 4px solid #17a2b8;
+}
+
+/* Cards com gradientes */
+.card-modern.gradient-blue {
+    background: linear-gradient(135deg, #034EA2 0%, #0466c8 100%);
+    color: white;
+    border: none;
+}
+
+.card-modern.gradient-green {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    border: none;
+}
+
+.card-modern.gradient-orange {
+    background: linear-gradient(135deg, #fd7e14 0%, #e06b0d 100%);
+    color: white;
+    border: none;
+}
+
+.card-modern.gradient-red {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+}
+
+/* Cards com sombra mais forte */
+.card-modern.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-modern.shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>

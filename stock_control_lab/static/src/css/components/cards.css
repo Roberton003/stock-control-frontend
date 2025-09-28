@@ -1,0 +1,31 @@
+/*
+  Estilos para Cards
+  - .card: Estilo base para cards genéricos.
+  - .dashboard-widget: Estilo específico para os widgets do dashboard, como na imagem.
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-card-background rounded-lg shadow-md p-4 md:p-6;
+    border: 1px solid;
+    @apply border-gray-200 dark:border-border-color;
+  }
+
+  .dashboard-widget {
+    @apply bg-white dark:bg-card-background rounded-xl shadow-lg p-4 transition-all duration-300 ease-in-out;
+    border: 1px solid;
+    @apply border-gray-100 dark:border-border-color;
+  }
+
+  .dashboard-widget:hover {
+    @apply transform -translate-y-1 shadow-2xl;
+  }
+
+  .dashboard-widget-title {
+    @apply text-lg font-semibold text-gray-800 dark:text-text-heading mb-4;
+  }
+}

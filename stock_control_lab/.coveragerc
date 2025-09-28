@@ -1,0 +1,65 @@
+# .coveragerc - Configuração do Coverage.py para o projeto
+
+[run]
+# Fonte de cobertura
+source = 
+    inventory
+    .
+
+# Diretórios/arquivos a serem omitidos
+omit = 
+    */venv/*
+    */migrations/*
+    */tests/*
+    manage.py
+    */settings/*
+    */wsgi.py
+    */asgi.py
+    */apps.py
+    */node_modules/*
+    .git/*
+    __pycache__/*
+    */__pycache__/*
+    .pytest_cache/*
+    .coverage
+    .coveragerc
+    coverage.xml
+    htmlcov/*
+    test_results/*
+
+# Medir cobertura de branch
+branch = True
+
+# Paralelismo
+parallel = True
+
+[report]
+# Excluir linhas específicas da cobertura
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if settings.DEBUG
+
+# Mostrar porcentagem de cobertura
+show_missing = True
+
+# Ignorar arquivos sem código executável
+skip_covered = False
+
+# Ordenar por nome do arquivo
+sort = Name
+
+[html]
+# Diretório para relatório HTML
+directory = test_results/coverage_html
+
+[xml]
+# Arquivo para relatório XML
+output = test_results/coverage.xml
+
+[json]
+# Arquivo para relatório JSON
+output = test_results/coverage.json
