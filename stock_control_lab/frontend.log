@@ -1,0 +1,114 @@
+
+> django-frontend@1.0.0 dev
+> vite
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+Port 5173 is in use, trying another one...
+Port 5174 is in use, trying another one...
+
+  VITE v5.4.20  ready in15:15:01 [vite] vite.config.js changed, restarting server...
+15:15:02 [vite] server restarted.
+15:18:46 [vite] page reload templates/dashb15:18:46 [15:18:46 [vite] page reload templ15:18:46 [15:18:46 [vite] page reload templates/examp15:18:46 [vite] page reload templates/examples/autocomplete_example.html
+15:18:46 [vite] page reload templates/examples/entity_navigation_example.html
+15:18:46 [vite] page reload templates/examples/form_example.html
+15:18:46 [vite] page reload templates/examples/intuitive_forms_example.html
+15:18:46 [vite] page reload templates/examples/loading_states_example.html
+15:18:46 [vite] page reload templates/examples/tabs_accordion_example.html
+15:18:46 [vite] page reload templates/examples/tooltips_help_example.html
+15:18:46 [vite] page reload templates/requisitions/list_create.html
+15:18:46 [vite] page reload templates/base/footer.html
+15:18:46 [vite] page reload templates/base/base.html
+15:18:46 [vite] page reload templates/base/navbar.html
+15:18:46 [vite] page reload templates/reagents/detail.html
+15:18:46 [vite] page reload templates/reagents/list_create.html
+15:18:46 [vite] page reload templates/stock_lots/create_form.html
+15:18:46 [vite] page reload templates/stock_movement15:18:54 [vite] page reload templates/reage15:18:54 [vite] page reload templates/requisitions/list_create.html
+15:18:54 [vite] page 15:18:54 [vite] page reload templates/stock_lots/create_form.html
+15:18:54 [vite] page reload templates/stock15:18:54 [vite] page reload te20:07:04 [vite] page reload templates/base/base_modern.html
+20:07:04 [vite] page reload templates/base/base_modern.html
+20:07:53 [vite] page reload templates/base/navbar_modern.html
+20:07:53 [vite] page reload templates/base/navbar_modern.html
+20:08:42 [vite] page reload templates/base/sidebar_modern.html
+20:08:42 [vite] page reload templates/base/sidebar_modern.html
+20:09:12 [vite] page reload templates/base/mobile_nav_modern.html
+20:09:12 [vite] page reload templates/base/mobile_nav_modern.html
+20:09:43 [vite] page reload templates/base/footer_modern.html
+20:09:43 [vite] page reload templates/base/footer_modern.html
+20:11:37 [vite] page reload templates/dashboard/dashboard_modern.html
+20:11:37 [vite] page reload templates/dashboard/dashboard_modern.html
+20:15:45 [vite] page reload templates/components/notification_component.html
+20:15:45 [vite] page reload templates/components/notification_component.html
+20:16:34 [vite] page reload templates/components/modal_component.html
+20:16:34 [vite] page reload templates/components/modal_component.html
+20:17:19 [vite] page reload templates/components/card_component.html
+20:17:20 [vite] page reload templates/components/card_component.html
+20:18:15 [vite] page reload templates/components/table_component.html
+20:18:15 [vite] page reload templates/components/table_component.html
+20:19:50 [vite] page reload templates/components/form_component.html
+20:19:50 [vite] page reload templates/components/form_component.html
+20:21:13 [vite] page reload templates/components/chart_component.html
+20:21:13 [vite] page reload templates/components/chart_component.html
+20:22:33 [vite] page reload templates/components/filter_component.html
+20:22:34 [vite] page reload templates/components/filter_component.html
+20:24:40 [vite] page reload templates/components/search_component.html
+20:24:40 [vite] page reload templates/components/search_component.html
+20:25:30 [vite] page reload templates/components/breadcrumb_component.html
+20:25:30 [vite] page reload templates/components/breadcrumb_component.html
+20:26:56 [vite] page reload templates/components/progress_component.html
+20:26:56 [vite] page reload templates/components/progress_component.html
+20:28:35 [vite] page reload templates/components/metric_card_component.html
+20:28:36 [vite] page reload templates/components/metric_card_component.html
+20:30:25 [vite] page reload templates/components/alert_component.html
+20:30:25 [vite] page reload templates/components/alert_component.html
+20:32:42 [vite] page reload templates/components/modal_component.html
+20:35:32 [vite] page reload templates/components/sidebar_component.html
+20:35:32 [vite] page reload templates/components/sidebar_component.html
+20:39:01 [vite] page reload templates/components/dashboard_component.html
+20:39:02 [vite] page reload templates/components/dashboard_component.html
+20:42:37 [vite] page reload templates/components/chart_component.html
+20:47:48 [vite] page reload templates/components/login_form_component.html
+20:47:48 [vite] page reload templates/components/login_form_component.html
+20:57:31 [vite] page reload templates/components/form_component.html
+21:32:46 [vite] page reload templates/components/form_component.html
+21:43:57 [vite] page reload templates/components/form_component.html
+21:54:20 [vite] page reload templates/components/button_component.html
+21:54:20 [vite] page reload templates/components/button_component.html
+21:56:13 [vite] page reload templates/examples/button_example.html
+21:56:13 [vite] page reload templates/examples/button_example.html
+21:59:33 [vite] page reload templates/examples/form_example.html
+22:51:40 [vite] page reload venv/lib/python3.12/site-packages/coverage/htmlfiles/index.html
+22:51:40 [vite] p22:51:40 [vite] page reload venv/lib/python3.12/site-packages/coverage/htmlfiles/index.html
+22:51:40 [vite] page reload venv/lib/python3.12/site-packages/coverage/htmlfiles/pyfile.html
+22:51:40 [vite] page reload venv/lib64/pyth22:51:40 [vite] page reload venv/lib623:15:43 [vite] page reload templates/examples/form_example.html
+23:20:29 [vite] page reload templates/dashboard/dashboard_modern.html
+23:28:31 [vite] page reload templates/components/sidebar_modern.html
+23:28:31 [vite] page reload templates/components/sidebar_modern.html
+23:39:39 [vite] page reload templates/components/form_component.html
+23:44:14 [vite] page reload templates/components/chart_component.html
+00:21:17 [vite] page reload templates/components/progress_component.html
+00:29:38 [vite] page reload templates/components/chart_component.html
+09:46:57 [vite] page reload templates/components/alert_component.html
+09:53:06 [vite] page reload templates/components/chart_component.html
+10:05:26 [vite] page reload templates/components/table_component.html
+10:56:50 [vite] page reload templates/components/form_component.html
+12:24:00 [vite] page reload templates/components/form_component.html
+13:15:30 [vite] page reload templates/examples/estoque_dashboard.html
+13:15:31 [vite] page reload templates/examples/estoque_dashboard.html
+13:22:56 [vite] page reload templates/examples/produtos_listagem.html
+13:22:56 [vite] page reload templates/examples/produtos_listagem.html
+13:26:59 [vite] page reload templates/examples/produto_detalhes.html
+13:26:59 [vite] page reload templates/examples/produto_detalhes.html
+13:29:52 [vite] page reload templates/examples/produto_formulario.html
+13:29:52 [vite] page reload templates/examples/produto_formulario.html
+13:40:50 [vite] page reload templates/examples/softensi_dashboard.html
+13:40:50 [vite] page reload templates/examples/softensi_dashboard.html
+13:51:45 [vite] page reload templates/examples/softensi_inspired_dashboard.html
+13:51:45 [vite] page reload templates/examples/softensi_inspired_dashboard.html
+14:05:06 [vite] page reload templates/examples/softensi_inspired_product_list.html
+14:05:06 [vite] page reload templates/examples/softensi_inspired_product_list.html
+14:12:36 [vite] page reload templates/examples/softensi_inspired_product_detail.html
+14:12:36 [vite] page reload templates/examples/softensi_inspired_product_detail.html
+14:19:15 [vite] page reload templates/examples/softensi_inspired_product_form.html
+14:19:15 [vite] page reload templates/examples/softensi_inspired_product_form.html
+nspired_product_form.html
+14:19:15 [vite] page reload templates/examp14:19:15 [vite] page reload templates/examples/softensi_inspired_product_form.html
