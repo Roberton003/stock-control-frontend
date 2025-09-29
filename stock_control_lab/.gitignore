@@ -1,3 +1,5 @@
 venv/
 venv/
 venv/
+stock-control-lab/backend/venv_new/lib/python3.12/site-packages/playwright/driver/node
+venv/lib/python3.12/site-packages/playwright/driver/node
