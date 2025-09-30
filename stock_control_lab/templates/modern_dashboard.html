@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabStock Control - Sistema de Gestão de Estoque</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, #1e3a8a 0%, #2563eb 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+        }
+        
+        .stat-card {
+            border-left: 4px solid;
+        }
+        
+        .stat-card-blue {
+            border-left-color: #3b82f6;
+        }
+        
+        .stat-card-yellow {
+            border-left-color: #f59e0b;
+        }
+        
+        .stat-card-red {
+            border-left-color: #ef4444;
+        }
+        
+        .stat-card-green {
+            border-left-color: #10b981;
+        }
+        
+        .nav-item {
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .table-row:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 sidebar text-white flex flex-col">
+            <div class="p-6 border-b border-blue-400">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-flask text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">LabStock Control</h1>
+                        <p class="text-xs text-blue-200">Sistema de Gestão</p>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="flex-1 p-4">
+                <a href="#" class="nav-item active flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-home mr-3"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-box mr-3"></i>
+                    <span>Produtos</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-boxes mr-3"></i>
+                    <span>Estoque</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-users mr-3"></i>
+                    <span>Fornecedores</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-shopping-cart mr-3"></i>
+                    <span>Movimentações</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 mb-2">
+                    <i class="fas fa-file-alt mr-3"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3">
+                    <i class="fas fa-cog mr-3"></i>
+                    <span>Configurações</span>
+                </a>
+            </nav>
+            
+            <div class="p-4 border-t border-blue-400">
+                <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                    <h4 class="font-medium">Versão Pro</h4>
+                    <p class="text-xs text-blue-200 mt-1">Atualize para recursos avançados</p>
+                    <button class="mt-3 w-full bg-white text-blue-600 text-xs py-2 rounded-lg font-medium">Atualizar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+                        <p class="text-sm text-gray-600">Visão geral do seu estoque</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Pesquisar..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm w-64">
+                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                        </div>
+                        
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                                <i class="fas fa-user text-gray-600"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700">Administrador</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="card bg-white p-6 stat-card stat-card-blue">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg mr-4">
+                                <i class="fas fa-dollar-sign text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Valor em Estoque</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1">R$ 42.560,00</p>
+                                <p class="text-green-500 text-xs flex items-center mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i> 12% este mês
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white p-6 stat-card stat-card-yellow">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-lg mr-4">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Abaixo do Mínimo</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1">8</p>
+                                <p class="text-red-500 text-xs flex items-center mt-1">
+                                    <i class="fas fa-arrow-up mr-1"></i> 2 novos
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white p-6 stat-card stat-card-red">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-lg mr-4">
+                                <i class="fas fa-hourglass-half text-red-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Próx. Vencimento</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1">3</p>
+                                <p class="text-red-500 text-xs flex items-center mt-1">
+                                    <i class="fas fa-calendar mr-1"></i> 7 dias
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white p-6 stat-card stat-card-green">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-lg mr-4">
+                                <i class="fas fa-clipboard-list text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm">Requisições Pendentes</p>
+                                <p class="text-2xl font-bold text-gray-800 mt-1">5</p>
+                                <p class="text-green-500 text-xs flex items-center mt-1">
+                                    <i class="fas fa-check mr-1"></i> 3 processadas
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Data -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Consumption Chart -->
+                    <div class="card bg-white p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Consumo dos Ú0 Meses</h3>
+                            <div class="flex space-x-2">
+                                <button class="text-xs px-3 py-1 rounded bg-gray-100 text-gray-700">Mês</button>
+                                <button class="text-xs px-3 py-1 rounded bg-blue-600 text-white">Ano</button>
+                            </div>
+                        </div>
+                        <div class="h-64 flex items-end justify-between pt-4 space-x-2">
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 70%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Jan</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 45%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Fev</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 60%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Mar</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 80%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Abr</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 65%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Mai</p>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="bg-blue-500 w-full rounded-t" style="height: 90%"></div>
+                                <p class="mt-2 text-sm text-gray-600">Jun</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Status -->
+                    <div class="card bg-white p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-6">Status de Validade dos Lotes</h3>
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="relative w-48 h-48 mr-0 md:mr-8 mb-6 md:mb-0">
+                                <div class="absolute w-full h-full rounded-full" 
+                                     style="background: conic-gradient(#10b981 0% 60%, #f59e0b 60% 85%, #ef4444 85% 100%)"></div>
+                                <div class="absolute w-32 h-32 bg-white rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                                    <span class="text-xl font-bold">120</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4 w-full max-w-xs">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-green-500 rounded mr-3"></div>
+                                    <span class="text-gray-700 flex-1">Válidos</span>
+                                    <span class="font-medium">72 (60%)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-yellow-500 rounded mr-3"></div>
+                                    <span class="text-gray-700 flex-1">Vencem em 90 dias</span>
+                                    <span class="font-medium">24 (20%)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-red-500 rounded mr-3"></div>
+                                    <span class="text-gray-700 flex-1">Vencidos</span>
+                                    <span class="font-medium">24 (20%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card bg-white overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Movimentações Recentes</h3>
+                        <button class="text-blue-600 hover:text-blue-800 flex items-center text-sm">
+                            <i class="fas fa-sync-alt mr-1"></i> Atualizar
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantidade</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsável</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-vial text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Ácido Clorídrico 37%</div>
+                                                <div class="text-sm text-gray-500">HCL-001-LT001</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Entrada
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5000 mL</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/06/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dr. Silva</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Processado
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-vial text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Etanol 95%</div>
+                                                <div class="text-sm text-gray-500">ETOH-95-LT045</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Retirada
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">250 mL</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/06/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dra. Costa</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Processado
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-vial text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Sulfato de Cobre</div>
+                                                <div class="text-sm text-gray-500">CUSO4-002-LT012</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Ajuste
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-500 g</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/06/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dr. Oliveira</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Confirmado
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                <i class="fas fa-vial text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Hidróxido de Sódio</div>
+                                                <div class="text-sm text-gray-500">NAOH-10-LT023</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Retirada
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1000 g</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13/06/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Dr. Santos</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Processado
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                        <div class="text-sm text-gray-700 mb-2 md:mb-0">
+                            Mostrando 4 de 20 registros
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-sm">Anterior</button>
+                            <button class="px-3 py-1 rounded bg-blue-600 text-white text-sm">1</button>
+                            <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-sm">2</button>
+                            <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-sm">3</button>
+                            <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-sm">Próximo</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

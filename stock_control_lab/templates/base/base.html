@@ -1,13 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR" class="{% if request.user.profile.dark_mode %}dark{% endif %}">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} | Controle de Estoque Lab</title>
+    <title>{% block title %}{% endblock %} | LabStock Control</title>
     
-    <!-- CSS -->
-    <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    {% if debug %}
+        <!-- Vite Dev Server -->
+        <script type="module" src="http://localhost:3000/@vite/client"></script>
+        <script type="module" src="http://localhost:3000/static/src/js/main.js"></script>
+        <link rel="stylesheet" href="http://localhost:3000/static/src/css/main.css">
+    {% else %}
+        <!-- CSS -->
+        <link href="{% static 'dist/css/main.css' %}" rel="stylesheet">
+    {% endif %}
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- JavaScript Libs via CDN (desenvolvimento) -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
@@ -15,7 +25,7 @@
     
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-50 dark:bg-background text-gray-800 dark:text-text-base font-sans">
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
     
     <!-- Navigation -->
     {% include 'base/navbar.html' %}
@@ -28,8 +38,10 @@
     <!-- Footer -->
     {% include 'base/footer.html' %}
     
-    <!-- JavaScript -->
-    <script src="{% static 'dist/js/main.js' %}"></script>
+    {% if not debug %}
+        <!-- JavaScript -->
+        <script src="{% static 'dist/js/main.js' %}"></script>
+    {% endif %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>

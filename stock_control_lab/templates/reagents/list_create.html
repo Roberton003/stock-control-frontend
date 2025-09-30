@@ -1,199 +1,304 @@
 {% extends 'base/base.html' %}
-{% load static %}
 
-{% block title %}Gestão de Reagentes{% endblock %}
+{% block title %}Produtos - Sistema de Gestão{% endblock %}
 
 {% block content %}
-<div 
-    class="container mx-auto p-4 md:p-8" 
-    x-data="reagentManager()"
-    x-init="init()"
->
-    <h1 class="text-3xl font-bold mb-6 text-text-heading">Gestão de Reagentes</h1>
-
-    <!-- Feedback Messages -->
-    <div x-show="successMessage" class="alert alert-success" role="alert">
-        <span x-text="successMessage"></span>
-    </div>
-    <div x-show="errorMessage" class="alert alert-danger" role="alert">
-        <span x-text="errorMessage"></span>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-lg">
+        <div class="p-5 border-b">
+            <div class="flex items-center">
+                <div class="bg-blue-600 w-10 h-10 rounded flex items-center justify-center">
+                    <i class="fas fa-flask text-white"></i>
+                </div>
+                <span class="ml-3 text-xl font-bold text-gray-800">LabStock Control</span>
+            </div>
+        </div>
         
-        <!-- Reagent List -->
-        <div class="lg:col-span-2 card">
-            <h2 class="dashboard-widget-title">Reagentes Cadastrados</h2>
-            <div x-show="isLoading" class="text-center p-4">
-                <p class="text-text-muted">Carregando reagentes...</p>
-            </div>
-            <div x-show="!isLoading && reagents.length === 0" class="text-center p-4">
-                <p class="text-text-muted">Nenhum reagente encontrado.</p>
-            </div>
-            <div x-show="!isLoading && reagents.length > 0" class="table-wrapper">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>SKU</th>
-                            <th>Estoque Mín.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template x-for="reagent in reagents" :key="reagent.id">
-                            <tr>
-                                <td x-text="reagent.name"></td>
-                                <td x-text="reagent.sku"></td>
-                                <td x-text="reagent.min_stock_level"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+        <nav class="mt-5 px-3">
+            <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-home mr-3"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'produto-list-create' %}" class="flex items-center px-4 py-3 bg-blue-50 text-blue-600 rounded-lg mb-1">
+                <i class="fas fa-box mr-3"></i>
+                <span class="font-medium">Produtos</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-boxes mr-3"></i>
+                <span>Estoque</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-users mr-3"></i>
+                <span>Fornecedores</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-shopping-cart mr-3"></i>
+                <span>Movimentações</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-file-alt mr-3"></i>
+                <span>Relatórios</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                <i class="fas fa-cog mr-3"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+        
+        <div class="absolute bottom-0 w-64 p-4 border-t">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 text-white">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="font-medium">Versão Pro</div>
+                        <div class="text-xs opacity-80 mt-1">Acesse mais recursos</div>
+                    </div>
+                    <button class="bg-white text-blue-600 text-xs px-3 py-1 rounded">Atualizar</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Create Reagent Form -->
-        <div class="lg:col-span-1 card">
-            <h2 class="dashboard-widget-title">Cadastrar Novo Reagente</h2>
-            <form @submit.prevent="saveReagent" class="space-y-4">
-                <div>
-                    <label for="name" class="form-label">Nome</label>
-                    <input type="text" id="name" x-model="newReagent.name" class="form-input" required>
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-gray-800">Produtos</h1>
                 </div>
-                <div>
-                    <label for="sku" class="form-label">SKU</label>
-                    <input type="text" id="sku" x-model="newReagent.sku" class="form-input" required>
-                </div>
-                <div>
-                    <label for="category" class="form-label">Categoria</label>
-                    <select id="category" x-model="newReagent.category" class="form-select" required>
-                        <option value="">Selecione...</option>
-                        <template x-for="category in categories" :key="category.id">
-                            <option :value="category.id" x-text="category.name"></option>
-                        </template>
-                    </select>
-                </div>
-                <div>
-                    <label for="supplier" class="form-label">Fornecedor</label>
-                    <select id="supplier" x-model="newReagent.supplier" class="form-select" required>
-                        <option value="">Selecione...</option>
-                        <template x-for="supplier in suppliers" :key="supplier.id">
-                            <option :value="supplier.id" x-text="supplier.name"></option>
-                        </template>
-                    </select>
-                </div>
-                <div>
-                    <label for="min_stock_level" class="form-label">Nível Mínimo de Estoque</label>
-                    <input type="number" step="0.01" id="min_stock_level" x-model="newReagent.min_stock_level" class="form-input" required>
-                </div>
-                <div class="pt-2">
-                    <button type="submit" class="btn btn-primary w-full">
-                        <span x-show="!isSaving">Cadastrar Reagente</span>
-                        <span x-show="isSaving">Salvando...</span>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Pesquisar produtos..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                        <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                    </div>
+                    
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Novo Produto
                     </button>
+                    
+                    <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                            <i class="fas fa-user text-gray-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">{{ user.get_full_name|default:user.username }}</span>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="flex-1 overflow-y-auto p-6">
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-blue-100 rounded-lg mr-4">
+                            <i class="fas fa-boxes text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Total de Produtos</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">142</p>
+                            <p class="text-green-500 text-xs flex items-center mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i> 5 novos este mês
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-green-100 rounded-lg mr-4">
+                            <i class="fas fa-tags text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Categorias</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">24</p>
+                            <p class="text-green-500 text-xs flex items-center mt-1">
+                                <i class="fas fa-plus mr-1"></i> 2 adicionadas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-purple-100 rounded-lg mr-4">
+                            <i class="fas fa-users text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">Fornecedores</p>
+                            <p class="text-2xl font-bold text-gray-800 mt-1">18</p>
+                            <p class="text-green-500 text-xs flex items-center mt-1">
+                                <i class="fas fa-check mr-1"></i> Ativos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="px-6 py-4 border-b flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-800">Lista de Produtos</h3>
+                    <div class="flex space-x-2">
+                        <button class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded">
+                            <i class="fas fa-filter mr-1"></i> Filtrar
+                        </button>
+                        <button class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+                            <i class="fas fa-download mr-1"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estoque</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço Unitário</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center mr-3">
+                                            <i class="fas fa-vial text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Ácido Clorídrico 37%</div>
+                                            <div class="text-xs text-gray-500">REF: HCL-001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Reagentes</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">4.850 mL</div>
+                                    <div class="text-xs text-gray-500">Mín: 1.000 mL</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 0,15/mL</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Normal
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Editar</a>
+                                    <a href="#" class="text-gray-600 hover:text-gray-900">Ver</a>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-yellow-100 rounded flex items-center justify-center mr-3">
+                                            <i class="fas fa-vial text-yellow-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Etanol 95%</div>
+                                            <div class="text-xs text-gray-500">REF: ETOH-95</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Soluções</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">245 mL</div>
+                                    <div class="text-xs text-gray-500">Mín: 500 mL</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 0,80/mL</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Baixo Estoque
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Editar</a>
+                                    <a href="#" class="text-gray-600 hover:text-gray-900">Ver</a>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-red-100 rounded flex items-center justify-center mr-3">
+                                            <i class="fas fa-vial text-red-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Sulfato de Cobre</div>
+                                            <div class="text-xs text-gray-500">REF: CUSO4-002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sais</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">1.200 g</div>
+                                    <div class="text-xs text-gray-500">Mín: 500 g</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 0,45/g</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Normal
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Editar</a>
+                                    <a href="#" class="text-gray-600 hover:text-gray-900">Ver</a>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center mr-3">
+                                            <i class="fas fa-vial text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Hidróxido de Sódio</div>
+                                            <div class="text-xs text-gray-500">REF: NAOH-10</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Bases</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">950 g</div>
+                                    <div class="text-xs text-gray-500">Mín: 1.000 g</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ 0,65/g</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Baixo Estoque
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">Editar</a>
+                                    <a href="#" class="text-gray-600 hover:text-gray-900">Ver</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="px-6 py-4 bg-gray-50 border-t flex justify-between items-center">
+                    <div class="text-sm text-gray-700">
+                        Mostrando 4 de 142 registros
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300">Anterior</button>
+                        <button class="px-3 py-1 rounded bg-blue-600 text-white">1</button>
+                        <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300">2</button>
+                        <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300">3</button>
+                        <button class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300">Próximo</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    function reagentManager() {
-        return {
-            reagents: [],
-            categories: [],
-            suppliers: [],
-            newReagent: {
-                name: '',
-                sku: '',
-                category: '',
-                supplier: '',
-                min_stock_level: 0,
-            },
-            isLoading: true,
-            isSaving: false,
-            successMessage: '',
-            errorMessage: '',
-
-            async init() {
-                this.isLoading = true;
-                await Promise.all([
-                    this.fetchReagents(),
-                    this.fetchCategories(),
-                    this.fetchSuppliers()
-                ]);
-                this.isLoading = false;
-            },
-
-            async fetchReagents() {
-                try {
-                    const response = await fetch("{% url 'produto-list-create' %}");
-                    this.reagents = await response.json();
-                } catch (error) {
-                    this.errorMessage = 'Falha ao carregar reagentes.';
-                    console.error(error);
-                }
-            },
-
-            async fetchCategories() {
-                try {
-                    const response = await fetch("{% url 'category-list-create' %}");
-                    this.categories = await response.json();
-                } catch (error) {
-                    this.errorMessage = 'Falha ao carregar categorias.';
-                    console.error(error);
-                }
-            },
-
-            async fetchSuppliers() {
-                try {
-                    const response = await fetch("{% url 'supplier-list-create' %}");
-                    this.suppliers = await response.json();
-                } catch (error) {
-                    this.errorMessage = 'Falha ao carregar fornecedores.';
-                    console.error(error);
-                }
-            },
-
-            async saveReagent() {
-                this.isSaving = true;
-                this.successMessage = '';
-                this.errorMessage = '';
-
-                try {
-                    const response = await fetch("{% url 'produto-list-create' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        },
-                        body: JSON.stringify(this.newReagent),
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(JSON.stringify(errorData));
-                    }
-
-                    this.successMessage = 'Reagente cadastrado com sucesso!';
-                    this.resetForm();
-                    await this.fetchReagents(); // Refresh list
-
-                } catch (error) {
-                    this.errorMessage = 'Erro ao salvar reagente. Verifique os campos.';
-                    console.error('Save error:', error);
-                } finally {
-                    this.isSaving = false;
-                    setTimeout(() => { this.successMessage = ''; this.errorMessage = ''; }, 5000);
-                }
-            },
-
-            resetForm() {
-                this.newReagent = { name: '', sku: '', category: '', supplier: '', min_stock_level: 0 };
-            }
-        }
-    }
-</script>
 {% endblock %}
