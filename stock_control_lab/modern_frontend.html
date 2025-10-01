@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabStock Control - Sistema de Controle de Estoque Moderno</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+    
+    <!-- Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',    // Modern indigo
+                        secondary: '#8b5cf6',  // Modern violet
+                        accent: '#06b6d4',     // Modern cyan
+                        light: '#f9fafb',
+                        dark: '#111827',
+                        modern: {
+                            primary: '#6366f1',
+                            secondary: '#8b5cf6',
+                            accent: '#06b6d4',
+                            success: '#10b981',
+                            warning: '#f59e0b',
+                            danger: '#ef4444',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .sidebar {
+            width: 260px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            .sidebar:hover {
+                width: 260px;
+            }
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-modern-primary p-2 rounded-lg">
+                    <i class="fas fa-flask text-white text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-modern-primary to-modern-secondary bg-clip-text text-transparent">
+                    LabStock Control
+                </h1>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Buscar produtos..." 
+                        class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-modern-primary focus:border-transparent"
+                    >
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                
+                <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-bell"></i>
+                </button>
+                
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-modern-primary flex items-center justify-center text-white">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="hidden md:inline">Analista</span>
+                </div>
+                
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-white dark:bg-gray-800 shadow-md h-[calc(100vh-64px)] fixed top-16 overflow-y-auto">
+            <nav class="p-4">
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg bg-modern-primary text-white">
+                            <i class="fas fa-home mr-3"></i>
+                            <span class="flex-1">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-vial mr-3"></i>
+                            <span class="flex-1">Reagentes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-boxes mr-3"></i>
+                            <span class="flex-1">Lotes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-clipboard-list mr-3"></i>
+                            <span class="flex-1">Requisições</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-chart-bar mr-3"></i>
+                            <span class="flex-1">Relatórios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-cog mr-3"></i>
+                            <span class="flex-1">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content flex-1 md:ml-64 p-6">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Dashboard</h2>
+                <p class="text-gray-600 dark:text-gray-400">Visão geral do estoque do laboratório</p>
+            </div>
+
+            <!-- Dashboard Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Valor Total em Estoque</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">R$ 42.560,00</h3>
+                        </div>
+                        <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                            <i class="fas fa-coins text-modern-primary text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-500 text-sm font-medium flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 12% este mês
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Produtos Abaixo do Mínimo</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">8</h3>
+                        </div>
+                        <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                            <i class="fas fa-exclamation-triangle text-modern-warning text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-red-500 text-sm font-medium flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 2 novos
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Lotes Próximos ao Vencimento</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">3</h3>
+                        </div>
+                        <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                            <i class="fas fa-hourglass-half text-modern-danger text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-red-500 text-sm font-medium flex items-center">
+                            <i class="fas fa-calendar mr-1"></i> 7 dias
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Requisições Pendentes</p>
+                            <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">5</h3>
+                        </div>
+                        <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                            <i class="fas fa-clipboard-list text-modern-success text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-500 text-sm font-medium flex items-center">
+                            <i class="fas fa-check mr-1"></i> 3 processadas
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Consumption Chart -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Consumo dos Últimos 6 Meses</h2>
+                        <div class="flex space-x-2">
+                            <button class="text-sm px-3 py-1 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Mês</button>
+                            <button class="text-sm px-3 py-1 rounded-lg bg-modern-primary text-white">Ano</button>
+                        </div>
+                    </div>
+                    <div class="h-64 flex items-end justify-between pt-4 space-x-2">
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 70%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jan</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 45%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Fev</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 60%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mar</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 80%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Abr</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 65%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mai</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 90%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jun</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Expiry Status Chart -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-6 text-gray-800 dark:text-white">Status de Validade dos Lotes</h2>
+                    <div class="flex flex-col items-center">
+                        <div class="relative w-48 h-48 mb-6">
+                            <div class="absolute w-full h-full rounded-full" 
+                                 style="background: conic-gradient(#10b981 0% 60%, #f59e0b 60% 85%, #ef4444 85% 100%)"></div>
+                            <div class="absolute w-32 h-32 bg-white dark:bg-gray-700 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                                <p class="text-2xl font-bold text-gray-800 dark:text-white">120</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Lotes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 w-full max-w-xs">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-modern-success rounded mr-3"></div>
+                                <span class="text-gray-700 dark:text-gray-300">Válidos (72)</span>
+                                <span class="ml-auto text-gray-600 dark:text-gray-400">60%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-modern-warning rounded mr-3"></div>
+                                <span class="text-gray-700 dark:text-gray-300">Vencem em 90 dias (24)</span>
+                                <span class="ml-auto text-gray-600 dark:text-gray-400">20%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-modern-danger rounded mr-3"></div>
+                                <span class="text-gray-700 dark:text-gray-300">Vencidos (24)</span>
+                                <span class="ml-auto text-gray-600 dark:text-gray-400">20%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Movimentações Recentes</h2>
+                    <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                        <i class="fas fa-sync-alt mr-2"></i> Atualizar
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantidade</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Usuário</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-vial text-modern-primary"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white">Ácido Clorídrico 37%</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">HCL-001-LT001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Entrada
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">5000 mL</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dr. Silva</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                                        Processado
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 bg-modern-warning bg-opacity-10 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-vial text-modern-warning"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white">Etanol 95%</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">ETOH-95-LT045</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                                        Retirada
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">250 mL</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">14/06/2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dra. Costa</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                                        Processado
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 bg-modern-danger bg-opacity-10 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-vial text-modern-danger"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white">Sulfato de Cobre</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">CUSO4-002-LT012</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                                        Ajuste
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">-500 g</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">14/06/2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dr. Oliveira</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Confirmado
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-vial text-modern-primary"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white">Hidróxido de Sódio</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">NAOH-10-LT023</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                                        Retirada
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1000 g</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">13/06/2025</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dr. Santos</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                                        Processado
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                    <div class="text-sm text-gray-700 dark:text-gray-300">
+                        Mostrando <span class="font-medium">1</span> a <span class="font-medium">4</span> de <span class="font-medium">20</span> resultados
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Anterior</button>
+                        <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+                        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+                        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+                        <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                        <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full mb-2">
+                            <i class="fas fa-plus text-modern-primary text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Cadastrar Produto</span>
+                    </button>
+                    <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                        <div class="bg-modern-success bg-opacity-10 p-3 rounded-full mb-2">
+                            <i class="fas fa-arrow-down text-modern-success text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Registrar Entrada</span>
+                    </button>
+                    <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                        <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full mb-2">
+                            <i class="fas fa-arrow-up text-modern-danger text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Registrar Saída</span>
+                    </button>
+                    <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                        <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full mb-2">
+                            <i class="fas fa-exclamation-triangle text-modern-warning text-xl"></i>
+                        </div>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Alertas</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        © 2025 LabStock Control. Todos os direitos reservados.
+                    </p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-modern-primary dark:hover:text-modern-primary transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-modern-primary dark:hover:text-modern-primary transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-modern-primary dark:hover:text-modern-primary transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 md:hidden z-10 transform translate-y-full transition-transform">
+        <div class="flex justify-around py-2">
+            <button class="text-modern-primary p-2">
+                <i class="fas fa-home text-xl"></i>
+            </button>
+            <button class="text-gray-500 p-2">
+                <i class="fas fa-vial text-xl"></i>
+            </button>
+            <button class="text-gray-500 p-2">
+                <i class="fas fa-boxes text-xl"></i>
+            </button>
+            <button class="text-gray-500 p-2">
+                <i class="fas fa-clipboard-list text-xl"></i>
+            </button>
+            <button class="text-gray-500 p-2">
+                <i class="fas fa-cog text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
+            
+            // Update icon
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            
+            if (htmlElement.classList.contains('dark')) {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            }
+        });
+        
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-y-full');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.add('translate-y-full');
+            }
+        });
+        
+        // Initialize sidebar to show full width on hover for desktop
+        if (window.innerWidth > 768) {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.addEventListener('mouseenter', () => {
+                sidebar.style.width = '260px';
+            });
+            
+            sidebar.addEventListener('mouseleave', () => {
+                sidebar.style.width = '70px';
+            });
+        }
+    </script>
+</body>
+</html>
