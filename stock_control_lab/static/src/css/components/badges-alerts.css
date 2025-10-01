@@ -14,11 +14,11 @@
 }
 
 .badge-secondary {
-  @apply bg-gray-500/20 text-text-muted;
+  @apply bg-gray-500/20 text-gray-500 dark:text-gray-400;
 }
 
 .badge-success {
-  @apply bg-accent-green/20 text-accent-green;
+  @apply bg-green-500/20 text-green-500;
 }
 
 .badge-warning {
@@ -26,7 +26,7 @@
 }
 
 .badge-danger {
-  @apply bg-accent-red/20 text-accent-red;
+  @apply bg-red-500/20 text-red-500;
 }
 
 .badge-info {
@@ -53,7 +53,7 @@
 }
 
 .alert-success {
-  @apply bg-accent-green/10 text-accent-green border-accent-green/30;
+  @apply bg-green-500/10 text-green-500 border-green-500/30;
 }
 
 .alert-warning {
@@ -61,7 +61,7 @@
 }
 
 .alert-danger {
-  @apply bg-accent-red/10 text-accent-red border-accent-red/30;
+  @apply bg-red-500/10 text-red-500 border-red-500/30;
 }
 
 .alert-info {

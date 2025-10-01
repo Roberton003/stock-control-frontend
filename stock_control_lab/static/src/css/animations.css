@@ -359,15 +359,15 @@
 }
 
 .feedback-animation--positive {
-  @apply bg-success-50 border-success-200 dark:bg-success-900/20 dark:border-success-800;
+  @apply bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800;
 }
 
 .feedback-animation--negative {
-  @apply bg-danger-50 border-danger-200 dark:bg-danger-900/20 dark:border-danger-800;
+  @apply bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800;
 }
 
 .feedback-animation--warning {
-  @apply bg-warning-50 border-warning-200 dark:bg-warning-900/20 dark:border-warning-800;
+  @apply bg-yellow-50 border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800;
 }
 
 .feedback-animation--info {

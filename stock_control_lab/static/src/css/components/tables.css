@@ -1,14 +1,14 @@
 @layer components {
   .table-wrapper {
-    @apply overflow-x-auto bg-card-background rounded-lg shadow;
+    @apply overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow;
   }
 
   .table {
-    @apply w-full text-sm text-left text-text-muted;
+    @apply w-full text-sm text-left text-gray-500 dark:text-gray-400;
   }
 
   .table thead {
-    @apply text-xs text-text-heading uppercase bg-gray-700 dark:bg-card-background border-b border-border-color;
+    @apply text-xs text-gray-900 dark:text-white uppercase bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700;
   }
 
   .table th,
@@ -17,7 +17,7 @@
   }
 
   .table tbody tr {
-    @apply border-b dark:border-border-color;
+    @apply border-b dark:border-gray-700;
   }
 
   .table tbody tr:last-of-type {

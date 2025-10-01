@@ -5,9 +5,19 @@ import './modern_functions.js';
 
 // Verificar se o DOM está pronto
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            initializeApp();
+        } catch (e) {
+            console.error("Error during initialization:", e);
+        }
+    });
 } else {
-    initializeApp();
+    try {
+        initializeApp();
+    } catch (e) {
+        console.error("Error during initialization:", e);
+    }
 }
 
 // Função de inicialização principal
