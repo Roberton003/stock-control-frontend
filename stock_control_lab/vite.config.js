@@ -55,14 +55,13 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      '/static': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-        secure: false,
-      },
+
     },
     // Abrir navegador automaticamente
     open: true,
+    watch: {
+      ignored: ['**/venv/**']
+    }
   },
   
   // Configurações de resolução de módulos
@@ -81,20 +80,7 @@ export default defineConfig({
   },
   
   // Configurações de plugins
-  plugins: [
-    // Plugin para lidar com arquivos CSS
-    {
-      name: 'css-post-process',
-      enforce: 'post',
-      transformIndexHtml(html) {
-        // Adicionar links para CSS gerados
-        return html.replace(
-          '</head>',
-          `  <link rel="stylesheet" href="/static/dist/assets/styles-.css">\n  </head>`
-        );
-      },
-    },
-  ],
+  plugins: [],
   
   // Configurações de otimização
   optimizeDeps: {
