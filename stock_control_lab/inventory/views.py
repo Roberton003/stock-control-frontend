@@ -17,7 +17,7 @@ from .services import approve_requisition, calculate_total_stock_value, get_cons
 
 # Frontend Views
 class ProdutoListView(TemplateView):
-    template_name = 'reagents/list_create.html'
+    template_name = 'produtos_list.html'
 
 class ProdutoDetailView(DetailView):
     model = Produto
@@ -32,16 +32,16 @@ class ProdutoDetailView(DetailView):
         return context
 
 class RequisitionListView(TemplateView):
-    template_name = 'requisitions/list_create.html'
+    template_name = 'requisitions_list.html'
 
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'
 
 class StockLotCreateView(TemplateView):
-    template_name = 'stock_lots/create_form.html'
+    template_name = 'stock_lots_create.html'
 
 class MovimentacaoEstoqueWithdrawView(TemplateView):
-    template_name = 'stock_movements/withdraw_form.html'
+    template_name = 'movimentacoes_withdraw.html'
 
 
 # API Views
