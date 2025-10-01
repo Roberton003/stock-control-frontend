@@ -121,3 +121,7 @@ dmypy.json
 cython_debug/
 venv/
 node_modules/
+venv/
+node_modules/
+*.pyc
+__pycache__/
