@@ -15,12 +15,6 @@ export default defineConfig({
       input: {
         // Entradas principais
         main: resolve(__dirname, 'static/src/js/main.js'),
-        dashboard: resolve(__dirname, 'static/src/js/dashboard.js'),
-        products: resolve(__dirname, 'static/src/js/products.js'),
-        lots: resolve(__dirname, 'static/src/js/lots.js'),
-        movements: resolve(__dirname, 'static/src/js/movements.js'),
-        requisitions: resolve(__dirname, 'static/src/js/requisitions.js'),
-        reports: resolve(__dirname, 'static/src/js/reports.js'),
         // Estilos principais
         styles: resolve(__dirname, 'static/src/css/main.css'),
       },

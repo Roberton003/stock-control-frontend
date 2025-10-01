@@ -10,7 +10,7 @@
 
 /* Variantes de badges */
 .badge-primary {
-  @apply bg-primary-blue/20 text-primary-blue;
+  @apply bg-blue-500/20 text-blue-500;
 }
 
 .badge-secondary {

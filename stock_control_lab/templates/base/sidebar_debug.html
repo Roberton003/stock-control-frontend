@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+
+{% block extra_head %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+.btn-primary { background-color: #3b82f6; color: white; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; border: none; cursor: pointer; }
+.btn-secondary { background-color: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; }
+.form-checkbox { margin-right: 0.5rem; border-radius: 0.125rem; border: 1px solid #d1d5db; background-color: #fff; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-lg">
+        <div class="flex items-center p-5 border-b">
+            <div class="bg-blue-600 w-10 h-10 rounded flex items-center justify-center">
+                <i class="fas fa-flask text-white"></i>
+            </div>
+            <span class="ml-3 text-xl font-bold text-gray-800">LabStock Control</span>
+        </div>
+
+        <nav class="mt-5 px-3">
+            <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-home mr-3"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            <a href="{% url 'produto-list' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-box mr-3"></i>
+                <span>Produtos</span>
+            </a>
+            <a href="{% url 'requisition-list' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-clipboard-list mr-3"></i>
+                <span>Requisições</span>
+            </a>
+            <a href="{% url 'stocklot-create' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-boxes mr-3"></i>
+                <span>Lotes</span>
+            </a>
+            <a href="{% url 'movimentacao-withdraw' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                <i class="fas fa-exchange-alt mr-3"></i>
+                <span>Movimentações</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1">
+        <h1 class="p-6 text-2xl font-bold text-gray-800">Página de Teste</h1>
+        <div class="p-6">
+            {% block page_content %}
+            <!-- Content will be here -->
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

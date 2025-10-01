@@ -1,0 +1,206 @@
+{% extends 'base/sidebar_debug.html' %}
+
+{% block title %}Retirada de Estoque - Sistema de Gestão{% endblock %}
+
+{% block page_content %}
+<div class="bg-white p-6 rounded-lg shadow">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Retirada de Estoque</h1>
+    <p class="text-gray-600 mb-4">Retirada de produtos do estoque</p>
+    <button class="btn-primary">Retirar Produto</button>
+</div>
+{% endblock %}
+<!-- Page Title -->
+<h1 class="text-2xl font-bold text-gray-800 mb-6">Retirada de Estoque</h1>
+
+<!-- Stock Status Alert -->
+<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+    <div class="flex">
+        <div class="flex-shrink-0">
+            <i class="fas fa-info-circle text-blue-400"></i>
+        </div>
+        <div class="ml-3">
+            <p class="text-sm text-blue-700">
+                <strong>Atenção:</strong> Certifique-se de que há estoque suficiente disponível antes da retirada.
+                A retirada será feita seguindo a ordem FIFO (First In, First Out).
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Withdrawal Form -->
+    <div class="lg:col-span-2">
+        <form class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Informações da Retirada</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Product Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Produto</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <option>Selecionar produto...</option>
+                        <option>Ácido Clorídrico 37% - LOT-2025-045 (45 unidades disponíveis)</option>
+                        <option>Etanol 95% - LOT-2025-044 (12 unidades disponíveis)</option>
+                        <option>Sulfato de Cobre - LOT-2025-043 (0 unidades disponível)</option>
+                        <option>Hidróxido de Sódio - LOT-2025-042 (18 unidades disponíveis)</option>
+                    </select>
+                </div>
+
+                <!-- Quantity -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Quantidade</label>
+                    <input type="number" min="0.01" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Digite a quantidade" required>
+                    <div class="mt-1 text-xs text-gray-500">Usar ponto decimal (ex: 1.5)</div>
+                </div>
+
+                <!-- Unit -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unidade</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>g (gramas)</option>
+                        <option>kg (quilogramas)</option>
+                        <option>mg (miligramas)</option>
+                        <option>L (litros)</option>
+                        <option>mL (mililitros)</option>
+                        <option>uL (microlitros)</option>
+                        <option>unidade(s)</option>
+                    </select>
+                </div>
+
+                <!-- User -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Solicitante</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Nome do solicitante" value="{{ user.get_full_name|default:user.username }}" readonly>
+                </div>
+            </div>
+
+            <!-- Location/Storage -->
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Localização</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+                    <option>Selecionar localização...</option>
+                    <option>Armário A1 - Congelador -70°C</option>
+                    <option>Armário B2 - Ambiente 18-25°C</option>
+                    <option>Estante C3 - Refrigerado 4-8°C</option>
+                    <option>Depósito Principal - Ambiente</option>
+                </select>
+            </div>
+
+            <!-- Purpose -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Finalidade</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Selecionar finalidade...</option>
+                    <option>Análise Laboratorial</option>
+                    <option>Pesquisa Científica</option>
+                    <option>Treinamento</option>
+                    <option>Cuidado e Manutenção</option>
+                    <option>Limpeza e Descontaminação</option>
+                    <option>Uso Terapêutico</option>
+                    <option>Outro</option>
+                </select>
+            </div>
+
+            <!-- Notes -->
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Observações</label>
+                <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Informações adicionais sobre a retirada..."></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-4 mt-8">
+                <button type="button" class="btn-secondary">Cancelar</button>
+                <button type="submit" class="btn-primary flex items-center">
+                    <i class="fas fa-minus mr-2"></i> Confirmar Retirada
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Sidebar Info -->
+    <div class="space-y-6">
+        <!-- Stock Info Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">Disponibilidade Atual</h3>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">Ácido Clorídrico 37%</div>
+                    <div class="text-lg font-bold text-green-600">45 un</div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">Etanol 95%</div>
+                    <div class="text-lg font-bold text-yellow-600">12 un</div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">Sulfato de Cobre</div>
+                    <div class="text-lg font-bold text-red-600">0 un</div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">Hidróxido de Sódio</div>
+                    <div class="text-lg font-bold text-green-600">18 un</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Safety Guidelines -->
+        <div class="bg-yellow-50 rounded-lg p-6 border border-yellow-200">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-shield-alt text-yellow-600"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-yellow-900">Orientações de Segurança</h4>
+            </div>
+            <ul class="text-sm text-yellow-800 space-y-2">
+                <li>• Sempre verifique a disponibilidade antes da retirada</li>
+                <li>• Use equipamentos de proteção adequados</li>
+                <li>• Trabalhe em local ventilado</li>
+                <li>• Registre todas as retiradas imediatamente</li>
+                <li>• Mantenha registros precisos para auditoria</li>
+            </ul>
+        </div>
+
+        <!-- Recent Withdrawals -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Retiradas Recentes</h4>
+            <div class="space-y-3">
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-100">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900">500 mL Ácido Sulfúrico</p>
+                        <p class="text-xs text-gray-500">Dr. Maria Silva • 2h atrás</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-100">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900">1 L Etanol 95%</p>
+                        <p class="text-xs text-gray-500">João Pereira • 5h atrás</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900">100 g Hidróxido de Sódio</p>
+                        <p class="text-xs text-gray-500">Ana Costa • 1 dia atrás</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

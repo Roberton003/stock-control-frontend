@@ -127,7 +127,7 @@
 }
 
 .lab-component-header {
-  @apply bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-700 dark:to-gray-800 px-4 py-3 font-medium;
+  @apply bg-gradient-to-r from-primary-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 px-4 py-3 font-medium;
 }
 
 /* Do's and Don'ts */

@@ -366,11 +366,11 @@
 }
 
 .form-action-button--success {
-  @apply btn-success;
+  @apply btn-primary;
 }
 
 .form-action-button--warning {
-  @apply btn-warning;
+  @apply btn-secondary;
 }
 
 .form-action-button--danger {
