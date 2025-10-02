@@ -1,191 +1,474 @@
-{% extends 'base/base.html' %}
+{% extends 'base/modern_base.html' %}
 {% load static %}
 
-{% block title %}Gestão de Requisições{% endblock %}
+{% block title %}Requisições{% endblock %}
 
 {% block content %}
-<div 
-    class="container mx-auto p-4 md:p-8"
-    x-data="requisitionManager()"
-    x-init="init()"
->
-    <h1 class="text-3xl font-bold mb-6 text-text-heading">Gestão de Requisições</h1>
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Requisições</h2>
+    <p class="text-gray-600 dark:text-gray-400">Gestão de requisições de produtos</p>
+</div>
 
-    <!-- Feedback Messages -->
-    <div x-show="feedback.message" 
-         :class="{ 'alert alert-success': feedback.type === 'success', 'alert alert-danger': feedback.type === 'error' }"
-         role="alert">
-        <span x-text="feedback.message"></span>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Requisition List -->
-        <div class="lg:col-span-2 card">
-            <h2 class="dashboard-widget-title">Requisições</h2>
-            <div x-show="isLoading" class="text-center p-4 text-text-muted">Carregando...</div>
-            <div x-show="!isLoading && requisitions.length === 0" class="text-center p-4 text-text-muted">Nenhuma requisição encontrada.</div>
-            
-            <div x-show="!isLoading && requisitions.length > 0" class="table-wrapper">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Reagente</th>
-                            <th>Qtd.</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template x-for="req in requisitions" :key="req.id">
-                            <tr>
-                                <td x-text="req.reagent_name"></td>
-                                <td x-text="req.quantity"></td>
-                                <td>
-                                    <span class="badge"
-                                          :class="{
-                                            'badge-status-pending': req.status === 'Pendente',
-                                            'badge-status-approved': req.status === 'Aprovada',
-                                            'badge-status-rejected': req.status === 'Rejeitada',
-                                          }"
-                                          x-text="req.status">
-                                    </span>
-                                </td>
-                                <td>
-                                    <template x-if="req.status === 'Pendente'">
-                                        <div class="flex items-center space-x-2">
-                                            <button @click="processRequisition(req.id, 'approve')" class="btn btn-sm btn-primary">Aprovar</button>
-                                            <button @click="processRequisition(req.id, 'reject')" class="btn btn-sm btn-secondary">Rejeitar</button>
-                                        </div>
-                                    </template>
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Total Requisições</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">67</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-file-contract text-modern-primary text-xl"></i>
             </div>
         </div>
+        <div class="mt-4">
+            <span class="text-blue-500 text-sm font-medium flex items-center">
+                <i class="fas fa-clock mr-1"></i> Este mês
+            </span>
+        </div>
+    </div>
 
-        <!-- Create Requisition Form -->
-        <div class="lg:col-span-1 card">
-            <h2 class="dashboard-widget-title">Nova Requisição</h2>
-            <form @submit.prevent="saveRequisition" class="space-y-4">
-                <div>
-                    <label for="reagent" class="form-label">Reagente</label>
-                    <select id="reagent" x-model="newRequisition.reagent" class="form-select" required>
-                        <option value="">Selecione...</option>
-                        <template x-for="reagent in reagents" :key="reagent.id">
-                            <option :value="reagent.id" x-text="reagent.name"></option>
-                        </template>
-                    </select>
-                </div>
-                <div>
-                    <label for="quantity" class="form-label">Quantidade</label>
-                    <input type="number" step="0.01" id="quantity" x-model="newRequisition.quantity" class="form-input" required>
-                </div>
-                <div class="pt-2">
-                    <button type="submit" class="btn btn-primary w-full">
-                        <span x-show="!isSaving">Criar Requisição</span>
-                        <span x-show="isSaving">Enviando...</span>
-                    </button>
-                </div>
-            </form>
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Pendentes</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">12</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-hourglass-half text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-yellow-500 text-sm font-medium flex items-center">
+                <i class="fas fa-exclamation-triangle mr-1"></i> Necessitam aprovação
+            </span>
+        </div>
+    </div>
+
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Aprovadas</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">45</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-check-circle text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 67% de aprovação
+            </span>
+        </div>
+    </div>
+
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Rejeitadas</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">10</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-times-circle text-modern-danger text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> 15% rejeitadas
+            </span>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
-<script>
-function requisitionManager() {
-    return {
-        requisitions: [],
-        reagents: [],
-        newRequisition: { reagent: '', quantity: 1, requester: {{ request.user.pk }} },
-        isLoading: true,
-        isSaving: false,
-        feedback: { message: '', type: '' },
+<!-- Action Buttons -->
+<div class="flex justify-between items-center mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Lista de Requisições</h3>
+    <div class="flex space-x-3">
+        <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+        </button>
+        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Atualizar
+        </button>
+        <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-plus mr-2"></i> Nova Requisição
+        </button>
+    </div>
+</div>
 
-        async init() {
-            this.isLoading = true;
-            await Promise.all([this.fetchRequisitions(), this.fetchReagents()]);
-            this.isLoading = false;
-        },
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Solicitante</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produto</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantidade</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prioridade</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">#REQ-2025-001</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-modern-primary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-modern-primary"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Dr. Maria Silva</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">Analista Sênior</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900 dark:text-white">Ácido Sulfúrico</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">H2SO4-001</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">500 mL</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/10/2025</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                            Pendente
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                            Alta
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600">
+                                Aprovar
+                            </button>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600">
+                                Rejeitar
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
 
-        async fetchRequisitions() {
-            try {
-                const response = await fetch("{% url 'requisition-list-create' %}");
-                const data = await response.json();
-                // Fetch reagent names for display
-                for (let req of data) {
-                    const reagent = this.reagents.find(r => r.id === req.reagent);
-                    req.reagent_name = reagent ? reagent.name : 'Desconhecido';
-                }
-                this.requisitions = data;
-            } catch (error) {
-                this.showFeedback('Falha ao carregar requisições.', 'error');
-            }
-        },
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">#REQ-2025-002</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-modern-success bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-modern-success"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">João Pereira</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">Técnico de Laboratório</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900 dark:text-white">Pipetas Automáticas</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">PIP-200-AUTO</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">5 unidades</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">14/10/2025</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Aprovada
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Normal
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-gray-400 cursor-not-allowed">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
 
-        async fetchReagents() {
-            try {
-                const response = await fetch("{% url 'produto-list-create' %}");
-                this.reagents = await response.json();
-            } catch (error) {
-                this.showFeedback('Falha ao carregar reagentes.', 'error');
-            }
-        },
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">#REQ-2025-003</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-modern-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-modern-secondary"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ana Costa</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">Pesquisadora</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900 dark:text-white">Centrífuga Digital</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">CENT-5000-DIG</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1 unidade</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">13/10/2025</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                            Rejeitada
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                            Baixa
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-gray-400 cursor-not-allowed">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
 
-        async saveRequisition() {
-            this.isSaving = true;
-            try {
-                const response = await fetch("{% url 'requisition-list-create' %}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    body: JSON.stringify(this.newRequisition),
-                });
-                if (!response.ok) throw new Error('Falha na requisição');
-                this.showFeedback('Requisição criada com sucesso!', 'success');
-                this.resetForm();
-                await this.fetchRequisitions();
-            } catch (error) {
-                this.showFeedback('Erro ao criar requisição.', 'error');
-            } finally {
-                this.isSaving = false;
-            }
-        },
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">#REQ-2025-004</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-modern-warning bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-modern-warning"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Roberto Lima</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">Coordenador</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900 dark:text-white">Espectrofotômetro UV</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">ESP-UV-2800</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1 unidade</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">12/10/2025</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                            Em Processamento
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                            Média
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        async processRequisition(id, action) {
-            try {
-                const response = await fetch(`/api/v1/requisitions/${id}/action/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    body: JSON.stringify({ action: action }),
-                });
-                if (!response.ok) throw new Error(`Falha ao ${action} a requisição`);
-                this.showFeedback(`Requisição foi ${action === 'approve' ? 'aprovada' : 'rejeitada'}!`, 'success');
-                await this.fetchRequisitions();
-            } catch (error) {
-                this.showFeedback(error.message, 'error');
-            }
-        },
+    <!-- Pagination -->
+    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+        <div class="text-sm text-gray-700 dark:text-gray-300">
+            Mostrando <span class="font-medium">1</span> a <span class="font-medium">4</span> de <span class="font-medium">67</span> requisições
+        </div>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200" disabled>Anterior</button>
+            <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+        </div>
+    </div>
+</div>
 
-        resetForm() {
-            this.newRequisition.reagent = '';
-            this.newRequisition.quantity = 1;
-        },
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Requisition Chart -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Distribuição de Requisições</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Status Distribution -->
+                <div class="flex flex-col items-center">
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-4">Por Status</h4>
+                    <div class="relative w-48 h-48 mb-4">
+                        <div class="absolute w-full h-full rounded-full" 
+                             style="background: conic-gradient(#10b981 0% 40%, #f59e0b 40% 70%, #ef4444 70% 100%)"></div>
+                        <div class="absolute w-32 h-32 bg-white dark:bg-gray-700 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <p class="text-2xl font-bold text-gray-800 dark:text-white">67</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Requisições</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 w-full max-w-xs">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-success rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Aprovadas (45)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-warning rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Pendentes (12)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-danger rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Rejeitadas (10)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trend Chart -->
+                <div>
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-4">Tendência Mensal</h4>
+                    <div class="h-48 flex items-end justify-between pt-4 space-x-2">
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 70%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jan</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 45%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Fev</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 60%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mar</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 80%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Abr</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 65%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mai</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 90%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jun</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        showFeedback(message, type) {
-            this.feedback = { message, type };
-            setTimeout(() => { this.feedback.message = ''; }, 5000);
-        }
-    }
-}
-</script>
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-plus text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Nova Requisição</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-check text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Aprovar Pendentes</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-exclamation-triangle text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Revisar Críticas</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-file-export text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Exportar Relatório</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Requisition Stats -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Estatísticas</h4>
+            <div class="space-y-4">
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Tempo médio de aprovação</span>
+                    <span class="text-gray-800 dark:text-white font-medium">2.4 dias</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Taxa de aprovação</span>
+                    <span class="text-gray-800 dark:text-white font-medium">67%</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Requisições este mês</span>
+                    <span class="text-gray-800 dark:text-white font-medium">23</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Valor total estimado</span>
+                    <span class="text-gray-800 dark:text-white font-medium">R$ 12.540,00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Atividades Recentes</h4>
+            <div class="space-y-3">
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-green-600 dark:text-green-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm text-gray-900 dark:text-white"><strong>João Pereira</strong> aprovou requisição #REQ-2025-002</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">2 horas atrás</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-full flex items-center justify-center">
+                            <i class="fas fa-plus text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm text-gray-900 dark:text-white"><strong>Maria Silva</strong> criou nova requisição</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">4 horas atrás</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                            <i class="fas fa-times text-red-600 dark:text-red-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm text-gray-900 dark:text-white"><strong>Ana Costa</strong> teve requisição rejeitada</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">1 dia atrás</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

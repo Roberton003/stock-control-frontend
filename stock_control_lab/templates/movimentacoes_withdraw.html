@@ -1,25 +1,22 @@
-{% extends 'base/sidebar_debug.html' %}
+{% extends 'base/modern_base.html' %}
+{% load static %}
 
-{% block title %}Retirada de Estoque - Sistema de Gestão{% endblock %}
+{% block title %}Retirada de Estoque{% endblock %}
 
-{% block page_content %}
-<div class="bg-white p-6 rounded-lg shadow">
-    <h1 class="text-2xl font-bold text-gray-800 mb-4">Retirada de Estoque</h1>
-    <p class="text-gray-600 mb-4">Retirada de produtos do estoque</p>
-    <button class="btn-primary">Retirar Produto</button>
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Retirada de Estoque</h2>
+    <p class="text-gray-600 dark:text-gray-400">Retirada de produtos do estoque</p>
 </div>
-{% endblock %}
-<!-- Page Title -->
-<h1 class="text-2xl font-bold text-gray-800 mb-6">Retirada de Estoque</h1>
 
 <!-- Stock Status Alert -->
-<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+<div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 dark:border-blue-700 p-4 mb-6 rounded">
     <div class="flex">
         <div class="flex-shrink-0">
-            <i class="fas fa-info-circle text-blue-400"></i>
+            <i class="fas fa-info-circle text-blue-400 dark:text-blue-300"></i>
         </div>
         <div class="ml-3">
-            <p class="text-sm text-blue-700">
+            <p class="text-sm text-blue-700 dark:text-blue-300">
                 <strong>Atenção:</strong> Certifique-se de que há estoque suficiente disponível antes da retirada.
                 A retirada será feita seguindo a ordem FIFO (First In, First Out).
             </p>
@@ -30,34 +27,34 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Withdrawal Form -->
     <div class="lg:col-span-2">
-        <form class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Informações da Retirada</h2>
+        <form class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Informações da Retirada</h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Product Selection -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Produto</label>
-                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Produto</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" required>
                         <option>Selecionar produto...</option>
-                        <option>Ácido Clorídrico 37% - LOT-2025-045 (45 unidades disponíveis)</option>
-                        <option>Etanol 95% - LOT-2025-044 (12 unidades disponíveis)</option>
-                        <option>Sulfato de Cobre - LOT-2025-043 (0 unidades disponível)</option>
-                        <option>Hidróxido de Sódio - LOT-2025-042 (18 unidades disponíveis)</option>
+                        <option>Ácido Clorídrico 37% - HCL-001 (4500 mL disponível)</option>
+                        <option>Etanol 95% - ETOH-95 (1200 mL disponível)</option>
+                        <option>Sulfato de Cobre - CUSO4-002 (0 g disponível)</option>
+                        <option>Hidróxido de Sódio - NAOH-10 (1800 g disponível)</option>
                     </select>
                 </div>
 
                 <!-- Quantity -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Quantidade</label>
-                    <input type="number" min="0.01" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quantidade</label>
+                    <input type="number" min="0.01" step="0.01" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent"
                            placeholder="Digite a quantidade" required>
-                    <div class="mt-1 text-xs text-gray-500">Usar ponto decimal (ex: 1.5)</div>
+                    <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">Usar ponto decimal (ex: 1.5)</div>
                 </div>
 
                 <!-- Unit -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Unidade</label>
-                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Unidade</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                         <option>g (gramas)</option>
                         <option>kg (quilogramas)</option>
                         <option>mg (miligramas)</option>
@@ -70,16 +67,16 @@
 
                 <!-- User -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Solicitante</label>
-                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Solicitante</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent"
                            placeholder="Nome do solicitante" value="{{ user.get_full_name|default:user.username }}" readonly>
                 </div>
             </div>
 
             <!-- Location/Storage -->
             <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Localização</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Localização</label>
+                <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent mb-4">
                     <option>Selecionar localização...</option>
                     <option>Armário A1 - Congelador -70°C</option>
                     <option>Armário B2 - Ambiente 18-25°C</option>
@@ -90,8 +87,8 @@
 
             <!-- Purpose -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Finalidade</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Finalidade</label>
+                <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                     <option>Selecionar finalidade...</option>
                     <option>Análise Laboratorial</option>
                     <option>Pesquisa Científica</option>
@@ -105,15 +102,17 @@
 
             <!-- Notes -->
             <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Observações</label>
-                <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Observações</label>
+                <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent"
                           placeholder="Informações adicionais sobre a retirada..."></textarea>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex justify-end space-x-4 mt-8">
-                <button type="button" class="btn-secondary">Cancelar</button>
-                <button type="submit" class="btn-primary flex items-center">
+                <button type="button" class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg">
+                    Cancelar
+                </button>
+                <button type="submit" class="bg-modern-danger hover:bg-modern-danger-dark text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-minus mr-2"></i> Confirmar Retirada
                 </button>
             </div>
@@ -123,41 +122,41 @@
     <!-- Sidebar Info -->
     <div class="space-y-6">
         <!-- Stock Info Card -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Disponibilidade Atual</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Disponibilidade Atual</h3>
 
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">Ácido Clorídrico 37%</div>
-                    <div class="text-lg font-bold text-green-600">45 un</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Ácido Clorídrico 37%</div>
+                    <div class="text-lg font-bold text-green-600 dark:text-green-400">4500 mL</div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">Etanol 95%</div>
-                    <div class="text-lg font-bold text-yellow-600">12 un</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Etanol 95%</div>
+                    <div class="text-lg font-bold text-yellow-600 dark:text-yellow-400">1200 mL</div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">Sulfato de Cobre</div>
-                    <div class="text-lg font-bold text-red-600">0 un</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Sulfato de Cobre</div>
+                    <div class="text-lg font-bold text-red-600 dark:text-red-400">0 g</div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-600">Hidróxido de Sódio</div>
-                    <div class="text-lg font-bold text-green-600">18 un</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Hidróxido de Sódio</div>
+                    <div class="text-lg font-bold text-green-600 dark:text-green-400">1800 g</div>
                 </div>
             </div>
         </div>
 
         <!-- Safety Guidelines -->
-        <div class="bg-yellow-50 rounded-lg p-6 border border-yellow-200">
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-800">
             <div class="flex items-center mb-4">
-                <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
-                    <i class="fas fa-shield-alt text-yellow-600"></i>
+                <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/40 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-shield-alt text-yellow-600 dark:text-yellow-400"></i>
                 </div>
-                <h4 class="text-lg font-semibold text-yellow-900">Orientações de Segurança</h4>
+                <h4 class="text-lg font-semibold text-yellow-900 dark:text-yellow-200">Orientações de Segurança</h4>
             </div>
-            <ul class="text-sm text-yellow-800 space-y-2">
+            <ul class="text-sm text-yellow-800 dark:text-yellow-300 space-y-2">
                 <li>• Sempre verifique a disponibilidade antes da retirada</li>
                 <li>• Use equipamentos de proteção adequados</li>
                 <li>• Trabalhe em local ventilado</li>
@@ -167,36 +166,36 @@
         </div>
 
         <!-- Recent Withdrawals -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h4 class="text-lg font-semibold text-gray-800 mb-4">Retiradas Recentes</h4>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Retiradas Recentes</h4>
             <div class="space-y-3">
-                <div class="flex items-start space-x-3 pb-3 border-b border-gray-100">
-                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 dark:text-red-400 text-xs"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm font-medium text-gray-900">500 mL Ácido Sulfúrico</p>
-                        <p class="text-xs text-gray-500">Dr. Maria Silva • 2h atrás</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">500 mL Ácido Sulfúrico</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Dr. Maria Silva • 2h atrás</p>
                     </div>
                 </div>
 
-                <div class="flex items-start space-x-3 pb-3 border-b border-gray-100">
-                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 dark:text-red-400 text-xs"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm font-medium text-gray-900">1 L Etanol 95%</p>
-                        <p class="text-xs text-gray-500">João Pereira • 5h atrás</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">1 L Etanol 95%</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">João Pereira • 5h atrás</p>
                     </div>
                 </div>
 
                 <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-minus text-red-600 text-xs"></i>
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                        <i class="fas fa-minus text-red-600 dark:text-red-400 text-xs"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm font-medium text-gray-900">100 g Hidróxido de Sódio</p>
-                        <p class="text-xs text-gray-500">Ana Costa • 1 dia atrás</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">100 g Hidróxido de Sódio</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Ana Costa • 1 dia atrás</p>
                     </div>
                 </div>
             </div>

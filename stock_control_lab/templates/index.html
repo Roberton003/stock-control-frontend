@@ -1,148 +1,359 @@
-{% extends 'base/base.html' %}
+{% extends 'base/modern_base.html' %}
+{% load static %}
 
-{% block title %}Página Inicial - LabStock Control{% endblock %}
+{% block title %}LabStock Control - Sistema de Gestão{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100">
-    <!-- Top Bar -->
-    <header class="bg-white shadow-sm">
-        <div class="flex items-center justify-between px-6 py-4">
-            <div class="flex items-center">
-                <div class="bg-blue-600 w-10 h-10 rounded flex items-center justify-center mr-3">
-                    <i class="fas fa-flask text-white"></i>
-                </div>
-                <span class="text-xl font-bold text-gray-800">LabStock Control</span>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <input type="text" placeholder="Pesquisar..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                    <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
-                </div>
-                
-                <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full">
-                    <i class="fas fa-bell"></i>
-                </button>
-                
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">
-                        <i class="fas fa-user text-gray-600"></i>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">{{ user.get_full_name|default:user.username }}</span>
-                </div>
-            </div>
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-modern-primary to-modern-secondary text-white rounded-xl shadow-lg p-8 mb-8">
+    <div class="max-w-6xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">LabStock Control</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Sistema Inteligente de Gestão de Estoque para Laboratórios</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <button class="bg-white text-modern-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                <i class="fas fa-play-circle mr-2"></i> Começar Agora
+            </button>
+            <button class="bg-transparent border-2 border-white hover:bg-white hover:text-modern-primary text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">
+                <i class="fas fa-book-open mr-2"></i> Ver Demonstração
+            </button>
         </div>
-    </header>
-
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg min-h-screen">
-            <div class="p-5 border-b">
-                <div class="flex items-center">
-                    <div class="bg-blue-600 w-10 h-10 rounded flex items-center justify-center">
-                        <i class="fas fa-flask text-white"></i>
-                    </div>
-                    <span class="ml-3 text-xl font-bold text-gray-800">LabStock Control</span>
-                </div>
-            </div>
-            
-            <nav class="mt-5 px-3">
-                <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-home mr-3"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="{% url 'produto-list-create' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-box mr-3"></i>
-                    <span>Produtos</span>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-boxes mr-3"></i>
-                    <span>Estoque</span>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-users mr-3"></i>
-                    <span>Fornecedores</span>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-shopping-cart mr-3"></i>
-                    <span>Movimentações</span>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
-                    <i class="fas fa-file-alt mr-3"></i>
-                    <span>Relatórios</span>
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <i class="fas fa-cog mr-3"></i>
-                    <span>Configurações</span>
-                </a>
-            </nav>
-            
-            <div class="absolute bottom-0 w-64 p-4 border-t">
-                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 text-white">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <div class="font-medium">Versão Pro</div>
-                            <div class="text-xs opacity-80 mt-1">Acesse mais recursos</div>
-                        </div>
-                        <button class="bg-white text-blue-600 text-xs px-3 py-1 rounded">Atualizar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <main class="flex-1 p-8">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                        Bem-vindo ao LabStock Control
-                    </h1>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Sistema completo de gestão de estoque para laboratórios. 
-                        Controle seus produtos, movimentações, fornecedores e relatórios em uma única plataforma.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                    <div class="bg-white rounded-lg shadow p-6 text-center">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-box text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Controle de Estoque</h3>
-                        <p class="text-gray-600">Monitore produtos, quantidades e alertas de estoque</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow p-6 text-center">
-                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Movimentações</h3>
-                        <p class="text-gray-600">Registre entradas, saídas e transferências</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow p-6 text-center">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Relatórios</h3>
-                        <p class="text-gray-600">Visualize dados e gerencie seu estoque</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow p-8 text-center">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Pronto para começar?</h2>
-                    <p class="text-gray-600 mb-6">Acesse o dashboard para gerenciar seu estoque de forma eficiente</p>
-                    <div class="flex justify-center gap-4">
-                        <a href="{% url 'dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg">
-                            Acessar Dashboard
-                        </a>
-                        <a href="{% url 'produto-list-create' %}" class="bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-50">
-                            Gerenciar Produtos
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </main>
     </div>
 </div>
+
+<!-- Features Section -->
+<div class="mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Recursos Poderosos</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">Tudo que você precisa para gerenciar seu estoque de laboratório de forma eficiente e segura</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-boxes text-modern-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Controle de Estoque</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Monitore níveis de estoque em tempo real com alertas automáticos quando os produtos estiverem abaixo do mínimo.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Rastreamento por lote</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Controle de validade</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Relatórios em tempo real</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-success bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-clipboard-list text-modern-success text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Gestão de Requisições</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Simplifique o processo de solicitação e aprovação de materiais com fluxos de trabalho configuráveis.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Aprovações hierárquicas</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Histórico completo</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Notificações automáticas</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-warning bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-chart-line text-modern-warning text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Relatórios e Análises</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Obtenha insights valiosos com relatórios personalizados e dashboards interativos.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Gráficos interativos</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Exportação em diversos formatos</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Agendamento automático</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-danger bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-shield-alt text-modern-danger text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Segurança e Auditoria</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Mantenha seus dados seguros com controle de acesso e registro completo de todas as atividades.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Controle de permissões</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Auditoria completa</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Backup automático</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-secondary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-mobile-alt text-modern-secondary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Acesso Móvel</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Gerencie seu estoque de qualquer lugar com nosso aplicativo responsivo para dispositivos móveis.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Interface otimizada</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Notificações push</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Sincronização em tempo real</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-plug text-modern-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Integrações</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Conecte-se facilmente com outros sistemas através de nossa API e integrações pré-configuradas.</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">API RESTful</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Webhooks</span>
+                </li>
+                <li class="flex items-center">
+                    <i class="fas fa-check-circle text-modern-success mr-2"></i>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Integrações ERP</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-gradient-to-r from-modern-primary to-modern-secondary text-white rounded-xl shadow-lg p-8 mb-12">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">Por que escolher o LabStock Control?</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold mb-2">500+</div>
+                <div class="text-lg">Laboratórios</div>
+                <div class="text-sm opacity-80">Confiam em nós</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-2">99.9%</div>
+                <div class="text-lg">Disponibilidade</div>
+                <div class="text-sm opacity-80">Garantida</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-2">24/7</div>
+                <div class="text-lg">Suporte</div>
+                <div class="text-sm opacity-80">Especializado</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-2">30%</div>
+                <div class="text-lg">Redução de Custos</div>
+                <div class="text-sm opacity-80">Em média</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">O que nossos clientes dizem</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">Laboratórios de todo o Brasil confiam no LabStock Control</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-modern-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-flask text-modern-primary"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 dark:text-white">Dr. Maria Silva</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Chefe de Laboratório</p>
+                </div>
+            </div>
+            <div class="flex text-yellow-400 mb-4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 italic">"O LabStock Control revolucionou a forma como gerenciamos nosso estoque. A redução de perdas e o controle de validade são impressionantes!"</p>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-modern-success bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-microscope text-modern-success"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 dark:text-white">Prof. João Pereira</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Diretor de Pesquisa</p>
+                </div>
+            </div>
+            <div class="flex text-yellow-400 mb-4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 italic">"A integração perfeita com nossos sistemas existentes e a interface intuitiva tornaram a transição extremamente fácil para nossa equipe."</p>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-modern-warning bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-vial text-modern-warning"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 dark:text-white">Dra. Ana Costa</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Coordenadora Técnica</p>
+                </div>
+            </div>
+            <div class="flex text-yellow-400 mb-4">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 italic">"Os relatórios detalhados e os alertas automáticos nos ajudaram a reduzir desperdícios em 35% e melhorar significativamente nossa eficiência operacional."</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-gradient-to-r from-modern-primary to-modern-secondary text-white rounded-xl shadow-lg p-8 mb-12">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">Pronto para transformar sua gestão de estoque?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">Junte-se a centenas de laboratórios que já estão economizando tempo e dinheiro com o LabStock Control.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <button class="bg-white text-modern-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                <i class="fas fa-rocket mr-2"></i> Começar Agora - Teste Grátis
+            </button>
+            <button class="bg-transparent border-2 border-white hover:bg-white hover:text-modern-primary text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">
+                <i class="fas fa-calendar-alt mr-2"></i> Agendar Demonstração
+            </button>
+        </div>
+        <p class="mt-6 text-sm opacity-80">Experimente gratuitamente por 14 dias. Sem cartão de crédito necessário.</p>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">Perguntas Frequentes</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">Tire suas dúvidas sobre o LabStock Control</p>
+    
+    <div class="max-w-4xl mx-auto space-y-4">
+        <!-- FAQ 1 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 cursor-pointer flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">O sistema é compatível com meu laboratório atual?</h3>
+                <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 hidden">
+                <p>Sim, o LabStock Control foi projetado para se integrar facilmente com a maioria dos sistemas de laboratório existentes. Oferecemos conectores pré-configurados para os principais sistemas ERP e LIMS do mercado.</p>
+            </div>
+        </div>
+        
+        <!-- FAQ 2 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 cursor-pointer flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Quanto tempo leva para implementar o sistema?</h3>
+                <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 hidden">
+                <p>O tempo de implementação varia de acordo com o tamanho do laboratório e a complexidade dos processos, mas a maioria dos clientes fica totalmente operacional em 2 a 4 semanas. Oferecemos suporte completo durante todo o processo.</p>
+            </div>
+        </div>
+        
+        <!-- FAQ 3 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 cursor-pointer flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Há treinamento incluso na implementação?</h3>
+                <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 hidden">
+                <p>Sim, oferecemos treinamento completo incluso no pacote de implementação. Isso inclui sessões presenciais ou remotas para sua equipe, manuais detalhados e acesso ao nosso centro de conhecimento online com vídeos tutoriais e documentação.</p>
+            </div>
+        </div>
+        
+        <!-- FAQ 4 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 cursor-pointer flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Como é feito o suporte técnico?</h3>
+                <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400"></i>
+            </div>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 hidden">
+                <p>Nosso suporte técnico está disponível 24/7 através de telefone, chat e e-mail. Além disso, oferecemos acesso a nossa base de conhecimento com soluções para problemas comuns e atualizações regulares do sistema.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Simple FAQ toggle functionality
+document.querySelectorAll('.cursor-pointer').forEach(item => {
+    item.addEventListener('click', event => {
+        const content = item.nextElementSibling;
+        const icon = item.querySelector('i');
+        
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            content.classList.add('hidden');
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    });
+});
+</script>
 {% endblock %}

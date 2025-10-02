@@ -1,0 +1,337 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Relatórios</h2>
+    <p class="text-gray-600 dark:text-gray-400">Relatórios detalhados do estoque e movimentações</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Relatórios Gerados</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">24</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-chart-bar text-modern-primary text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 15% este mês
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Relatórios Agendados</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">3</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-clock text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-blue-500 text-sm font-medium flex items-center">
+                <i class="fas fa-sync mr-1"></i> Automáticos
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Exportados</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">18</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-file-export text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-check mr-1"></i> PDF/Excel
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Aguardando</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">2</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-exclamation-triangle text-modern-danger text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-calendar mr-1"></i> Programados
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Report Categories -->
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mb-8">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Categorias de Relatórios</h2>
+        <div class="flex space-x-3">
+            <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+                <i class="fas fa-filter mr-1"></i> Filtrar
+            </button>
+            <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                <i class="fas fa-sync-alt mr-2"></i> Atualizar
+            </button>
+        </div>
+    </div>
+    
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Estoque -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-4">
+                    <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full mr-4">
+                        <i class="fas fa-boxes text-modern-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Estoque</h3>
+                </div>
+                <ul class="space-y-2">
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Estoque Atual</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Estoque por Categoria</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Estoque por Localização</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Movimentações -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-4">
+                    <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full mr-4">
+                        <i class="fas fa-exchange-alt text-modern-warning text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Movimentações</h3>
+                </div>
+                <ul class="space-y-2">
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Movimentações</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Consumo por Usuário</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Perdas e Desperdícios</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Validade -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-center mb-4">
+                    <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full mr-4">
+                        <i class="fas fa-hourglass-half text-modern-danger text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Validade</h3>
+                </div>
+                <ul class="space-y-2">
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Vencimentos</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Validade por Produto</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                    <li class="flex justify-between">
+                        <span class="text-gray-600 dark:text-gray-300">Relatório de Estoque Expirado</span>
+                        <button class="text-modern-primary hover:text-modern-primary-dark text-sm">Gerar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Reports -->
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mb-8">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Relatórios Recentes</h2>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nome</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Gerado em</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Período</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Relatório de Estoque Atual</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">estoque_atual_20250615.pdf</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Estoque</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 10:30</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Último mês</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Pronto
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Relatório de Movimentações</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">movimentacoes_20250614.pdf</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Movimentações</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">14/06/2025 14:20</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Semana passada</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Pronto
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Relatório de Vencimentos</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">vencimentos_20250614.xlsx</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Validade</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">14/06/2025 09:15</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Próx. 90 dias</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                            Processando
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300" disabled>
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Relatório de Estoque por Categoria</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">estoque_categoria_20250613.pdf</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Estoque</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">13/06/2025 16:45</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Último mês</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                            Erro
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300" disabled>
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+        <div class="text-sm text-gray-700 dark:text-gray-300">
+            Mostrando <span class="font-medium">1</span> a <span class="font-medium">4</span> de <span class="font-medium">12</span> relatórios
+        </div>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200" disabled>Anterior</button>
+            <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+            <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full mb-2">
+                <i class="fas fa-chart-bar text-modern-primary text-xl"></i>
+            </div>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Relatório Rápido</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full mb-2">
+                <i class="fas fa-calendar-plus text-modern-success text-xl"></i>
+            </div>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Agendar Relatório</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full mb-2">
+                <i class="fas fa-history text-modern-warning text-xl"></i>
+            </div>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Histórico</span>
+        </button>
+        <button class="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full mb-2">
+                <i class="fas fa-cog text-modern-danger text-xl"></i>
+            </div>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Configurações</span>
+        </button>
+    </div>
+</div>
+{% endblock %}

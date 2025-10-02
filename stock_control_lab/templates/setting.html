@@ -1,0 +1,218 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Configurações{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Configurações</h2>
+    <p class="text-gray-600 dark:text-gray-400">Gerenciar preferências e configurações do sistema</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <!-- Sidebar de Navegação -->
+    <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Seções</h3>
+            <ul class="space-y-2">
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg bg-modern-primary text-white">
+                        <i class="fas fa-user-cog mr-3"></i>
+                        <span>Conta e Perfil</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>Preferências</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-bell mr-3"></i>
+                        <span>Notificações</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-shield-alt mr-3"></i>
+                        <span>Segurança</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-database mr-3"></i>
+                        <span>Dados e Backup</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-credit-card mr-3"></i>
+                        <span>Planos e Assinaturas</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="lg:col-span-3">
+        <!-- Perfil do Usuário -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Perfil do Usuário</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome Completo</label>
+                    <input type="text" value="Dr. Ana Silva" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail</label>
+                    <input type="email" value="ana.silva@laboratorio.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cargo</label>
+                    <input type="text" value="Analista de Laboratório Sênior" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Departamento</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        <option>Química Analítica</option>
+                        <option>Biologia Molecular</option>
+                        <option>Microbiologia</option>
+                        <option>Patologia Clínica</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sobre</label>
+                <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">Especialista em controle de qualidade com mais de 10 anos de experiência em laboratórios de pesquisa.</textarea>
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg">
+                    Salvar Alterações
+                </button>
+            </div>
+        </div>
+
+        <!-- Preferências -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Preferências</h3>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-800 dark:text-white">Modo Escuro</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Alternar entre temas claro e escuro</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-modern-primary/50 dark:peer-focus:ring-modern-primary/80 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-modern-primary"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-800 dark:text-white">Notificações por E-mail</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Receber notificações por e-mail</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-modern-primary/50 dark:peer-focus:ring-modern-primary/80 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-modern-primary"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-800 dark:text-white">Notificações por Push</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Receber notificações do navegador</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-modern-primary/50 dark:peer-focus:ring-modern-primary/80 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-modern-primary"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-800 dark:text-white">Unidades de Medida</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Sistema de unidades padrão</p>
+                    </div>
+                    <select class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        <option>Sistema Internacional (SI)</option>
+                        <option>Sistema Americano</option>
+                        <option>Sistema Científico</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-800 dark:text-white">Idioma</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Idioma de exibição</p>
+                    </div>
+                    <select class="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        <option>Português (Brasil)</option>
+                        <option>Inglês</option>
+                        <option>Espanhol</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg">
+                    Salvar Preferências
+                </button>
+            </div>
+        </div>
+
+        <!-- Segurança -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Segurança</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-2">Senha</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Senha Atual</label>
+                            <input type="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nova Senha</label>
+                            <input type="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirmar Nova Senha</label>
+                            <input type="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-2">Autenticação de Dois Fatores</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Adicione uma camada extra de segurança à sua conta</p>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-modern-primary/50 dark:peer-focus:ring-modern-primary/80 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-modern-primary"></div>
+                        <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">Habilitar 2FA</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end space-x-3">
+                <button class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg">
+                    Cancelar
+                </button>
+                <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg">
+                    Atualizar Senha
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

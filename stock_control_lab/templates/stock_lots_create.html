@@ -1,42 +1,43 @@
-{% extends 'base/sidebar_debug.html' %}
+{% extends 'base/modern_base.html' %}
+{% load static %}
 
-{% block title %}Criar Lote de Estoque - Sistema de Gestão{% endblock %}
+{% block title %}Criar Lote de Estoque{% endblock %}
 
-{% block page_content %}
+{% block content %}
 <!-- Page Title -->
 <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Criar Lote de Estoque</h1>
-    <button onclick="window.history.back()" class="btn-secondary flex items-center">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Criar Lote de Estoque</h2>
+    <button onclick="window.history.back()" class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg flex items-center">
         <i class="fas fa-arrow-left mr-2"></i> Voltar
     </button>
 </div>
 
 <!-- Progress Steps -->
-<div class="bg-white rounded-lg shadow p-6 mb-8">
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
     <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold text-gray-800">Progresso da Criação</h2>
-        <span class="text-sm text-gray-500">Passo 1 de 3</span>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Progresso da Criação</h3>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Passo 1 de 3</span>
     </div>
     <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+            <div class="w-8 h-8 bg-modern-primary text-white rounded-full flex items-center justify-center text-sm font-medium">
                 <i class="fas fa-box"></i>
             </div>
-            <span class="text-sm font-medium text-blue-600">Informações do Lote</span>
+            <span class="text-sm font-medium text-modern-primary dark:text-modern-primary">Informações do Lote</span>
         </div>
-        <div class="w-16 h-0.5 bg-gray-300"></div>
+        <div class="w-16 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
         <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
+            <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-300 rounded-full flex items-center justify-center text-sm font-medium">
                 2
             </div>
-            <span class="text-sm text-gray-500">Produtos</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Produtos</span>
         </div>
-        <div class="w-16 h-0.5 bg-gray-300"></div>
+        <div class="w-16 h-0.5 bg-gray-300 dark:bg-gray-600"></div>
         <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-sm font-medium">
+            <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-300 rounded-full flex items-center justify-center text-sm font-medium">
                 3
             </div>
-            <span class="text-sm text-gray-500">Confirmação</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Confirmação</span>
         </div>
     </div>
 </div>
@@ -46,28 +47,28 @@
     <div class="lg:col-span-2">
         <form class="space-y-8">
             <!-- Basic Information -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Informações Básicas</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Informações Básicas</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Lote</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Lote Outubro 2025">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome do Lote</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: Lote Outubro 2025">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Número do Lote</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: LOT-2025-001">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número do Lote</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: LOT-2025-001">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Data de Entrada</label>
-                        <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data de Entrada</label>
+                        <input type="date" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Data de Validade</label>
-                        <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data de Validade</label>
+                        <input type="date" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Fornecedor</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fornecedor</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                             <option>Selecionar fornecedor...</option>
                             <option>Sigma-Aldrich</option>
                             <option>Thermo Fisher</option>
@@ -76,8 +77,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Localização</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Localização</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
                             <option>Selecionar localização...</option>
                             <option>Armário A1 - Congelador</option>
                             <option>Armário B2 - Ambiente</option>
@@ -88,42 +89,42 @@
                 </div>
 
                 <div class="mt-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Observações</label>
-                    <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Informações adicionais sobre o lote..."></textarea>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Observações</label>
+                    <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Informações adicionais sobre o lote..."></textarea>
                 </div>
             </div>
 
             <!-- Quality Control -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Controle de Qualidade</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Controle de Qualidade</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Certificado de Análise</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Número do certificado">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Certificado de Análise</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Número do certificado">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Concentração</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 37%, 95%">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Concentração</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: 37%, 95%">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Pureza</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 99.9%">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pureza</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: 99.9%">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Testado por</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nome do analista">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Testado por</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Nome do analista">
                     </div>
                 </div>
 
                 <div class="mt-6">
                     <div class="flex items-center space-x-6">
                         <label class="flex items-center">
-                            <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
-                            <span class="ml-2 text-sm text-gray-700">Aprovado para uso</span>
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary">
+                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Aprovado para uso</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
-                            <span class="ml-2 text-sm text-gray-700">Quarentena necessária</span>
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary">
+                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Quarentena necessária</span>
                         </label>
                     </div>
                 </div>
@@ -131,8 +132,8 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-end space-x-4">
-                <button type="button" class="btn-secondary">Salvar Rascunho</button>
-                <button type="submit" class="btn-primary flex items-center">
+                <button type="button" class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg">Salvar Rascunho</button>
+                <button type="submit" class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-arrow-right mr-2"></i> Próximo Passo
                 </button>
             </div>
@@ -142,14 +143,14 @@
     <!-- Sidebar Info -->
     <div class="space-y-6">
         <!-- Help Card -->
-        <div class="bg-blue-50 rounded-lg p-6 border border-blue-200">
+        <div class="bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 rounded-xl p-6 border border-modern-primary dark:border-modern-primary">
             <div class="flex items-center mb-4">
-                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                    <i class="fas fa-info text-blue-600"></i>
+                <div class="w-10 h-10 bg-modern-primary bg-opacity-20 dark:bg-modern-primary dark:bg-opacity-30 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-info text-modern-primary dark:text-modern-primary"></i>
                 </div>
-                <h4 class="text-lg font-semibold text-blue-900">Dicas para Criar Lotes</h4>
+                <h4 class="text-lg font-semibold text-modern-primary dark:text-modern-primary">Dicas para Criar Lotes</h4>
             </div>
-            <ul class="text-sm text-blue-800 space-y-2">
+            <ul class="text-sm text-modern-primary dark:text-modern-primary space-y-2">
                 <li>• O número do lote deve ser único</li>
                 <li>• Verifique as datas de validade</li>
                 <li>• Completar controle de qualidade é obrigatório</li>
@@ -158,33 +159,46 @@
         </div>
 
         <!-- Recent Lots Card -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h4 class="text-lg font-semibold text-gray-800 mb-4">Lotes Recentes</h4>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Lotes Recentes</h4>
             <div class="space-y-3">
-                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center mr-3">
-                            <i class="fas fa-vial text-green-600"></i>
+                        <div class="w-8 h-8 bg-modern-success bg-opacity-10 dark:bg-modern-success dark:bg-opacity-20 rounded flex items-center justify-center mr-3">
+                            <i class="fas fa-vial text-modern-success dark:text-modern-success"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-medium text-gray-900">Etanol 95%</div>
-                            <div class="text-xs text-gray-500">LOT-2025-045</div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">Etanol 95%</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">LOT-2025-045</div>
                         </div>
                     </div>
-                    <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded">Ativo</span>
+                    <span class="text-xs text-modern-success bg-modern-success bg-opacity-10 dark:bg-modern-success dark:bg-opacity-20 px-2 py-1 rounded">Ativo</span>
                 </div>
 
-                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center mr-3">
-                            <i class="fas fa-vial text-blue-600"></i>
+                        <div class="w-8 h-8 bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 rounded flex items-center justify-center mr-3">
+                            <i class="fas fa-vial text-modern-primary dark:text-modern-primary"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-medium text-gray-900">Ácido Clorídrico</div>
-                            <div class="text-xs text-gray-500">LOT-2025-044</div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">Ácido Clorídrico</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">LOT-2025-044</div>
                         </div>
                     </div>
-                    <span class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Em análise</span>
+                    <span class="text-xs text-modern-primary bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 px-2 py-1 rounded">Em análise</span>
+                </div>
+                
+                <div class="flex items-center justify-between py-2">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-modern-warning bg-opacity-10 dark:bg-modern-warning dark:bg-opacity-20 rounded flex items-center justify-center mr-3">
+                            <i class="fas fa-vial text-modern-warning dark:text-modern-warning"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">Sulfato de Cobre</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">LOT-2025-043</div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-modern-warning bg-modern-warning bg-opacity-10 dark:bg-modern-warning dark:bg-opacity-20 px-2 py-1 rounded">Próximo vencimento</span>
                 </div>
             </div>
         </div>

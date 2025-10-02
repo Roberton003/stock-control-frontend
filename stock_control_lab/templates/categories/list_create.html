@@ -1,0 +1,398 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Categorias de Produtos{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Categorias de Produtos</h2>
+    <p class="text-gray-600 dark:text-gray-400">Gerenciamento de categorias de produtos</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Total de Categorias</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">15</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-tags text-modern-primary text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 2 novas este mês
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Categorias Ativas</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">14</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-check-circle text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-check mr-1"></i> 93% ativas
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Categorias Inativas</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">1</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-pause-circle text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-yellow-500 text-sm font-medium flex items-center">
+                <i class="fas fa-pause mr-1"></i> 7% inativas
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex justify-between items-center mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Lista de Categorias</h3>
+    <div class="flex space-x-3">
+        <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+        </button>
+        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Atualizar
+        </button>
+        <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-plus mr-2"></i> Nova Categoria
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Categories List -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Categoria</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produtos</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-vial text-modern-primary"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Reagentes Químicos</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">REAG-CHEM</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Reagentes para análises químicas</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">48</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativa
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-success bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-flask text-modern-success"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Equipamentos de Laboratório</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">EQUIP-LAB</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Instrumentos e equipamentos laboratoriais</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">12</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativa
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-warning bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-vials text-modern-warning"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Consumíveis</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">CONS-TIP</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Materiais descartáveis e consumíveis</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">35</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativa
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-danger bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-prescription-bottle text-modern-danger"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Padrões e Referências</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">PADR-REF</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Padrões de referência e calibradores</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">18</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativa
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-secondary bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-capsules text-modern-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Reagentes Biológicos</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">REAG-BIO</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Reagentes para biologia molecular</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">25</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                                    Inativa
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                <div class="text-sm text-gray-700 dark:text-gray-300">
+                    Mostrando <span class="font-medium">1</span> a <span class="font-medium">5</span> de <span class="font-medium">15</span> categorias
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200" disabled>Anterior</button>
+                    <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Category Distribution -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Distribuição por Categoria</h4>
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-primary rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Reagentes Químicos</span>
+                    <span class="text-gray-600 dark:text-gray-400">48 (32%)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-success rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Equipamentos</span>
+                    <span class="text-gray-600 dark:text-gray-400">12 (8%)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-warning rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Consumíveis</span>
+                    <span class="text-gray-600 dark:text-gray-400">35 (23%)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-danger rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Padrões</span>
+                    <span class="text-gray-600 dark:text-gray-400">18 (12%)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-secondary rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Reagentes Biológicos</span>
+                    <span class="text-gray-600 dark:text-gray-400">25 (17%)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-plus text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Adicionar Categoria</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-file-import text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Importar Categorias</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-file-export text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Exportar Categorias</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-trash-alt text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Excluir Selecionadas</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Info -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+            <div class="flex items-center mb-3">
+                <div class="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-full mr-3">
+                    <i class="fas fa-info-circle text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200">Sobre Categorias</h4>
+            </div>
+            <p class="text-sm text-blue-700 dark:text-blue-300">
+                As categorias ajudam a organizar seus produtos de forma eficiente. 
+                Você pode criar hierarquias, definir propriedades específicas e 
+                gerar relatórios por categoria.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- New Category Modal -->
+<div id="new-category-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Nova Categoria</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome da Categoria</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: Reagentes Químicos">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: REAG-CHEM">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descrição</label>
+                    <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Descrição da categoria..."></textarea>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cor</label>
+                    <div class="flex space-x-2">
+                        <div class="w-8 h-8 bg-modern-primary rounded-full cursor-pointer ring-2 ring-offset-2 ring-modern-primary"></div>
+                        <div class="w-8 h-8 bg-modern-success rounded-full cursor-pointer"></div>
+                        <div class="w-8 h-8 bg-modern-warning rounded-full cursor-pointer"></div>
+                        <div class="w-8 h-8 bg-modern-danger rounded-full cursor-pointer"></div>
+                        <div class="w-8 h-8 bg-modern-secondary rounded-full cursor-pointer"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-end space-x-3">
+                <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg">Cancelar</button>
+                <button class="px-4 py-2 bg-modern-primary hover:bg-modern-primary-dark text-white rounded-lg">Criar Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

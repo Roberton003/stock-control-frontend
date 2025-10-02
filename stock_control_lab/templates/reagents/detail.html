@@ -1,155 +1,314 @@
-{% extends 'base/base.html' %}
+{% extends 'base/modern_base.html' %}
 {% load static %}
 
-{% block title %}{{ reagent.name }} - Detalhes{% endblock %}
+{% block title %}Detalhes do Produto{% endblock %}
 
 {% block content %}
-<div 
-    class="container mx-auto p-4 md:p-8"
-    x-data="reagentDetailManager({{ reagent.pk }})"
-    x-init="init()"
->
-    <!-- Loading State -->
-    <div x-show="isLoading" class="text-center p-8">
-        <p>Carregando detalhes do reagente...</p>
+<div class="mb-6">
+    <div class="flex justify-between items-center">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Detalhes do Produto</h2>
+            <p class="text-gray-600 dark:text-gray-400">Informações completas sobre o produto</p>
+        </div>
+        <button onclick="window.history.back()" class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
+        </button>
     </div>
+</div>
 
-    <!-- Error State -->
-    <div x-show="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-        <span class="block sm:inline" x-text="error"></span>
-    </div>
-
-    <!-- Main Content -->
-    <div x-show="!isLoading && reagent">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Detalhes: <span x-text="reagent.name"></span></h1>
-
-        <!-- General Info -->
-        <div class="card mb-6">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4">Informações Gerais</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <p><strong>SKU:</strong> <span x-text="reagent.sku"></span></p>
-                    <p><strong>Categoria:</strong> <span x-text="reagent.category_name || 'N/A'"></span></p>
-                    <p><strong>Fornecedor:</strong> <span x-text="reagent.supplier_name || 'N/A'"></span></p>
-                    <p><strong>Estoque Mínimo:</strong> <span x-text="reagent.min_stock_level"></span></p>
-                    <p><strong>Condições de Armazenamento:</strong> <span x-text="reagent.storage_conditions || 'N/A'"></span></p>
-                    <p><strong>Valor Atual:</strong> <span x-text="reagent.current_value ? utils.formatCurrency(reagent.current_value) : 'N/A'"></span></p>
-                </div>
+<!-- Product Info Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Quantidade Atual</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">4500 mL</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-vial text-modern-primary text-xl"></i>
             </div>
         </div>
-
-        <!-- Stock Lots -->
-        <div class="card mb-6">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4">Lotes em Estoque</h2>
-                <div x-show="stockLots.length === 0" class="text-center p-4">
-                    <p>Nenhum lote em estoque para este reagente.</p>
-                </div>
-                <div x-show="stockLots.length > 0" class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lote</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Validade</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qtd. Atual</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QR Code</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            <template x-for="lot in stockLots" :key="lot.id">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap" x-text="lot.lot_number"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap" x-text="new Date(lot.expiry_date).toLocaleDateString('pt-BR')"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap" x-text="lot.current_quantity"></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <img :src="lot.qr_code_image" alt="QR Code" class="w-12 h-12">
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Estoque Mínimo</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">500 mL</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-exclamation-triangle text-modern-warning text-xl"></i>
             </div>
         </div>
-
-        <!-- Attachments -->
-        <div class="card">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold mb-4">Anexos</h2>
-                <div x-show="attachments.length === 0" class="text-center p-4">
-                    <p>Nenhum anexo para este reagente.</p>
-                </div>
-                <ul x-show="attachments.length > 0" class="space-y-2">
-                    <template x-for="attachment in attachments" :key="attachment.id">
-                        <li>
-                            <a :href="attachment.file" target="_blank" class="text-primary-600 hover:underline" x-text="attachment.description"></a>
-                        </li>
-                    </template>
-                </ul>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Lotes Ativos</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">3</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-boxes text-modern-success text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Próx. Vencimento</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">21/12/2025</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-hourglass-half text-modern-danger text-xl"></i>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
-<script>
-function reagentDetailManager(reagentId) {
-    return {
-        reagentId: reagentId,
-        reagent: null,
-        stockLots: [],
-        attachments: [],
-        isLoading: true,
-        error: '',
-
-        async init() {
-            this.isLoading = true;
-            this.error = '';
-            try {
-                await Promise.all([
-                    this.fetchReagentDetails(),
-                    this.fetchStockLots(),
-                    this.fetchAttachments(),
-                ]);
-            } catch (e) {
-                this.error = 'Não foi possível carregar os dados completos do reagente.';
-                console.error(e);
-            } finally {
-                this.isLoading = false;
-            }
-        },
-
-        async fetchReagentDetails() {
-            // This assumes your API can expand related fields or you make separate calls
-            const response = await fetch(`/api/v1/reagents/${this.reagentId}/`);
-            if (!response.ok) throw new Error('Failed to fetch reagent details');
-            const data = await response.json();
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Product Details -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Informações do Produto</h3>
             
-            // Fetch related names if they are not in the main payload
-            const categoryResponse = await fetch(`/api/v1/categories/${data.category}/`);
-            const categoryData = await categoryResponse.json();
-            data.category_name = categoryData.name;
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome do Produto</label>
+                    <p class="text-gray-900 dark:text-white font-medium">Ácido Clorídrico 37%</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">SKU</label>
+                    <p class="text-gray-900 dark:text-white font-medium">HCL-001-37</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Categoria</label>
+                    <p class="text-gray-900 dark:text-white font-medium">Reagentes Químicos</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fornecedor</label>
+                    <p class="text-gray-900 dark:text-white font-medium">Sigma-Aldrich</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Unidade de Medida</label>
+                    <p class="text-gray-900 dark:text-white font-medium">mL</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Condições de Armazenamento</label>
+                    <p class="text-gray-900 dark:text-white font-medium">Ambiente seco e fresco</p>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descrição</label>
+                <p class="text-gray-900 dark:text-white">
+                    Solução de Ácido Clorídrico a 37% em água destilada. Produto de alta pureza para aplicações analíticas e de pesquisa. 
+                    Deve ser manipulado com equipamentos de proteção adequados devido à sua natureza corrosiva.
+                </p>
+            </div>
+        </div>
 
-            const supplierResponse = await fetch(`/api/v1/suppliers/${data.supplier}/`);
-            const supplierData = await supplierResponse.json();
-            data.supplier_name = supplierData.name;
+        <!-- Stock Lots -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Lotes em Estoque</h3>
+                <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Adicionar Lote
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Lote</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Quantidade</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Validade</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">HCL-001-LT001</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2000 mL</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">21/12/2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">HCL-001-LT045</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1500 mL</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/11/2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">HCL-001-LT023</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">1000 mL</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">30/10/2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                                    Próximo vencimento
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            this.reagent = data;
-        },
+        <!-- Recent Movements -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Movimentações Recentes</h3>
+            
+            <div class="space-y-4">
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-down text-green-600 dark:text-green-400 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">Entrada de 2000 mL</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Lote HCL-001-LT001 • Dr. Silva • 15/06/2025</p>
+                    </div>
+                    <div class="text-sm font-medium text-green-600 dark:text-green-400">+2000 mL</div>
+                </div>
 
-        async fetchStockLots() {
-            const response = await fetch(`/api/v1/stock-lots/?reagent=${this.reagentId}`);
-            if (!response.ok) throw new Error('Failed to fetch stock lots');
-            this.stockLots = await response.json();
-        },
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-up text-red-600 dark:text-red-400 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">Retirada de 500 mL</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Lote HCL-001-LT023 • Dra. Costa • 14/06/2025</p>
+                    </div>
+                    <div class="text-sm font-medium text-red-600 dark:text-red-400">-500 mL</div>
+                </div>
 
-        async fetchAttachments() {
-            const response = await fetch(`/api/v1/attachments/?reagent=${this.reagentId}`);
-            if (!response.ok) throw new Error('Failed to fetch attachments');
-            this.attachments = await response.json();
-        },
-    };
-}
-</script>
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 w-8 h-8 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-yellow-600 dark:text-yellow-400 text-xs"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">Ajuste de estoque</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Lote HCL-001-LT045 • Dr. Oliveira • 13/06/2025</p>
+                    </div>
+                    <div class="text-sm font-medium text-yellow-600 dark:text-yellow-400">-100 mL</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Actions Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-arrow-down text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Registrar Entrada</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-arrow-up text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Registrar Saída</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-exchange-alt text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Ajustar Estoque</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-print text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Imprimir QR Code</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Storage Info -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Informações de Armazenamento</h4>
+            <div class="space-y-4">
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Localização Atual</span>
+                    <span class="text-gray-800 dark:text-white font-medium">Armário A1 - Seção 2</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Temperatura Recomendada</span>
+                    <span class="text-gray-800 dark:text-white font-medium">15-25°C</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Umidade</span>
+                    <span class="text-gray-800 dark:text-white font-medium">50-70%</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Última Inspeção</span>
+                    <span class="text-gray-800 dark:text-white font-medium">10/06/2025</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Safety Information -->
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-800">
+            <div class="flex items-center mb-3">
+                <div class="bg-yellow-100 dark:bg-yellow-900/40 p-2 rounded-full mr-3">
+                    <i class="fas fa-shield-alt text-yellow-600 dark:text-yellow-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200">Informações de Segurança</h4>
+            </div>
+            <ul class="text-sm text-yellow-700 dark:text-yellow-300 space-y-2">
+                <li>• Produto corrosivo - usar EPI adequado</li>
+                <li>• Armazenar em local bem ventilado</li>
+                <li>• Manter longe de bases e metais</li>
+                <li>• Em caso de contato, lavar abundantemente com água</li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

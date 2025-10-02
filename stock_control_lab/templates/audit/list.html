@@ -1,0 +1,484 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Auditoria{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Auditoria</h2>
+    <p class="text-gray-600 dark:text-gray-400">Registro de atividades e alterações no sistema</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Total de Registros</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">1,248</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-clipboard-list text-modern-primary text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 142 hoje
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Registros Esta Semana</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">684</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-calendar-week text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 8% esta semana
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Alertas de Segurança</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">3</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-exclamation-triangle text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-yellow-500 text-sm font-medium flex items-center">
+                <i class="fas fa-shield-alt mr-1"></i> 1 crítica
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Erros do Sistema</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">7</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-bug text-modern-danger text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> 2 a menos que ontem
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex justify-between items-center mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Registro de Auditoria</h3>
+    <div class="flex space-x-3">
+        <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+        </button>
+        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Atualizar
+        </button>
+        <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-file-export mr-2"></i> Exportar Relatório
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Audit Logs -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data/Hora</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Usuário</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ação</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Objeto</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">IP</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 14:32:15</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8 bg-modern-primary bg-opacity-10 rounded-full flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-modern-primary text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Dr. Maria Silva</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">analista.senior</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    CREATE
+                                </span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Cadastro de produto</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                <div>Ácido Clorídrico 37%</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">HCL-001-LT001</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">192.168.1.105</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    SUCESSO
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 14:28:42</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8 bg-modern-success bg-opacity-10 rounded-full flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-modern-success text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">João Pereira</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">tecnico.lab</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                                    UPDATE
+                                </span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Atualização de estoque</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                <div>Etanol 95%</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">ETOH-95-LT045</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">192.168.1.112</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    SUCESSO
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 14:15:33</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8 bg-modern-warning bg-opacity-10 rounded-full flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-modern-warning text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Ana Costa</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">pesquisadora</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                                    DELETE
+                                </span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Exclusão de lote</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                <div>Sulfato de Cobre</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">CUSO4-002-LT012</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">192.168.1.118</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    SUCESSO
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 13:58:21</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8 bg-modern-danger bg-opacity-10 rounded-full flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-modern-danger text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Dr. Roberto Lima</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">coordenador</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                                    LOGIN
+                                </span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Falha de autenticação</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                <div>Sistema</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">-</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">192.168.1.201</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                                    FALHA
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">15/06/2025 13:45:17</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8 bg-modern-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-modern-secondary text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Juliana Mendes</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">assistente.adm</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-200">
+                                    REPORT
+                                </span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">Geração de relatório</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                <div>Relatório de Estoque</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">estoque_atual_20250615.pdf</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">192.168.1.125</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                    SUCESSO
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                <div class="text-sm text-gray-700 dark:text-gray-300">
+                    Mostrando <span class="font-medium">1</span> a <span class="font-medium">5</span> de <span class="font-medium">1,248</span> registros
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200" disabled>Anterior</button>
+                    <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Filter Options -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Filtros</h4>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Período</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="date" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                        <input type="date" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Ação</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                        <option>Todas as ações</option>
+                        <option>CREATE</option>
+                        <option>UPDATE</option>
+                        <option>DELETE</option>
+                        <option>LOGIN</option>
+                        <option>REPORT</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                        <option>Todos os status</option>
+                        <option>SUCESSO</option>
+                        <option>FALHA</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Usuário</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm" placeholder="Nome do usuário...">
+                </div>
+                
+                <div class="pt-2">
+                    <button class="w-full bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg text-sm">
+                        Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Summary -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Resumo de Auditoria</h4>
+            <div class="space-y-4">
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Total de ações hoje</span>
+                    <span class="text-gray-800 dark:text-white font-medium">142</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Ações de criação</span>
+                    <span class="text-gray-800 dark:text-white font-medium">24 (17%)</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Ações de atualização</span>
+                    <span class="text-gray-800 dark:text-white font-medium">89 (63%)</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Ações de exclusão</span>
+                    <span class="text-gray-800 dark:text-white font-medium">8 (6%)</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Ações de login</span>
+                    <span class="text-gray-800 dark:text-white font-medium">21 (14%)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Alerts -->
+        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border border-red-200 dark:border-red-800">
+            <div class="flex items-center mb-4">
+                <div class="bg-red-100 dark:bg-red-900/40 p-2 rounded-full mr-3">
+                    <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-red-800 dark:text-red-200">Alertas de Segurança</h4>
+            </div>
+            <div class="space-y-3">
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-red-200 dark:border-red-800">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h5 class="text-sm font-medium text-red-800 dark:text-red-200">Falha de Autenticação Crítica</h5>
+                            <p class="text-xs text-red-700 dark:text-red-300 mt-1">Múltiplas tentativas de login falhadas detectadas</p>
+                        </div>
+                        <span class="text-xs text-red-600 dark:text-red-400 whitespace-nowrap">15/06 13:58</span>
+                    </div>
+                </div>
+                
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-red-200 dark:border-red-800">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h5 class="text-sm font-medium text-red-800 dark:text-red-200">Acesso Não Autorizado</h5>
+                            <p class="text-xs text-red-700 dark:text-red-300 mt-1">Tentativa de acesso a área restrita</p>
+                        </div>
+                        <span class="text-xs text-red-600 dark:text-red-400 whitespace-nowrap">14/06 09:24</span>
+                    </div>
+                </div>
+                
+                <div class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h5 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">Alteração de Permissões</h5>
+                            <p class="text-xs text-yellow-700 dark:text-yellow-300 mt-1">Permissões de usuário modificadas</p>
+                        </div>
+                        <span class="text-xs text-yellow-600 dark:text-yellow-400 whitespace-nowrap">13/06 16:42</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm">
+                    Ver Todos os Alertas
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Modal -->
+<div id="export-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Exportar Relatório de Auditoria</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Formato</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <label class="flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input type="radio" name="format" class="sr-only">
+                            <i class="fas fa-file-pdf text-red-600 text-xl mb-2"></i>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">PDF</span>
+                        </label>
+                        <label class="flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input type="radio" name="format" class="sr-only" checked>
+                            <i class="fas fa-file-excel text-green-600 text-xl mb-2"></i>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">Excel</span>
+                        </label>
+                        <label class="flex flex-col items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input type="radio" name="format" class="sr-only">
+                            <i class="fas fa-file-csv text-blue-600 text-xl mb-2"></i>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">CSV</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Período</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="date" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                        <input type="date" class="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent text-sm">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Incluir</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary" checked>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Dados de usuário</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary" checked>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Detalhes da ação</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary" checked>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Endereços IP</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-modern-primary">
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">Metadados técnicos</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-end space-x-3">
+                <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg">Cancelar</button>
+                <button class="px-4 py-2 bg-modern-primary hover:bg-modern-primary-dark text-white rounded-lg">Exportar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

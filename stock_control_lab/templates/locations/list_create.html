@@ -1,0 +1,494 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Localizações{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Localizações</h2>
+    <p class="text-gray-600 dark:text-gray-400">Gerenciamento de localizações de armazenamento</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Total de Localizações</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">18</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-map-marker-alt text-modern-primary text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 2 novas este mês
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Localizações Ativas</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">16</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-check-circle text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-check mr-1"></i> 89% ativas
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Localizações em Uso</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">14</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-archive text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-yellow-500 text-sm font-medium flex items-center">
+                <i class="fas fa-boxes mr-1"></i> 78% em uso
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Localizações Vazias</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">4</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-box-open text-modern-danger text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-archive mr-1"></i> 22% vazias
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex justify-between items-center mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Lista de Localizações</h3>
+    <div class="flex space-x-3">
+        <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+        </button>
+        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Atualizar
+        </button>
+        <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-plus mr-2"></i> Nova Localização
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Locations List -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Localização</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Capacidade</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Produtos</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-primary bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-door-open text-modern-primary"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Armário A1</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Congelador -70°C</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Armário de aço inox com controle de temperatura</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">4 prateleiras</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">24</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Ativa
+                                    </span>
+                                    <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-modern-warning bg-opacity-10 text-modern-warning dark:bg-modern-warning dark:bg-opacity-20">
+                                        Em uso
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-modern-primary hover:text-modern-primary-dark">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-success bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-door-closed text-modern-success"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Armário B2</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Ambiente 18-25°C</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Armário ventilado com controle de umidade</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">6 prateleiras</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">32</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Ativa
+                                    </span>
+                                    <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-modern-warning bg-opacity-10 text-modern-warning dark:bg-modern-warning dark:bg-opacity-20">
+                                        Em uso
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-modern-primary hover:text-modern-primary-dark">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-warning bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-temperature-high text-modern-warning"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Estante C3</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Refrigerado 4-8°C</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Estante com refrigeração controlada</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">3 prateleiras</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">18</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Ativa
+                                    </span>
+                                    <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-modern-warning bg-opacity-10 text-modern-warning dark:bg-modern-warning dark:bg-opacity-20">
+                                        Em uso
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-modern-primary hover:text-modern-primary-dark">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-danger bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-warehouse text-modern-danger"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Depósito Principal</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Ambiente</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Área ampla para armazenamento de volumes</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">12 paletes</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">45</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Ativa
+                                    </span>
+                                    <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-modern-warning bg-opacity-10 text-modern-warning dark:bg-modern-warning dark:bg-opacity-20">
+                                        Em uso
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-modern-primary hover:text-modern-primary-dark">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-750">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-modern-secondary bg-opacity-10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-door-closed text-modern-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Armário D4</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Ambiente 18-25°C</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Armário secundário para materiais gerais</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">5 prateleiras</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">0</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                                        Ativa
+                                    </span>
+                                    <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-modern-success bg-opacity-10 text-modern-success dark:bg-modern-success dark:bg-opacity-20">
+                                        Vazia
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-modern-primary hover:text-modern-primary-dark">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                <div class="text-sm text-gray-700 dark:text-gray-300">
+                    Mostrando <span class="font-medium">1</span> a <span class="font-medium">5</span> de <span class="font-medium">18</span> localizações
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200" disabled>Anterior</button>
+                    <button class="px-3 py-1 rounded-md bg-modern-primary text-white">1</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">2</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">3</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">4</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Location Distribution -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Distribuição por Tipo</h4>
+            <div class="relative w-48 h-48 mx-auto mb-4">
+                <div class="absolute w-full h-full rounded-full" 
+                     style="background: conic-gradient(#10b981 0% 35%, #f59e0b 35% 60%, #ef4444 60% 85%, #8b5cf6 85% 100%)"></div>
+                <div class="absolute w-32 h-32 bg-white dark:bg-gray-700 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                    <p class="text-2xl font-bold text-gray-800 dark:text-white">18</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Locais</p>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-success rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Congelador (-70°C)</span>
+                    <span class="text-gray-600 dark:text-gray-400">4</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-primary rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Refrigerado (4-8°C)</span>
+                    <span class="text-gray-600 dark:text-gray-400">3</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-warning rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Ambiente (18-25°C)</span>
+                    <span class="text-gray-600 dark:text-gray-400">7</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-danger rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Ambiente (>25°C)</span>
+                    <span class="text-gray-600 dark:text-gray-400">2</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-modern-secondary rounded mr-3"></div>
+                    <span class="text-gray-700 dark:text-gray-300 flex-1">Área Aberta</span>
+                    <span class="text-gray-600 dark:text-gray-400">2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-plus text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Adicionar Localização</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-map-marked-alt text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Mapa de Localizações</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-file-export text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Exportar Relatório</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-qrcode text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Gerar QR Codes</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Location Stats -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Estatísticas de Localizações</h4>
+            <div class="space-y-4">
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Utilização média</span>
+                    <span class="text-gray-800 dark:text-white font-medium">72%</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Espaço total disponível</span>
+                    <span class="text-gray-800 dark:text-white font-medium">124 m²</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Espaço em uso</span>
+                    <span class="text-gray-800 dark:text-white font-medium">89 m²</span>
+                </div>
+                
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Manutenção programada</span>
+                    <span class="text-gray-800 dark:text-white font-medium">2 locais</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Location Modal -->
+<div id="new-location-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Nova Localização</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome da Localização</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: Armário A1">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: ARM-A1">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Localização</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                        <option>Selecionar tipo...</option>
+                        <option>Congelador (-70°C)</option>
+                        <option>Refrigerado (4-8°C)</option>
+                        <option>Ambiente (18-25°C)</option>
+                        <option>Ambiente (>25°C)</option>
+                        <option>Área Aberta</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descrição</label>
+                    <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Descrição da localização..."></textarea>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Capacidade</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: 4 prateleiras, 12 paletes">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área (m²)</label>
+                    <input type="number" min="0.1" step="0.1" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" placeholder="Ex: 2.5">
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-end space-x-3">
+                <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg">Cancelar</button>
+                <button class="px-4 py-2 bg-modern-primary hover:bg-modern-primary-dark text-white rounded-lg">Criar Localização</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

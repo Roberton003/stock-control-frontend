@@ -1,0 +1,497 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Meu Perfil</h2>
+    <p class="text-gray-600 dark:text-gray-400">Gerencie suas informações pessoais e preferências</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Profile Sidebar -->
+    <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <div class="text-center">
+                <div class="relative inline-block">
+                    <div class="w-24 h-24 bg-modern-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-modern-primary text-4xl"></i>
+                    </div>
+                    <button class="absolute bottom-0 right-0 bg-modern-primary text-white p-2 rounded-full hover:bg-modern-primary-dark">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Dr. Maria Silva</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-2">Analista Sênior</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Laboratório de Química Analítica</p>
+                
+                <div class="mt-4 flex justify-center space-x-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                        <i class="fas fa-circle text-xs mr-2"></i> Ativo
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-modern-primary bg-opacity-10 text-modern-primary dark:bg-modern-primary dark:bg-opacity-20">
+                        <i class="fas fa-medal text-xs mr-2"></i> Administrador
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Informações de Contato</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-modern-primary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-envelope text-modern-primary"></i>
+                        </div>
+                        <span class="text-gray-700 dark:text-gray-300">maria.silva@laboratorio.com</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-modern-success bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-phone text-modern-success"></i>
+                        </div>
+                        <span class="text-gray-700 dark:text-gray-300">(11) 98765-4321</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-modern-warning bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-building text-modern-warning"></i>
+                        </div>
+                        <span class="text-gray-700 dark:text-gray-300">Bloco A, Sala 203</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-modern-danger bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-calendar-alt text-modern-danger"></i>
+                        </div>
+                        <span class="text-gray-700 dark:text-gray-300">Membro desde: Jan 2020</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-user-edit text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Editar Perfil</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-lock text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Alterar Senha</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-bell text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Preferências de Notificação</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-history text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Histórico de Atividades</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="lg:col-span-2 space-y-8">
+        <!-- Personal Information -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Informações Pessoais</h3>
+                <button class="text-modern-primary hover:text-modern-primary-dark">
+                    <i class="fas fa-edit mr-2"></i> Editar
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome Completo</label>
+                    <p class="text-gray-900 dark:text-white">Dra. Maria da Silva Santos</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cargo</label>
+                    <p class="text-gray-900 dark:text-white">Analista Sênior</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Departamento</label>
+                    <p class="text-gray-900 dark:text-white">Laboratório de Química Analítica</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Matrícula</label>
+                    <p class="text-gray-900 dark:text-white">LAB-2020-001</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data de Nascimento</label>
+                    <p class="text-gray-900 dark:text-white">15/03/1985</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CPF</label>
+                    <p class="text-gray-900 dark:text-white">***.123.456-**</p>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sobre Mim</label>
+                    <p class="text-gray-900 dark:text-white">Especialista em química analítica com mais de 10 anos de experiência em laboratórios de pesquisa. Bacharel em Química pela Universidade de São Paulo e Mestrado em Ciências pela Unicamp.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Informações de Contato</h3>
+                <button class="text-modern-primary hover:text-modern-primary-dark">
+                    <i class="fas fa-edit mr-2"></i> Editar
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail Principal</label>
+                    <p class="text-gray-900 dark:text-white">maria.silva@laboratorio.com</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail Secundário</label>
+                    <p class="text-gray-900 dark:text-white">maria.santos.personal@gmail.com</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefone Principal</label>
+                    <p class="text-gray-900 dark:text-white">(11) 98765-4321</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefone Alternativo</label>
+                    <p class="text-gray-900 dark:text-white">(11) 3456-7890</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Endereço</label>
+                    <p class="text-gray-900 dark:text-white">Rua das Américas, 1000 - Apto 52<br>São Paulo, SP - CEP: 01234-567</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Localização no Laboratório</label>
+                    <p class="text-gray-900 dark:text-white">Bloco A - Sala 203<br>Piso 2 - Ala Norte</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Preferências</h3>
+                <button class="text-modern-primary hover:text-modern-primary-dark">
+                    <i class="fas fa-edit mr-2"></i> Editar
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tema</label>
+                    <p class="text-gray-900 dark:text-white">Sistema (Automático)</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Idioma</label>
+                    <p class="text-gray-900 dark:text-white">Português (Brasil)</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fuso Horário</label>
+                    <p class="text-gray-900 dark:text-white">América/São_Paulo (GMT-3)</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Unidade de Medida</label>
+                    <p class="text-gray-900 dark:text-white">Sistema Internacional (SI)</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notificações por E-mail</label>
+                    <p class="text-gray-900 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Ativado
+                        </span>
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notificações Push</label>
+                    <p class="text-gray-900 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Ativado
+                        </span>
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notificações SMS</label>
+                    <p class="text-gray-900 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200">
+                            Desativado
+                        </span>
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Relatórios Automáticos</label>
+                    <p class="text-gray-900 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Ativado
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Segurança</h3>
+                <button class="text-modern-primary hover:text-modern-primary-dark">
+                    <i class="fas fa-edit mr-2"></i> Editar
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Última Alteração de Senha</label>
+                    <p class="text-gray-900 dark:text-white">10/06/2025</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Autenticação de Dois Fatores</label>
+                    <p class="text-gray-900 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                            Ativado
+                        </span>
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Método 2FA</label>
+                    <p class="text-gray-900 dark:text-white">Aplicativo Authenticator</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dispositivos Confiáveis</label>
+                    <p class="text-gray-900 dark:text-white">3 dispositivos registrados</p>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Histórico de Login</label>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="text-sm text-gray-900 dark:text-white">Login bem-sucedido</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">15/06/2025 08:45 - Chrome no Windows 10</p>
+                            </div>
+                            <span class="text-green-500 text-sm">Sucesso</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="text-sm text-gray-900 dark:text-white">Login bem-sucedido</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">14/06/2025 14:20 - Safari no macOS</p>
+                            </div>
+                            <span class="text-green-500 text-sm">Sucesso</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <div>
+                                <p class="text-sm text-gray-900 dark:text-white">Tentativa de login falha</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">13/06/2025 22:15 - Chrome no Windows 10</p>
+                            </div>
+                            <span class="text-red-500 text-sm">Falha</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex space-x-4">
+                <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-key mr-2"></i> Alterar Senha
+                </button>
+                <button class="bg-modern-warning hover:bg-modern-warning-dark text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-shield-alt mr-2"></i> Configurar 2FA
+                </button>
+                <button class="bg-modern-danger hover:bg-modern-danger-dark text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Sair de Todos os Dispositivos
+                </button>
+            </div>
+        </div>
+
+        <!-- Permissions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-6">Permissões e Papéis</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-3">Papéis Atribuídos</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center p-3 bg-modern-primary bg-opacity-10 rounded-lg">
+                            <div class="w-8 h-8 bg-modern-primary rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-crown text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white">Administrador</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Acesso total ao sistema</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-modern-success bg-opacity-10 rounded-lg">
+                            <div class="w-8 h-8 bg-modern-success rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-vial text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white">Analista Sênior</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Gerenciamento de estoque</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-modern-warning bg-opacity-10 rounded-lg">
+                            <div class="w-8 h-8 bg-modern-warning rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-chart-bar text-white text-xs"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800 dark:text-white">Gerador de Relatórios</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Criação de relatórios</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-3">Permissões Específicas</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Criar e editar produtos</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Gerenciar estoque</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Aprovar requisições</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Gerar relatórios</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Gerenciar usuários</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-modern-success mr-3"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Configurar sistema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="edit-profile-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-2xl">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Editar Perfil</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome Completo</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="Dra. Maria da Silva Santos">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cargo</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="Analista Sênior">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Departamento</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">
+                            <option>Laboratório de Química Analítica</option>
+                            <option>Laboratório de Biologia Molecular</option>
+                            <option>Laboratório de Microbiologia</option>
+                            <option>Laboratório de Patologia Clínica</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Data de Nascimento</label>
+                        <input type="date" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="1985-03-15">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail Principal</label>
+                        <input type="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="maria.silva@laboratorio.com">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-mail Secundário</label>
+                        <input type="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="maria.santos.personal@gmail.com">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefone Principal</label>
+                        <input type="tel" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="(11) 98765-4321">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefone Alternativo</label>
+                        <input type="tel" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="(11) 3456-7890">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Endereço</label>
+                        <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">Rua das Américas, 1000 - Apto 52
+São Paulo, SP - CEP: 01234-567</textarea>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Localização no Laboratório</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent" value="Bloco A - Sala 203">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sobre Mim</label>
+                        <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-modern-primary focus:border-transparent">Especialista em química analítica com mais de 10 anos de experiência em laboratórios de pesquisa. Bacharel em Química pela Universidade de São Paulo e Mestrado em Ciências pela Unicamp.</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600 flex justify-end space-x-3">
+                <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg">Cancelar</button>
+                <button class="px-4 py-2 bg-modern-primary hover:bg-modern-primary-dark text-white rounded-lg">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

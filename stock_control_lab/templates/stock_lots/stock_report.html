@@ -1,0 +1,347 @@
+{% extends 'base/modern_base.html' %}
+{% load static %}
+
+{% block title %}Relatórios de Estoque{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Relatórios de Estoque</h2>
+    <p class="text-gray-600 dark:text-gray-400">Relatórios detalhados do estoque atual e histórico</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-primary hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Total de Produtos</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">128</h3>
+            </div>
+            <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-boxes text-modern-primary text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 5% este mês
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-warning hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Abaixo do Mínimo</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">8</h3>
+            </div>
+            <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-exclamation-triangle text-modern-warning text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 2 novos
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-danger hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Vencendo em 30 dias</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">5</h3>
+            </div>
+            <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-hourglass-half text-modern-danger text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-red-500 text-sm font-medium flex items-center">
+                <i class="fas fa-calendar mr-1"></i> Urgente
+            </span>
+        </div>
+    </div>
+    
+    <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-l-4 border-modern-success hover-lift">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">Valor Total</p>
+                <h3 class="text-2xl font-bold mt-1 text-gray-800 dark:text-white">R$ 42.560,00</h3>
+            </div>
+            <div class="bg-modern-success bg-opacity-10 p-3 rounded-full">
+                <i class="fas fa-coins text-modern-success text-xl"></i>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class="text-green-500 text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 12% este mês
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex justify-between items-center mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Relatórios Disponíveis</h3>
+    <div class="flex space-x-3">
+        <button class="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded flex items-center">
+            <i class="fas fa-filter mr-1"></i> Filtrar
+        </button>
+        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Atualizar
+        </button>
+        <button class="bg-modern-primary hover:bg-modern-primary-dark text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-file-export mr-2"></i> Exportar Tudo
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Report Categories -->
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Relatórios de Estoque</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Estoque Atual -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-modern-primary bg-opacity-10 p-3 rounded-full mr-4">
+                            <i class="fas fa-box-full text-modern-primary text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Estoque Atual</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Relatório completo do estoque atual com todos os produtos e quantidades</p>
+                    <div class="flex space-x-3">
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-pdf mr-1"></i> PDF
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-excel mr-1"></i> Excel
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-chart-bar mr-1"></i> Visualizar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Estoque por Categoria -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-modern-warning bg-opacity-10 p-3 rounded-full mr-4">
+                            <i class="fas fa-tags text-modern-warning text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Por Categoria</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Relatório de estoque agrupado por categorias de produtos</p>
+                    <div class="flex space-x-3">
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-pdf mr-1"></i> PDF
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-excel mr-1"></i> Excel
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-chart-bar mr-1"></i> Visualizar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Estoque por Localização -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-modern-success bg-opacity-10 p-3 rounded-full mr-4">
+                            <i class="fas fa-map-marker-alt text-modern-success text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Por Localização</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Relatório de estoque por localização física dos produtos</p>
+                    <div class="flex space-x-3">
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-pdf mr-1"></i> PDF
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-excel mr-1"></i> Excel
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-chart-bar mr-1"></i> Visualizar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Estoque Abaixo do Mínimo -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-modern-danger bg-opacity-10 p-3 rounded-full mr-4">
+                            <i class="fas fa-exclamation-triangle text-modern-danger text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Abaixo do Mínimo</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Relatório de produtos com estoque abaixo do nível mínimo</p>
+                    <div class="flex space-x-3">
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-pdf mr-1"></i> PDF
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-file-excel mr-1"></i> Excel
+                        </button>
+                        <button class="text-modern-primary hover:text-modern-primary-dark font-medium flex items-center">
+                            <i class="fas fa-chart-bar mr-1"></i> Visualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Report Charts -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Visualização de Estoque</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Inventory Distribution -->
+                <div class="flex flex-col items-center">
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-4">Distribuição por Categoria</h4>
+                    <div class="relative w-48 h-48 mb-4">
+                        <div class="absolute w-full h-full rounded-full" 
+                             style="background: conic-gradient(#10b981 0% 40%, #f59e0b 40% 70%, #ef4444 70% 100%)"></div>
+                        <div class="absolute w-32 h-32 bg-white dark:bg-gray-700 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <p class="text-2xl font-bold text-gray-800 dark:text-white">128</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Produtos</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 w-full max-w-xs">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-success rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Reagentes (40%)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-warning rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Equipamentos (30%)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-modern-danger rounded mr-3"></div>
+                            <span class="text-gray-700 dark:text-gray-300">Consumíveis (30%)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inventory Trends -->
+                <div>
+                    <h4 class="font-medium text-gray-800 dark:text-white mb-4">Tendência de Estoque</h4>
+                    <div class="h-48 flex items-end justify-between pt-4 space-x-2">
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 70%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jan</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 45%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Fev</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 60%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mar</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 80%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Abr</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 65%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Mai</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="bg-modern-primary w-3/4 rounded-t-lg" style="height: 90%"></div>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Jun</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <!-- Quick Actions -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ações Rápidas</h4>
+            <div class="space-y-3">
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-primary bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-chart-bar text-modern-primary"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Relatório Personalizado</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-success bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-calendar-plus text-modern-success"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Agendar Relatório</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-warning bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-history text-modern-warning"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Histórico de Relatórios</span>
+                </button>
+                
+                <button class="w-full flex items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+                    <div class="bg-modern-danger bg-opacity-10 p-2 rounded-full mr-3">
+                        <i class="fas fa-download text-modern-danger"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300">Exportar Dados</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Reports -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Relatórios Recentes</h4>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Estoque Atual</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">15/06/2025</div>
+                    </div>
+                    <span class="text-xs text-modern-primary bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 px-2 py-1 rounded">PDF</span>
+                </div>
+                
+                <div class="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Abaixo do Mínimo</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">14/06/2025</div>
+                    </div>
+                    <span class="text-xs text-modern-primary bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 px-2 py-1 rounded">PDF</span>
+                </div>
+                
+                <div class="flex items-center justify-between py-2">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-white">Por Categoria</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">13/06/2025</div>
+                    </div>
+                    <span class="text-xs text-modern-primary bg-modern-primary bg-opacity-10 dark:bg-modern-primary dark:bg-opacity-20 px-2 py-1 rounded">Excel</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock Alerts -->
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-800">
+            <div class="flex items-center mb-3">
+                <div class="bg-yellow-100 dark:bg-yellow-900/40 p-2 rounded-full mr-3">
+                    <i class="fas fa-bell text-yellow-600 dark:text-yellow-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200">Alertas Importantes</h4>
+            </div>
+            <ul class="text-sm text-yellow-700 dark:text-yellow-300 space-y-2">
+                <li>• 8 produtos abaixo do estoque mínimo</li>
+                <li>• 3 produtos sem estoque disponível</li>
+                <li>• 5 lotes vencendo em 30 dias</li>
+                <li>• 2 reagentes críticos para pesquisa</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
